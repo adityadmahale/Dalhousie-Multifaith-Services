@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getChaplains } from "../services/chaplains";
 import { Line } from "rc-progress";
 
-const Appointment = () => {
+const ChaplainList = () => {
   const [chaplains, setChaplains] = useState([]);
 
   useEffect(() => {
@@ -92,4 +92,4 @@ const renderButton = (availability) => {
   );
 };
 
-export default Appointment;
+export default ChaplainList;
