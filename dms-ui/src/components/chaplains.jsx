@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getChaplains } from "../services/chaplains";
 import AvailabilityBar from "./availabilityBar";
+import ChaplainImage from "./chaplainImage";
 
 const ChaplainList = () => {
   const [chaplains, setChaplains] = useState([]);
@@ -19,33 +20,13 @@ const ChaplainList = () => {
       {chaplains.map((chaplain) => (
         <div className="col-12 col-md-4" key={chaplain.id}>
           <div className="card">
-            {renderChaplainImage(chaplain)}
+            <ChaplainImage chaplain={chaplain} />
             <AvailabilityBar availability={chaplain.availability} />
             <div className="row description">{chaplain.description}</div>
             {renderButton(chaplain.availability)}
           </div>
         </div>
       ))}
-    </div>
-  );
-};
-
-const renderChaplainImage = (chaplain) => {
-  return (
-    <div className="row mb-3">
-      <div className="col-12 col-xl-5 mb-3">
-        <div className="apt-img-container">
-          <img
-            className="profile-img"
-            src={process.env.PUBLIC_URL + chaplain.image}
-            alt="profile"
-          />
-        </div>
-      </div>
-      <div className="col-12 col-xl-7 text-center align-self-center">
-        <div style={{ fontWeight: "bold" }}>{chaplain.name}</div>
-        <div className="title">{chaplain.title}</div>
-      </div>
     </div>
   );
 };
