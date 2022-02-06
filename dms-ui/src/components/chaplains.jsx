@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getChaplains } from "../services/chaplains";
-import { Line } from "rc-progress";
+import AvailabilityBar from "./availabilityBar";
 
 const ChaplainList = () => {
   const [chaplains, setChaplains] = useState([]);
@@ -20,7 +20,7 @@ const ChaplainList = () => {
         <div className="col-12 col-md-4" key={chaplain.id}>
           <div className="card">
             {renderChaplainImage(chaplain)}
-            {renderAvailability(chaplain.availability)}
+            <AvailabilityBar availability={chaplain.availability} />
             <div className="row description">{chaplain.description}</div>
             {renderButton(chaplain.availability)}
           </div>
@@ -48,32 +48,6 @@ const renderChaplainImage = (chaplain) => {
       </div>
     </div>
   );
-};
-
-const renderAvailability = (availability) => {
-  return (
-    <div className="row mb-2">
-      <div className="p-0 mb-1 fw-bold">Availability</div>
-      <Line
-        strokeColor={getStrokeColor(availability)}
-        strokeWidth={4}
-        percent={availability}
-        trailWidth={4}
-        className="p-0"
-      />
-    </div>
-  );
-};
-
-const getStrokeColor = (availability) => {
-  if (availability <= 33) {
-    return "#e02e22";
-  }
-  if (availability > 75) {
-    return "#23b81c";
-  }
-
-  return "#ebaa13";
 };
 
 const renderButton = (availability) => {
