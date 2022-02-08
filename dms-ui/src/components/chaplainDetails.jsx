@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getChaplain } from "../services/chaplains";
+import { getCurrentWeekDates, getTimeRanges } from "../utility/booking";
 
 const ChaplainDetails = () => {
   const { id } = useParams();
+  const [slot, selectSlot] = useState("");
   const [chaplain, setChaplain] = useState({
     id: "",
     name: "",
@@ -32,7 +34,8 @@ const ChaplainDetails = () => {
           {renderButton(chaplain.availability)}
         </div>
       </div>
-      <div className="row description">{chaplain.description}</div>
+      <div className="row description p-2">{chaplain.description}</div>
+      {renderSlots()}
     </div>
   );
 };
@@ -74,6 +77,37 @@ const renderButton = (availability) => {
     >
       Book Appointment
     </button>
+  );
+};
+
+const renderSlots = () => {
+  const dates = getCurrentWeekDates();
+  const times = getTimeRanges();
+
+  return (
+    <div className="row">
+      {dates.map((date) => (
+        <React.Fragment key={date.getDate()}>
+          {times.map((time) => (
+            <div key={time} className="col-12 col-md-6 col-lg-3 p-0">
+              {renderSlot(date, time)}
+            </div>
+          ))}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+};
+
+const renderSlot = (date, time) => {
+  const day = date.getDate();
+  const month = date.toLocaleString("default", { month: "long" });
+  const year = date.getFullYear();
+  return (
+    <div className="slot-available text-center">
+      <p>{day + " " + month + ", " + year}</p>
+      <p>{time}</p>
+    </div>
   );
 };
 
