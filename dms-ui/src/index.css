@@ -122,12 +122,23 @@ code {
   background-color: #bbbbbb !important;
 }
 
+.btn-detail {
+  display: block;
+  margin-left: auto;
+}
+
 @media only screen and (max-width: 768px) {
   .form-layout {
     width: 100%;
   }
 
   .apt-img-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-detail {
     display: block;
     margin-left: auto;
     margin-right: auto;

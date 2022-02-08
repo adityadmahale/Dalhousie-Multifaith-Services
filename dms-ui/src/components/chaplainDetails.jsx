@@ -22,7 +22,59 @@ const ChaplainDetails = () => {
     getData();
   });
 
-  return <div>ChaplainDetails {chaplain.name}</div>;
+  return (
+    <div className="m-2">
+      <div className="row">
+        <div className="col-12 col-md-8 col-lg-4">
+          {ChaplainImage(chaplain)}
+        </div>
+        <div className="col-12 col-md-4 col-lg-8 align-self-center">
+          {renderButton(chaplain.availability)}
+        </div>
+      </div>
+      <div className="row description">{chaplain.description}</div>
+    </div>
+  );
+};
+
+const ChaplainImage = (chaplain) => {
+  return (
+    <div className="row mb-3">
+      <div className="col-12 col-md-6 col-lg-4 mb-3">
+        <div className="apt-img-container">
+          <img
+            className="profile-img"
+            src={process.env.PUBLIC_URL + chaplain.image}
+            alt="profile"
+          />
+        </div>
+      </div>
+      <div className="col-12 col-md-6 col-lg-8 text-center align-self-center">
+        <div style={{ fontWeight: "bold", fontSize: "30px" }}>
+          {chaplain.name}
+        </div>
+        <div className="title">{chaplain.title}</div>
+      </div>
+    </div>
+  );
+};
+
+const renderButton = (availability) => {
+  let classes = "btn btn-primary btn-detail";
+
+  if (availability === 0) {
+    classes += " disabled-button";
+  }
+
+  return (
+    <button
+      disabled={availability === 0}
+      className={classes}
+      style={{ maxWidth: "300px" }}
+    >
+      Book Appointment
+    </button>
+  );
 };
 
 export default ChaplainDetails;
