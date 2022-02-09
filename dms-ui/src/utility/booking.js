@@ -1,21 +1,17 @@
 export const getCurrentWeekDates = () => {
   const currentDay = new Date();
   const week = [];
+  const time = [14, 15, 16, 17];
 
   for (let i = 1; i <= 5; i++) {
-    let first = currentDay.getDate() - currentDay.getDay() + i;
-    let day = new Date(currentDay.setDate(first));
-    week.push(day);
+    for (let j = 0; j < time.length; j++) {
+      const first = currentDay.getDate() - currentDay.getDay() + i;
+      const day = new Date(currentDay.setDate(first));
+      day.setUTCHours(time[j], 0, 0, 0);
+      week.push(day);
+    }
   }
   return week;
 };
 
-export const getTimeRanges = () => {
-  const slots = [
-    "10:00 AM - 11:00 AM",
-    "11:00 AM - 12:00 PM",
-    "12:00 PM - 1:00 PM",
-    "1:00 PM - 2:00 PM",
-  ];
-  return slots;
-};
+console.log(getCurrentWeekDates());
