@@ -26,3 +26,9 @@ export const isSlotInPast = (slot) => {
   const current = new Date();
   return current.getTime() >= slot.getTime();
 };
+
+export const isSlotBooked = (slot, bookedSlots) => {
+  return bookedSlots.some((bookedSlot) =>
+    isSlotEqual(new Date(bookedSlot.slot), slot)
+  );
+};
