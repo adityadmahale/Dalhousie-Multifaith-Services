@@ -1,5 +1,9 @@
 import React from "react";
-import { getCurrentWeekDates, isSlotEqual } from "../utility/booking";
+import {
+  getCurrentWeekDates,
+  isSlotEqual,
+  isSlotInPast,
+} from "../utility/booking";
 
 const Slots = ({ selected, onSlotSelect }) => {
   const dates = getCurrentWeekDates();
@@ -21,7 +25,10 @@ const Slots = ({ selected, onSlotSelect }) => {
 
 const getClasses = (slot, selectedSlot) => {
   let classes = "slot-available text-center ";
-  if (isSlotEqual(slot, selectedSlot)) {
+
+  if (isSlotInPast(slot)) {
+    classes += "past-slot";
+  } else if (isSlotEqual(slot, selectedSlot)) {
     classes += "selected-slot";
   }
 

@@ -21,3 +21,8 @@ export const isSlotEqual = (slot, selectedSlot) => {
     selectedSlot.getTime() === slot.getTime()
   );
 };
+
+export const isSlotInPast = (slot) => {
+  const current = new Date();
+  return current.getTime() >= slot.getTime();
+};

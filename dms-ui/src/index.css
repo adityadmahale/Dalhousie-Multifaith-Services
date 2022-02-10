@@ -142,6 +142,13 @@ code {
   background-color: #2b7ad7;
 }
 
+.past-slot {
+  color: #bbbbbb;
+  background-color: #ffffff;
+  border: 3px solid #bbbbbb;
+  cursor: initial;
+}
+
 @media only screen and (max-width: 768px) {
   .form-layout {
     width: 100%;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getChaplain } from "../services/chaplains";
-import { isSlotEqual } from "../utility/booking";
+import { isSlotEqual, isSlotInPast } from "../utility/booking";
 import Slots from "./slots";
 
 const ChaplainDetails = () => {
@@ -28,6 +28,10 @@ const ChaplainDetails = () => {
   const handleSlotSelect = (selectedSlot) => {
     if (isSlotEqual(slot, selectedSlot)) {
       setSlot(null);
+      return;
+    }
+
+    if (isSlotInPast(selectedSlot)) {
       return;
     }
 
