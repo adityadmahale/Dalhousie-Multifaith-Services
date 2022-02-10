@@ -134,6 +134,7 @@ code {
   border-radius: 5px;
   color: #2b7ad7;
   background-color: #ffffff;
+  cursor: pointer;
 }
 
 .selected-slot {

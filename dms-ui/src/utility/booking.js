@@ -13,3 +13,11 @@ export const getCurrentWeekDates = () => {
   }
   return week;
 };
+
+export const isSlotEqual = (slot, selectedSlot) => {
+  return (
+    selectedSlot !== null &&
+    slot !== null &&
+    selectedSlot.getTime() === slot.getTime()
+  );
+};
