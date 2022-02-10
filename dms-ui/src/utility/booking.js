@@ -13,5 +13,3 @@ export const getCurrentWeekDates = () => {
   }
   return week;
 };
-
-console.log(getCurrentWeekDates());

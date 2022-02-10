@@ -5,7 +5,7 @@ import Slots from "./slots";
 
 const ChaplainDetails = () => {
   const { id } = useParams();
-  const [slot, selectSlot] = useState("");
+  const [slot, setSlot] = useState(null);
   const [chaplain, setChaplain] = useState({
     id: "",
     name: "",
@@ -24,6 +24,15 @@ const ChaplainDetails = () => {
     getData();
   });
 
+  const handleSlotSelect = (selectedSlot) => {
+    if (slot !== null && slot.getTime() === selectedSlot.getTime()) {
+      setSlot(null);
+      return;
+    }
+
+    setSlot(selectedSlot);
+  };
+
   return (
     <div className="m-2">
       <div className="row">
@@ -31,11 +40,11 @@ const ChaplainDetails = () => {
           {ChaplainImage(chaplain)}
         </div>
         <div className="col-12 col-md-4 col-lg-8 align-self-center">
-          {renderButton(chaplain.availability)}
+          {renderButton(chaplain.availability, slot)}
         </div>
       </div>
       <div className="row description p-2">{chaplain.description}</div>
-      <Slots />
+      <Slots selected={slot} onSlotSelect={handleSlotSelect} />
     </div>
   );
 };
@@ -62,7 +71,7 @@ const ChaplainImage = (chaplain) => {
   );
 };
 
-const renderButton = (availability) => {
+const renderButton = (availability, slot) => {
   let classes = "btn btn-primary btn-detail";
 
   if (availability === 0) {
@@ -71,7 +80,7 @@ const renderButton = (availability) => {
 
   return (
     <button
-      disabled={availability === 0}
+      disabled={availability === 0 || slot === null}
       className={classes}
       style={{ maxWidth: "300px" }}
     >

@@ -1,27 +1,39 @@
 import React from "react";
 import { getCurrentWeekDates } from "../utility/booking";
 
-const Slots = () => {
+const Slots = ({ selected, onSlotSelect }) => {
   const dates = getCurrentWeekDates();
 
   return (
     <div className="row">
       {dates.map((date) => (
-        <div key={date} className="col-12 col-md-6 col-lg-3 p-0">
-          {renderSlot(date)}
+        <div
+          key={date}
+          className="col-12 col-md-6 col-lg-3 p-0"
+          onClick={() => onSlotSelect(date)}
+        >
+          {renderSlot(date, selected)}
         </div>
       ))}
     </div>
   );
 };
 
-const renderSlot = (date) => {
+const getClasses = (date, selected) => {
+  let classes = "slot-available text-center ";
+  if (selected !== null && selected.getTime() === date.getTime()) {
+    classes += "selected-slot";
+  }
+
+  return classes;
+};
+
+const renderSlot = (date, selected) => {
   const day = date.getDate();
   const month = date.toLocaleString("default", { month: "long" });
   const year = date.getFullYear();
-  const startTime = date.getHours();
   return (
-    <div className="slot-available text-center">
+    <div className={getClasses(date, selected)}>
       <p>{`${day} ${month}, ${year}`}</p>
       <p>{getSlotRange(date.getHours())}</p>
     </div>

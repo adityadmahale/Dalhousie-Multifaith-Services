@@ -129,11 +129,16 @@ code {
 
 .slot-available {
   padding: 20px;
-  border: 3px solid #4d9cd4;
+  border: 3px solid #2b7ad7;
   margin: 5px;
   border-radius: 5px;
-  color: #4d9cd4;
+  color: #2b7ad7;
   background-color: #ffffff;
+}
+
+.selected-slot {
+  color: #ffffff;
+  background-color: #2b7ad7;
 }
 
 @media only screen and (max-width: 768px) {
