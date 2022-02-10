@@ -5,7 +5,8 @@ import Login from "./components/login";
 import Register from "./components/register";
 import Logout from "./components/logout";
 import Profile from "./components/profile";
-import Appointment from "./components/appointment";
+import ChaplainList from "./components/chaplains";
+import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Recovery from "./components/recovery";
 import Header from "./components/header";
@@ -21,7 +22,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/chaplains/:id" element={<ChaplainDetails />} />
+          <Route path="/chaplains" element={<ChaplainList />} />
           <Route path="/register" element={<Register />} />
           <Route path="/recovery" element={<Recovery />} />
           <Route path="/not-found" element={<NotFound />} />
