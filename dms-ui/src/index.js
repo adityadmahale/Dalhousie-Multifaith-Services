@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
+import "remixicon/fonts/remixicon.css";
 import "react-phone-number-input/style.css";
 import "./index.css";
 
