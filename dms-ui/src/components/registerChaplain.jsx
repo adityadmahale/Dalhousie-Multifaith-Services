@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import Logo from "./logo";
 
-const Register = () => {
+const RegisterChaplain = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -64,7 +64,7 @@ const Register = () => {
       />
       <button className="btn btn-primary">Sign Up</button>
       <div className="text-center">
-        <Link to="/login" className="link">
+        <Link to="/login/chaplain" className="link">
           Already have an account?
         </Link>
       </div>
@@ -72,4 +72,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterChaplain;

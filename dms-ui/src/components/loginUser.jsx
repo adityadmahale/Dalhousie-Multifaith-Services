@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "./logo";
 
-const Login = () => {
+const LoginUser = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,7 +34,7 @@ const Login = () => {
       <button className="btn btn-primary">Sign In</button>
       <div className="text-center">
         <span>New to DMS? </span>
-        <Link to="/register" className="link">
+        <Link to="/register/user" className="link">
           Register
         </Link>
       </div>
@@ -42,4 +42,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginUser;
