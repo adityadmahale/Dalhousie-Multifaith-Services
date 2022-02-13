@@ -1,13 +1,16 @@
 export const getCurrentWeekDates = () => {
   const currentDay = new Date();
   const week = [];
-  const time = [14, 15, 16, 17];
+
+  const slotTimeStart = [10, 11, 12, 13].map(
+    (timing) => timing + currentDay.getTimezoneOffset() / 60
+  );
 
   for (let i = 1; i <= 5; i++) {
-    for (let j = 0; j < time.length; j++) {
+    for (let j = 0; j < slotTimeStart.length; j++) {
       const first = currentDay.getDate() - currentDay.getDay() + i;
       const day = new Date(currentDay.setDate(first));
-      day.setUTCHours(time[j], 0, 0, 0);
+      day.setUTCHours(slotTimeStart[j], 0, 0, 0);
       week.push(day);
     }
   }
