@@ -1,33 +1,74 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Input from "./inputField";
+import Joi from "joi";
 import Logo from "./logo";
 
 const LoginChaplain = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [chaplain, setChaplain] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = ({ currentTarget: input }) => {
+    const account = { ...chaplain };
+    account[input.name] = input.value;
+    setChaplain(account);
+  };
+
+  const schema = Joi.object({
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required()
+      .label("Email"),
+    password: Joi.string().min(8).required().label("Password"),
+  });
+
+  const validate = () => {
+    const result = schema.validate(chaplain, { abortEarly: false });
+
+    if (!result.error) {
+      return null;
+    }
+    const errors = {};
+    for (let item of result.error.details) {
+      errors[item.path[0]] = item.message;
+    }
+
+    return errors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const errors = validate();
+    setErrors(errors || {});
+    if (errors) {
+      return;
+    }
+    console.log("Submitted");
   };
 
   return (
     <form className="form-layout text-center" onSubmit={handleSubmit}>
       <Logo />
 
-      <input
+      <Input
         type="text"
-        className="form-control"
         placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
+        name="email"
+        onChange={handleChange}
+        value={chaplain.email}
+        error={errors.email}
       />
-      <input
+
+      <Input
         type="password"
-        className="form-control"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
+        name="password"
+        onChange={handleChange}
+        value={chaplain.password}
+        error={errors.password}
       />
+
       <Link to="/recovery" className="link float-end">
         Forgot Password?
       </Link>
