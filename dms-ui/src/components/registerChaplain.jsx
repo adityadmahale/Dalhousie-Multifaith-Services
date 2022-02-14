@@ -8,6 +8,8 @@ const RegisterChaplain = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(undefined);
+  const [religion, setReligion] = useState("");
+  const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -34,6 +36,21 @@ const RegisterChaplain = () => {
           onChange={(e) => setLastName(e.currentTarget.value)}
         />
       </div>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Religion"
+        value={religion}
+        onChange={(e) => setReligion(e.currentTarget.value)}
+      />
+      <textarea
+        className="form-control"
+        placeholder="Description"
+        id="Description1"
+        value={description}
+        rows="3"
+        onChange={(e) => setDescription(e.currentTarget.value)}
+      ></textarea>
       <PhoneInput
         className="form-control"
         value={phoneNumber}
