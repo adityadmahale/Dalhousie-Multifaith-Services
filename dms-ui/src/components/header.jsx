@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
+  const collapseRef = React.createRef();
+  const [screenWidth, setScreenWidth] = useState(0);
+
+  useEffect(() => {
+    setScreenWidth(window.innerWidth);
+  });
+
+  const handleCollapse = () => {
+    if (screenWidth < 992) collapseRef.current.click();
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <button
+        ref={collapseRef}
         className="navbar-toggler m-2 mr-auto"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
@@ -19,22 +31,30 @@ const Header = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mx-auto">
           <li className="nav-item active">
-            <NavLink className="nav-link" to="/">
+            <NavLink className="nav-link" to="/" onClick={handleCollapse}>
               Home
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/profile">
+            <NavLink
+              className="nav-link"
+              to="/profile"
+              onClick={handleCollapse}
+            >
               Profile
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/chaplains">
+            <NavLink
+              className="nav-link"
+              to="/chaplains"
+              onClick={handleCollapse}
+            >
               Chaplains
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/logout">
+            <NavLink className="nav-link" to="/logout" onClick={handleCollapse}>
               Logout
             </NavLink>
           </li>
