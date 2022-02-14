@@ -45,6 +45,9 @@ code {
 .form-control {
   background-color: #f1f1f1 !important;
   padding: 15px;
+}
+
+.form-group {
   margin-bottom: 20px;
 }
 
@@ -147,6 +150,20 @@ code {
   background-color: #ffffff;
   border: 3px solid #bbbbbb;
   cursor: initial;
+}
+
+.logo {
+  font-size: 58px;
+  color: #2b7ad7;
+  font-weight: bolder;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.ri-mental-health-fill {
+  display: inline-block;
+  font-size: 45px;
+  color: #000000;
 }
 
 @media only screen and (max-width: 768px) {
