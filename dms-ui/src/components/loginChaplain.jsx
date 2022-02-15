@@ -69,7 +69,7 @@ const LoginChaplain = () => {
         error={errors.password}
       />
 
-      <Link to="/recovery" className="link float-end">
+      <Link to="/recovery/email" className="link float-end">
         Forgot Password?
       </Link>
       <button className="btn btn-primary">Sign In</button>

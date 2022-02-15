@@ -7,7 +7,7 @@ const Header = () => {
 
   useEffect(() => {
     setScreenWidth(window.innerWidth);
-  });
+  }, [screenWidth]);
 
   const handleCollapse = () => {
     if (screenWidth < 992) collapseRef.current.click();
