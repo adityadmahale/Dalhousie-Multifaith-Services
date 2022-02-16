@@ -5,6 +5,9 @@ import "remixicon/fonts/remixicon.css";
 import "react-phone-number-input/style.css";
 import "./index.css";
 
+import "jquery/dist/jquery.slim";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 

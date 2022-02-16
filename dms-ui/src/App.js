@@ -8,9 +8,11 @@ import RegisterUser from "./components/registerUser";
 import Logout from "./components/logout";
 import Profile from "./components/profile";
 import ChaplainList from "./components/chaplains";
+import RecoveryEmail from "./components/recoveryEmail";
+import RecoveryCode from "./components/recoveryCode";
+import RecoveryPassword from "./components/recoveryPassword";
 import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
-import Recovery from "./components/recovery";
 import Header from "./components/header";
 
 function App() {
@@ -25,11 +27,13 @@ function App() {
           <Route path="/register/chaplain" element={<RegisterChaplain />} />
           <Route path="/login/user" element={<LoginUser />} />
           <Route path="/login/chaplain" element={<LoginChaplain />} />
+          <Route path="/recovery/email" element={<RecoveryEmail />} />
+          <Route path="/recovery/code" element={<RecoveryCode />} />
+          <Route path="/recovery/password" element={<RecoveryPassword />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/chaplains/:id" element={<ChaplainDetails />} />
           <Route path="/chaplains" element={<ChaplainList />} />
-          <Route path="/recovery" element={<Recovery />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
@@ -45,6 +49,9 @@ const isHeaderRequired = (route) => {
     "/login/chaplain",
     "/register/user",
     "/register/chaplain",
+    "/recovery/email",
+    "/recovery/code",
+    "/recovery/password",
   ];
   if (noHeaderLinks.includes(route)) {
     return false;

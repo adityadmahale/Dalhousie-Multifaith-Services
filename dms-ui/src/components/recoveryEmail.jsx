@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
+import { useNavigate } from "react-router-dom";
 
-const LoginUser = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
+const RecoveryEmail = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ email: "" });
   const [errors, setErrors] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
@@ -17,13 +18,8 @@ const LoginUser = () => {
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })
-      .regex(RegExp(".*@dal.ca$"))
       .required()
-      .label("Email")
-      .messages({
-        "string.pattern.base": '"Email" must belong to the university domain',
-      }),
-    password: Joi.string().min(8).required().label("Password"),
+      .label("Email"),
   });
 
   const validate = () => {
@@ -48,13 +44,12 @@ const LoginUser = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+    navigate("/recovery/code", { state: user.email });
   };
 
   return (
     <form className="form-layout text-center" onSubmit={handleSubmit}>
       <Logo />
-
       <Input
         type="text"
         placeholder="Email"
@@ -63,27 +58,9 @@ const LoginUser = () => {
         value={user.email}
         error={errors.email}
       />
-      <Input
-        type="password"
-        placeholder="Password"
-        name="password"
-        onChange={handleChange}
-        value={user.password}
-        error={errors.password}
-      />
-
-      <Link to="/recovery/email" className="link float-end">
-        Forgot Password?
-      </Link>
-      <button className="btn btn-primary">Sign In</button>
-      <div className="text-center">
-        <span>New to DMS? </span>
-        <Link to="/register/user" className="link">
-          Register
-        </Link>
-      </div>
+      <button className="btn btn-primary">Send Recovery Code</button>
     </form>
   );
 };
 
-export default LoginUser;
+export default RecoveryEmail;
