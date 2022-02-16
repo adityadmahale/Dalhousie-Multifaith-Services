@@ -2,8 +2,10 @@ import { useState } from "react";
 import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
+import { useNavigate } from "react-router-dom";
 
 const RecoveryEmail = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({ email: "" });
   const [errors, setErrors] = useState({});
 
@@ -42,7 +44,7 @@ const RecoveryEmail = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+    navigate("/recovery/code", { state: user.email });
   };
 
   return (

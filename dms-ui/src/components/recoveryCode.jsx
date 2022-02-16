@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Joi from "joi";
 import Input from "./inputField";
 import Logo from "./logo";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const RecoveryCode = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.state) {
+      navigate("/");
+    }
+  });
+
   const [code, setCode] = useState({ code: "" });
   const [errors, setErrors] = useState({});
 
@@ -39,7 +49,9 @@ const RecoveryCode = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+    navigate("/recovery/password", {
+      state: { code: code.code, email: location.state },
+    });
   };
 
   return (

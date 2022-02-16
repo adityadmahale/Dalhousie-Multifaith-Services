@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const RecoveryPassword = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.state) {
+      navigate("/");
+    }
+  });
+
   const [user, setUser] = useState({
     password: "",
     confirmPassword: "",
