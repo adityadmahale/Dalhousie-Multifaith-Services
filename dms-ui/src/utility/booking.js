@@ -35,3 +35,20 @@ export const isSlotBooked = (slot, bookedSlots) => {
     isSlotEqual(new Date(bookedSlot.slot), slot)
   );
 };
+
+export const getSlotRange = (time) => {
+  const startTime = getTime(time);
+  const endTime = getTime(time + 1);
+  return `${startTime} - ${endTime}`;
+};
+
+const getTime = (time) => {
+  if (time === 12) {
+    return "12 PM";
+  }
+  if (time > 12) {
+    return `${time - 12} PM`;
+  }
+
+  return `${time} AM`;
+};
