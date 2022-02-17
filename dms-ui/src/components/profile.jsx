@@ -1,6 +1,10 @@
+import Modal from "./modal";
+import RegisterUser from "./registerUser";
+
 const Profile = ({ user }) => {
   return (
     <div className="profile-jumbotron">
+      <Modal></Modal>
       <div className="prl-img-container">
         <img
           className="profile-img"
@@ -8,7 +12,11 @@ const Profile = ({ user }) => {
           alt="profile"
         />
       </div>
-      <div className="ri-pencil-fill ri-2x"></div>
+      <div
+        className="ri-pencil-fill ri-2x"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      ></div>
       <div className="row mt-5">
         <div className="col-0 col-md-1"></div>
         <div className="col-12 col-md-5">
