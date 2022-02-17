@@ -3,12 +3,16 @@ import { useParams } from "react-router-dom";
 import { getChaplain } from "../services/chaplains";
 import { getBookedSlots } from "../services/slots";
 import { isSlotBooked, isSlotEqual, isSlotInPast } from "../utility/booking";
+import CardConfirmation from "./cardConfirmation";
+import CardDisplay from "./cardDisplay";
+import Modal from "./modal";
 import Slots from "./slots";
 
 const ChaplainDetails = () => {
   const { id } = useParams();
   const [slot, setSlot] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
+  const [display, setDisplay] = useState(false);
   const [chaplain, setChaplain] = useState({
     id: "",
     name: "",
@@ -42,21 +46,23 @@ const ChaplainDetails = () => {
     setSlot(selectedSlot);
   };
 
-  const handleButtonClick = (slot) => {
+  const handleConfirmClick = () => {
     const slotTime =
       slot.toISOString().split("T")[0] +
       " " +
       slot.toTimeString().split(" ")[0];
+    setDisplay(true);
   };
 
   return (
     <div className="m-2">
+      {renderModal(display, slot, chaplain, handleConfirmClick)}
       <div className="row">
         <div className="col-12 col-md-8 col-lg-4">
           {ChaplainImage(chaplain)}
         </div>
         <div className="col-12 col-md-4 col-lg-8 align-self-center">
-          {renderButton(chaplain.availability, slot, handleButtonClick)}
+          {renderButton(chaplain.availability, slot)}
         </div>
       </div>
       <div className="row description p-2">{chaplain.description}</div>
@@ -66,6 +72,22 @@ const ChaplainDetails = () => {
         bookedSlots={bookedSlots}
       />
     </div>
+  );
+};
+
+const renderModal = (display, slot, chaplain, handleModalDisplay) => {
+  return (
+    <Modal>
+      {display ? (
+        <CardConfirmation />
+      ) : (
+        <CardDisplay
+          slot={slot}
+          name={chaplain.name}
+          onClick={handleModalDisplay}
+        />
+      )}
+    </Modal>
   );
 };
 
@@ -91,7 +113,7 @@ const ChaplainImage = (chaplain) => {
   );
 };
 
-const renderButton = (availability, slot, onClick) => {
+const renderButton = (availability, slot) => {
   let classes = "btn btn-primary btn-detail";
 
   if (availability === 0) {
@@ -103,7 +125,8 @@ const renderButton = (availability, slot, onClick) => {
       disabled={availability === 0 || slot === null}
       className={classes}
       style={{ maxWidth: "300px" }}
-      onClick={() => onClick(slot)}
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
     >
       Book Appointment
     </button>

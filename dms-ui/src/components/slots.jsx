@@ -1,4 +1,6 @@
 import React from "react";
+import { getSlotRange } from "../utility/booking";
+
 import {
   getCurrentWeekDates,
   isSlotEqual,
@@ -46,23 +48,6 @@ const renderSlot = (date, selected, bookedSlots) => {
       <p>{getSlotRange(date.getHours())}</p>
     </div>
   );
-};
-
-const getSlotRange = (time) => {
-  const startTime = getTime(time);
-  const endTime = getTime(time + 1);
-  return `${startTime} - ${endTime}`;
-};
-
-const getTime = (time) => {
-  if (time === 12) {
-    return "12 PM";
-  }
-  if (time > 12) {
-    return `${time - 12} PM`;
-  }
-
-  return `${time} AM`;
 };
 
 export default Slots;
