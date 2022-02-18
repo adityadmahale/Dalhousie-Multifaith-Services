@@ -1,7 +1,7 @@
 const user = {
   firstName: "Andrew",
   lastName: "Williams",
-  email: "andrew.williams@abc.com",
+  email: "andrew.williams@dal.ca",
   contactNo: "+19999999999",
 };
 

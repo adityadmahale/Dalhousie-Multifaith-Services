@@ -1,10 +1,12 @@
 import Modal from "./modal";
-import RegisterUser from "./registerUser";
+import ProfileUpdateForm from "./profileUpdateForm";
 
 const Profile = ({ user }) => {
   return (
     <div className="profile-jumbotron">
-      <Modal></Modal>
+      <Modal>
+        <ProfileUpdateForm user={user} />
+      </Modal>
       <div className="prl-img-container">
         <img
           className="profile-img"
