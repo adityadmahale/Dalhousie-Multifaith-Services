@@ -15,8 +15,26 @@ import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Header from "./components/header";
 
+import { useEffect, useState } from "react";
+import { getUser } from "./services/user";
+
 function App() {
   const { pathname: route } = useLocation();
+  const [user, setUser] = useState({
+    firstName: "",
+    lastname: "",
+    email: "",
+    contactNo: "",
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      const dataUser = await getUser(1);
+      setUser(dataUser);
+    };
+
+    getData();
+  });
 
   return (
     <React.Fragment>
@@ -31,7 +49,7 @@ function App() {
           <Route path="/recovery/code" element={<RecoveryCode />} />
           <Route path="/recovery/password" element={<RecoveryPassword />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile user={user} />} />
           <Route path="/chaplains/:id" element={<ChaplainDetails />} />
           <Route path="/chaplains" element={<ChaplainList />} />
           <Route path="/not-found" element={<NotFound />} />

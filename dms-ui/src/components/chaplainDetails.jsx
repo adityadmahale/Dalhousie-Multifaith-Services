@@ -52,6 +52,7 @@ const ChaplainDetails = () => {
       " " +
       slot.toTimeString().split(" ")[0];
     setDisplay(true);
+    setSlot(null);
   };
 
   return (
