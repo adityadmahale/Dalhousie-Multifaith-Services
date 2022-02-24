@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'djoser',
+    'dmsfront',
+
 
 ]
 
@@ -114,6 +116,34 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+REST_FRAMEWORK = {
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+    ),
+
+}
+
+
+SIMPLE_JWT = {
+
+   'AUTH_HEADER_TYPES': ('JWT',),
+
+}
+
+
+DJOSER = {
+
+    'SERIALIZERS': {
+
+        'user_create': 'core.serializers.UserCreateSerializer'
+
+    }
+
+}
 
 
 # Static files (CSS, JavaScript, Images)
