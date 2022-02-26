@@ -15,6 +15,8 @@ pytest-django = "*"
 pytest = "*"
 pytest-html = "*"
 flake8 = "*"
+atomicwrites = "*"
+urllib3 = "*"
 
 [requires]
 python_version = "3.8"
