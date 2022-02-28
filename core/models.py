@@ -1,10 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, UserManager as BaseUserManager
+from django.contrib.auth.models import (
+    AbstractUser,
+    UserManager as BaseUserManager,
+)
 from django.utils.translation import gettext_lazy as _
 
-# Reference: https://www.pygopar.com/how-to-remove-username-from-django-user-model
+
+# https://www.pygopar.com/how-to-remove-username-from-django-user-model
 class UserManager(BaseUserManager):
-    """ User Manager that knows how to create users via email instead of username """
+    """User Manager that knows how to create
+     users via email instead of username"""
+
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
@@ -28,12 +34,13 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, password, **extra_fields)
 
+
 # Create your models here.
 class User(AbstractUser):
     username = None
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_("email address"), unique=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
