@@ -1,0 +1,73 @@
+stages:
+  - build
+  - test
+  - code_quality
+  - deploy_frontend
+
+.ssh-configure: &ssh-configure
+  - "command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )"
+  - eval $(ssh-agent -s)
+  - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+
+default:
+  image: ubuntu:20.04
+  cache:
+    paths:
+      - ~/.cache/pip/
+      - dms-ui/node_modules
+  before_script:
+    - apt -y update
+    - apt -y install apt-utils net-tools python3.8 python3-pip mysql-client libmysqlclient-dev openssh-client
+    - apt -y upgrade
+    - pip3 install pipenv
+
+build:
+  stage: build
+  script:
+    - python3 -m pipenv install
+    - python3 -m pipenv run python manage.py makemigrations
+    - python3 -m pipenv run python manage.py migrate
+    - python3 -m pipenv run python manage.py check
+    # Unit Testing
+    # Check Code Coverage
+
+test:
+  stage: test
+  script:
+    - python3 -m pipenv install
+    - python3 -m pipenv install --dev
+    - python3 -m pipenv run python manage.py makemigrations
+    - python3 -m pipenv run python manage.py migrate
+    - python3 -m pipenv run python manage.py runserver > /dev/null 2>&1 &
+    - sleep 5
+    # Integration Testing
+    - python3 -m pipenv run pytest -m integration
+  after_script:
+    - *ssh-configure
+    - scp -r -o StrictHostKeyChecking=no report.html "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_integration.html"
+  only:
+    - develop
+    - main
+
+code_quality:
+  stage: code_quality
+  script:
+    - python3 -m pipenv install --dev
+    - python3 -m pipenv run flake8 --output-file=code_quality.txt
+  after_script:
+    - *ssh-configure
+    - scp -r -o StrictHostKeyChecking=no code_quality.txt "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_code_quality.txt"
+
+deploy_frontend:
+  image: node:12.16.1
+  stage: deploy_frontend
+  before_script:
+    - echo "Deploying to https://dms-g10-qa.herokuapp.com/"
+  script:
+    - git subtree push --prefix dms-ui https://${HEROKU_USER_FRONTEND}:${HEROKU_API_KEY_FRONTEND}@git.heroku.com/dms-g10-qa.git main
+    - echo "Deployed to qa server"
+  environment:
+    name: qa
+    url: https://dms-g10-qa.herokuapp.com/
+  only:
+    - main
