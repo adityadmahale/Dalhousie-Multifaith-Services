@@ -5,8 +5,18 @@ name = "pypi"
 
 [packages]
 django = "*"
+djangorestframework = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
+requests = "*"
+pytest-django = "*"
+pytest = "*"
+pytest-html = "*"
+flake8 = "*"
+atomicwrites = "*"
+urllib3 = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.8"

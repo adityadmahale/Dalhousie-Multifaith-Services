@@ -1,13 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(#cfd9df, #ffffff);
+  background-repeat: no-repeat;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.navbar {
+  background: linear-gradient(to right, #4d9cd4, #2b7ad7);
+}
+
+.nav-link {
+  color: #ffffff;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.nav-link:hover {
+  color: #cfd9df;
+}
+
+.card {
+  padding: 40px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.form-control {
+  background-color: #f1f1f1 !important;
+  padding: 15px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-layout {
+  margin: auto;
+  width: 35%;
+}
+
+.btn-primary {
+  padding: 15px;
+  width: 100%;
+  background-color: #2b7ad7;
+  margin: 10px 0px 10px;
+  border: 0;
+}
+
+.description {
+  color: #bbbbbb;
+  text-align: justify;
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  height: 150px;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+}
+
+.link {
+  text-decoration: none;
+  color: #4d9cd4;
+}
+
+.PhoneInputInput,
+.PhoneInputInput:focus {
+  background-color: #f1f1f1 !important;
+  border: none;
+  outline-width: 0;
+}
+
+.profile-jumbotron {
+  background-color: #ffffff;
+  padding: 90px;
+  border-radius: 10px;
+  margin-top: 90px;
+}
+
+.prl-img-container {
+  border-radius: 50%;
+  position: absolute;
+  left: 22%;
+  margin-left: -90px;
+  margin-top: -180px;
+  width: 180px;
+  height: 180px;
+  border: 4px solid #2b7ad7;
+}
+
+.ri-pencil-fill {
+  color: #2b7ad7;
+  cursor: pointer;
+  float: right;
+  margin: -60px;
+}
+
+.label {
+  color: #2b7ad7;
+  font-weight: bold;
+}
+
+.apt-img-container {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+
+.title {
+  color: #8c8c8c;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.disabled-button {
+  background-color: #bbbbbb !important;
+}
+
+.btn-detail {
+  display: block;
+  margin-left: auto;
+}
+
+.slot-available {
+  padding: 20px;
+  border: 3px solid #2b7ad7;
+  margin: 5px;
+  border-radius: 5px;
+  color: #2b7ad7;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.selected-slot {
+  color: #ffffff;
+  background-color: #2b7ad7;
+}
+
+.unavailable-slot {
+  color: #bbbbbb;
+  background-color: #ffffff;
+  border: 3px solid #bbbbbb;
+  cursor: initial;
+}
+
+.logo {
+  font-size: 58px;
+  color: #2b7ad7;
+  font-weight: bolder;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+.ri-mental-health-fill {
+  display: inline-block;
+  font-size: 45px;
+  color: #000000;
+}
+
+.card-confirmation {
+  min-width: 200px;
+  max-width: 500px;
+  height: 300px;
+  margin-top: 120px;
+}
+
+@media only screen and (max-width: 768px) {
+  .form-layout {
+    width: 100%;
+  }
+
+  .apt-img-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-detail {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .prl-img-container {
+    left: 30%;
+  }
 }
