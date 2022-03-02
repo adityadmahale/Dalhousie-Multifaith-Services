@@ -14,6 +14,7 @@ import RecoveryPassword from "./components/recoveryPassword";
 import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Header from "./components/header";
+import AppointmentHistory from "./components/appointmentHistory";
 
 import { useEffect, useState } from "react";
 import { getUser } from "./services/user";
@@ -55,7 +56,8 @@ function App() {
           <Route path="/not-found" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
-        </Routes>
+          <Route path="/appointment-history" element={<AppointmentHistory/>}/>
+                  </Routes>
       </div>
     </React.Fragment>
   );
