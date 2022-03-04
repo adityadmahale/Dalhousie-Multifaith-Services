@@ -2,3 +2,4 @@ dms-ui/node_modules
 **/__pycache__/
 db.sqlite3
 .vscode
+report.html
