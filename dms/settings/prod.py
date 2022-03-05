@@ -1,5 +1,4 @@
 import os
-import django_heroku
 
 from .common import * # NOQA
 
@@ -18,5 +17,3 @@ DATABASES = {
         "PASSWORD": os.environ['DB_PASSWORD'],
     }
 }
-
-django_heroku.settings(locals())

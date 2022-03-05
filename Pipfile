@@ -10,7 +10,6 @@ djoser = "*"
 djangorestframework-simplejwt = "*"
 mysqlclient = "*"
 gunicorn = "==18.0.0"
-django-heroku = "*"
 
 [dev-packages]
 requests = "*"
