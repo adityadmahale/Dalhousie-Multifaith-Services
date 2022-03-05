@@ -6,7 +6,7 @@ DEBUG = False
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dms-g10-be-qa.herokuapp.com']
 
 DATABASES = {
     "default": {
