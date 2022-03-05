@@ -8,6 +8,8 @@ django = "*"
 djangorestframework = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+mysqlclient = "*"
+gunicorn = "==18.0.0"
 
 [dev-packages]
 requests = "*"

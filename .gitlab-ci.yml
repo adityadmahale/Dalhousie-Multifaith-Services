@@ -3,6 +3,7 @@ stages:
   - test
   - code_quality
   - deploy_frontend
+  - deploy_backend
 
 .ssh-configure: &ssh-configure
   - "command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )"
@@ -69,5 +70,19 @@ deploy_frontend:
   environment:
     name: qa
     url: https://dms-g10-qa.herokuapp.com/
+  only:
+    - main
+
+deploy_backend:
+  image: node:12.16.1
+  stage: deploy_backend
+  before_script:
+    - echo "Deploying to https://dms-g10-be-qa.herokuapp.com/"
+  script:
+    - git push https://${HEROKU_USER_BACKEND}:${HEROKU_API_KEY_BACKEND}@git.heroku.com/dms-g10-be-qa.git HEAD:main
+    - echo "Deployed to qa server"
+  environment:
+    name: qa
+    url: https://dms-g10-be-qa.herokuapp.com/
   only:
     - main
