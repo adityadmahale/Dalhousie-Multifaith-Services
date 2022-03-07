@@ -54,9 +54,10 @@ function App() {
           <Route path="/chaplains/:id" element={<ChaplainDetails />} />
           <Route path="/chaplains" element={<ChaplainList />} />
           <Route path="/not-found" element={<NotFound />} />
+          <Route path="/appointment-history" element={<AppointmentHistory/>}/>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
-          <Route path="/appointment-history" element={<AppointmentHistory/>}/>
+          
                   </Routes>
       </div>
     </React.Fragment>

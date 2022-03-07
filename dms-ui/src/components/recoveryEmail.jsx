@@ -2,12 +2,14 @@ import { useState } from "react";
 import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
-import { useNavigate } from "react-router-dom";
-
+import {  useNavigate} from "react-router-dom";
+import emailjs from 'emailjs-com';
+import { useRef } from "react";
 const RecoveryEmail = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ email: "" });
   const [errors, setErrors] = useState({});
+  const form = useRef();
 
   const handleChange = ({ currentTarget: input }) => {
     const account = { ...user };
@@ -16,10 +18,7 @@ const RecoveryEmail = () => {
   };
 
   const schema = Joi.object({
-    email: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required()
-      .label("Email"),
+    email: Joi.string().email({ tlds: { allow: false } }).required().label("Email"),
   });
 
   const validate = () => {
@@ -44,20 +43,25 @@ const RecoveryEmail = () => {
     if (errors) {
       return;
     }
-    navigate("/recovery/code", { state: user.email });
+    sendEmail(e)
+    navigate("/recovery/code", { state: {email:e.target.email.value,code:e.target.message.value} });
+    
   };
-
+  const sendEmail = (e) => {
+    e.preventDefault();
+    emailjs.sendForm('service_sl0idrg', 'template_x7egss2',form.current, 'R5Pc47SwqiD03yrMb')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+  };
   return (
-    <form className="form-layout text-center" onSubmit={handleSubmit}>
+    <form ref={form} className="form-layout text-center" onSubmit={handleSubmit}>
       <Logo />
-      <Input
-        type="text"
-        placeholder="Email"
-        name="email"
-        onChange={handleChange}
-        value={user.email}
-        error={errors.email}
-      />
+      
+      <Input type="text" name="email" placeholder = "Email" onChange={handleChange} value={user.email} error={errors.email}/>
+      <input name="message" hidden value={Math.floor(100000+Math.random()*100000)} readOnly/>
       <button className="btn btn-primary">Send Recovery Code</button>
     </form>
   );
