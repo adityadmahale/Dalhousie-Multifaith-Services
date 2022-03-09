@@ -28,3 +28,10 @@ class Chaplain(models.Model):
 
     class Meta:
         ordering = ["user__first_name", "user__last_name"]
+
+
+class Appointment(models.Model):
+    slot = models.DateTimeField(null=True)
+    user_id = models.ForeignKey(DalUser, on_delete=models.CASCADE)
+    chaplain_id = models.ForeignKey(Chaplain, on_delete=models.CASCADE)
+    status = models.CharField(max_length=255)
