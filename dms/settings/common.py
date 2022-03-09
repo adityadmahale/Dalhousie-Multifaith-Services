@@ -110,14 +110,14 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1)
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 
 DJOSER = {
     "SERIALIZERS": {
         "user_create": "core.serializers.UserCreateSerializer",
-        "current_user": "core.serializers.UserSerializer"
+        "current_user": "core.serializers.UserSerializer",
     }
 }
 
@@ -126,7 +126,7 @@ DJOSER = {
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 AUTH_USER_MODEL = "core.User"
 

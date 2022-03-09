@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 # https://www.pygopar.com/how-to-remove-username-from-django-user-model
 class UserManager(BaseUserManager):
     """User Manager that knows how to create
-     users via email instead of username"""
+    users via email instead of username"""
 
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
