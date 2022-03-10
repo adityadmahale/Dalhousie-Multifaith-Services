@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import Input from "./inputField";
+import ListError from "./listError";
 import Joi from "joi";
 import Logo from "./logo";
 import { registerChaplain, register } from "../services/userService";
 import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 const RegisterChaplain = () => {
   const [chaplain, setChaplain] = useState({
@@ -79,10 +81,14 @@ const RegisterChaplain = () => {
       await auth.login(chaplain.email, chaplain.password);
       window.location = "/";
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const serverErrors = { errors };
-        serverErrors.email = ex.response.data;
-        setErrors(serverErrors);
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(<ListError errors={Object.values(ex.response.data)} />, {
+          icon: false,
+        });
       }
     }
   };

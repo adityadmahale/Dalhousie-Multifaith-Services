@@ -4,9 +4,11 @@ import PhoneInput from "react-phone-number-input";
 import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
+import ListError from "./listError";
 
 import { register, registerDalUser } from "../services/userService";
 import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 const RegisterUser = () => {
   const [user, setUser] = useState({
@@ -77,10 +79,14 @@ const RegisterUser = () => {
       await auth.login(user.email, user.password);
       window.location = "/";
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const serverErrors = { errors };
-        serverErrors.email = ex.response.data;
-        setErrors(serverErrors);
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(<ListError errors={Object.values(ex.response.data)} />, {
+          icon: false,
+        });
       }
     }
   };
