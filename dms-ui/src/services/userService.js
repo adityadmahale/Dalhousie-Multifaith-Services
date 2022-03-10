@@ -7,8 +7,8 @@ const chaplainApiEndpoint = "/dmsfront/chaplains/";
 export function register(user) {
   return http.post(authApiEndpoint, {
     email: user.email,
-    first_name: user.first_name,
-    last_name: user.last_name,
+    first_name: user.firstName,
+    last_name: user.lastName,
     password: user.password,
   });
 }

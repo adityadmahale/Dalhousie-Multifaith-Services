@@ -7,8 +7,8 @@ const tokenKey = "dms_token";
 http.setJwt(getJwt());
 
 async function login(email, password) {
-  const { data: jwt } = await http.post(apiEndpoint, { email, password });
-  localStorage.setItem(tokenKey, jwt);
+  const { data } = await http.post(apiEndpoint, { email, password });
+  localStorage.setItem(tokenKey, data.access);
 }
 
 function logout() {

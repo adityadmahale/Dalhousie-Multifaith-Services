@@ -5,6 +5,9 @@ import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
 
+import { register, registerDalUser } from "../services/userService";
+import auth from "../services/authService";
+
 const RegisterUser = () => {
   const [user, setUser] = useState({
     firstName: "",
@@ -54,7 +57,7 @@ const RegisterUser = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -62,7 +65,24 @@ const RegisterUser = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+
+    try {
+      const { data } = await register({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+      });
+      await registerDalUser({ user_id: data.id, phone: phoneNumber });
+      await auth.login(user.email, user.password);
+      window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const serverErrors = { errors };
+        serverErrors.email = ex.response.data;
+        setErrors(serverErrors);
+      }
+    }
   };
 
   return (
