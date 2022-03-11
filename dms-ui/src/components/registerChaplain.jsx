@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
 import Input from "./inputField";
+import ListError from "./listError";
 import Joi from "joi";
 import Logo from "./logo";
+import { registerChaplain, register } from "../services/userService";
+import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 const RegisterChaplain = () => {
   const [chaplain, setChaplain] = useState({
@@ -53,7 +57,7 @@ const RegisterChaplain = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -61,7 +65,32 @@ const RegisterChaplain = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+    try {
+      const { data } = await register({
+        firstName: chaplain.firstName,
+        lastName: chaplain.lastName,
+        email: chaplain.email,
+        password: chaplain.password,
+      });
+      await registerChaplain({
+        user_id: data.id,
+        phone: phoneNumber,
+        religion: chaplain.religion,
+        description: description,
+      });
+      await auth.login(chaplain.email, chaplain.password);
+      window.location = "/";
+    } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(<ListError errors={Object.values(ex.response.data)} />, {
+          icon: false,
+        });
+      }
+    }
   };
 
   return (

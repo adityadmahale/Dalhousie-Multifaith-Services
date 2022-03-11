@@ -18,6 +18,7 @@ import AppointmentHistory from "./components/appointmentHistory";
 
 import { useEffect, useState } from "react";
 import { getUser } from "./services/user";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { pathname: route } = useLocation();
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       {isHeaderRequired(route) ? <Header /> : null}
       <div className="container pt-4">
         <Routes>
@@ -54,11 +56,10 @@ function App() {
           <Route path="/chaplains/:id" element={<ChaplainDetails />} />
           <Route path="/chaplains" element={<ChaplainList />} />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="/appointment-history" element={<AppointmentHistory/>}/>
+          <Route path="/appointment-history" element={<AppointmentHistory />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
-          
-                  </Routes>
+        </Routes>
       </div>
     </React.Fragment>
   );

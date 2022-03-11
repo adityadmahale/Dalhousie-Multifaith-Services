@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Input from "./inputField";
 import Joi from "joi";
 import Logo from "./logo";
+import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 const LoginChaplain = () => {
   const [chaplain, setChaplain] = useState({ email: "", password: "" });
@@ -36,7 +38,7 @@ const LoginChaplain = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -44,7 +46,18 @@ const LoginChaplain = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+    try {
+      await auth.login(chaplain.email, chaplain.password);
+      window.location = "/";
+    } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(ex.response.data.detail);
+      }
+    }
   };
 
   return (
