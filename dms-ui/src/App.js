@@ -15,6 +15,7 @@ import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Header from "./components/header";
 import AppointmentHistory from "./components/appointmentHistory";
+import auth from "./services/authService";
 
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
@@ -24,7 +25,12 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    setUser(user);
+    const getData = async () => {
+      const user = await auth.getCurrentUser();
+      setUser(user);
+    };
+
+    getData();
   }, []);
 
   return (

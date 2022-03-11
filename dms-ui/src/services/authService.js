@@ -1,10 +1,10 @@
 import http from "./httpService";
-import jwtDecode from "jwt-decode";
 
 const apiEndpoint = "/auth/jwt/create/";
+const apiUserEndpoint = "/auth/users/me/";
+const apiChaplainEndpoint = "/dmsfront/chaplains/";
+const apiDalUserEndpoint = "/dmsfront/dalusers/";
 const tokenKey = "dms_token";
-
-http.setJwt(getJwt());
 
 async function login(email, password) {
   const { data } = await http.post(apiEndpoint, { email, password });
@@ -23,10 +23,24 @@ function loginWithJwt(jwt) {
   localStorage.setItem(tokenKey, jwt);
 }
 
-function getCurrentUser() {
+async function getCurrentUser() {
   try {
-    const jwt = localStorage.getItem(tokenKey);
-    return jwtDecode(jwt);
+    const jwt = getJwt();
+    if (jwt === null) return null;
+
+    http.setJwt(jwt);
+    const { data } = await http.get(apiUserEndpoint);
+    if (data.is_staff) {
+      const { data: chaplain } = await http.get(
+        `${apiChaplainEndpoint}${data.id}`
+      );
+      return chaplain;
+    } else {
+      const { data: daluser } = await http.get(
+        `${apiDalUserEndpoint}${data.id}`
+      );
+      return daluser;
+    }
   } catch (ex) {
     return null;
   }
