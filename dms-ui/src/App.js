@@ -17,26 +17,15 @@ import Header from "./components/header";
 import AppointmentHistory from "./components/appointmentHistory";
 
 import { useEffect, useState } from "react";
-import { getUser } from "./services/user";
 import { ToastContainer } from "react-toastify";
 
 function App() {
   const { pathname: route } = useLocation();
-  const [user, setUser] = useState({
-    firstName: "",
-    lastname: "",
-    email: "",
-    contactNo: "",
-  });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const getData = async () => {
-      const dataUser = await getUser(1);
-      setUser(dataUser);
-    };
-
-    getData();
-  });
+    setUser(user);
+  }, []);
 
   return (
     <React.Fragment>

@@ -71,6 +71,7 @@ const RegisterChaplain = () => {
         lastName: chaplain.lastName,
         email: chaplain.email,
         password: chaplain.password,
+        is_staff: true,
       });
       await registerChaplain({
         user_id: data.id,

@@ -74,6 +74,7 @@ const RegisterUser = () => {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
+        is_staff: false,
       });
       await registerDalUser({ user_id: data.id, phone: phoneNumber });
       await auth.login(user.email, user.password);
