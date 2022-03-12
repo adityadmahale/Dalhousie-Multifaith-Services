@@ -48,7 +48,14 @@ function App() {
           <Route path="/recovery/code" element={<RecoveryCode />} />
           <Route path="/recovery/password" element={<RecoveryPassword />} />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route
+            path="/logout"
+            element={
+              <ProtectedRoute user={user}>
+                <Logout />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/profile"
             element={
