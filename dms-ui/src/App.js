@@ -36,7 +36,7 @@ function App() {
   return (
     <React.Fragment>
       <ToastContainer />
-      {isHeaderRequired(route) ? <Header /> : null}
+      {isHeaderRequired(route) ? <Header user={user} /> : null}
       <div className="container pt-4">
         <Routes>
           <Route path="/register/user" element={<RegisterUser />} />
@@ -46,11 +46,11 @@ function App() {
           <Route path="/recovery/email" element={<RecoveryEmail />} />
           <Route path="/recovery/code" element={<RecoveryCode />} />
           <Route path="/recovery/password" element={<RecoveryPassword />} />
+          <Route path="/not-found" element={<NotFound />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile user={user} />} />
           <Route path="/chaplains/:id" element={<ChaplainDetails />} />
           <Route path="/chaplains" element={<ChaplainList />} />
-          <Route path="/not-found" element={<NotFound />} />
           <Route path="/appointment-history" element={<AppointmentHistory />} />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
