@@ -8,7 +8,7 @@ export const getCurrentWeekDates = () => {
 
   for (let i = 1; i <= 5; i++) {
     for (let j = 0; j < slotTimeStart.length; j++) {
-      const first = currentDay.getDate() - currentDay.getDay() + i;
+      const first = currentDay.getDate() - currentDay.getDay() + i - 1;
       const day = new Date(currentDay.setDate(first));
       day.setUTCHours(slotTimeStart[j], 0, 0, 0);
       week.push(day);
