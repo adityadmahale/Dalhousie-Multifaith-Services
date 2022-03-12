@@ -23,22 +23,22 @@ const Profile = ({ user }) => {
         <div className="col-0 col-md-1"></div>
         <div className="col-12 col-md-5">
           <div className="label">First Name</div>
-          <div>{user.firstName}</div>
+          <div>{user.user.first_name}</div>
         </div>
         <div className="col-12 col-md-5">
           <div className="label">Last Name</div>
-          <div>{user.lastName}</div>
+          <div>{user.user.last_name}</div>
         </div>
       </div>
       <div className="row mt-5">
         <div className="col-0 col-md-1"></div>
         <div className="col-12 col-md-5">
           <div className="label">Email</div>
-          <div>{user.email}</div>
+          <div>{user.user.email}</div>
         </div>
         <div className="col-12 col-md-5">
           <div className="label">Contact Number</div>
-          <div>{user.contactNo}</div>
+          <div>{user.phone}</div>
         </div>
       </div>
     </div>
