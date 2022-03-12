@@ -19,12 +19,12 @@ class DalUserList(APIView):
 
 class DalUserDetail(APIView):
     def get(self, request, id):
-        dal_user = get_object_or_404(DalUser, pk=id)
+        dal_user = get_object_or_404(DalUser, user_id=id)
         serializer = DalUserSerializer(dal_user)
         return Response(serializer.data)
 
     def put(self, request, id):
-        dal_user = get_object_or_404(DalUser, pk=id)
+        dal_user = get_object_or_404(DalUser, user_id=id)
         serializer = DalUserSerializer(dal_user, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -46,12 +46,12 @@ class ChaplainList(APIView):
 
 class ChaplainDetail(APIView):
     def get(self, request, id):
-        dal_user = get_object_or_404(Chaplain, pk=id)
+        dal_user = get_object_or_404(Chaplain, user_id=id)
         serializer = ChaplainSerializer(dal_user)
         return Response(serializer.data)
 
     def put(self, request, id):
-        dal_user = get_object_or_404(Chaplain, pk=id)
+        dal_user = get_object_or_404(Chaplain, user_id=id)
         serializer = ChaplainSerializer(dal_user, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

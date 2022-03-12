@@ -15,33 +15,29 @@ import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Header from "./components/header";
 import AppointmentHistory from "./components/appointmentHistory";
+import auth from "./services/authService";
 
 import { useEffect, useState } from "react";
-import { getUser } from "./services/user";
 import { ToastContainer } from "react-toastify";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   const { pathname: route } = useLocation();
-  const [user, setUser] = useState({
-    firstName: "",
-    lastname: "",
-    email: "",
-    contactNo: "",
-  });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
-      const dataUser = await getUser(1);
-      setUser(dataUser);
+      const user = await auth.getCurrentUser();
+      setUser(user);
     };
 
     getData();
-  });
+  }, []);
 
   return (
     <React.Fragment>
       <ToastContainer />
-      {isHeaderRequired(route) ? <Header /> : null}
+      {isHeaderRequired(route) ? <Header user={user} /> : null}
       <div className="container pt-4">
         <Routes>
           <Route path="/register/user" element={<RegisterUser />} />
@@ -51,12 +47,47 @@ function App() {
           <Route path="/recovery/email" element={<RecoveryEmail />} />
           <Route path="/recovery/code" element={<RecoveryCode />} />
           <Route path="/recovery/password" element={<RecoveryPassword />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/profile" element={<Profile user={user} />} />
-          <Route path="/chaplains/:id" element={<ChaplainDetails />} />
-          <Route path="/chaplains" element={<ChaplainList />} />
           <Route path="/not-found" element={<NotFound />} />
-          <Route path="/appointment-history" element={<AppointmentHistory />} />
+          <Route
+            path="/logout"
+            element={
+              <ProtectedRoute user={user}>
+                <Logout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute user={user}>
+                <Profile user={user} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chaplains/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <ChaplainDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chaplains"
+            element={
+              <ProtectedRoute user={user}>
+                <ChaplainList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/appointment-history"
+            element={
+              <ProtectedRoute user={user}>
+                <AppointmentHistory />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>

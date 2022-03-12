@@ -10,6 +10,7 @@ export function register(user) {
     first_name: user.firstName,
     last_name: user.lastName,
     password: user.password,
+    is_staff: user.is_staff,
   });
 }
 
