@@ -19,6 +19,7 @@ import auth from "./services/authService";
 
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   const { pathname: route } = useLocation();
@@ -48,10 +49,38 @@ function App() {
           <Route path="/recovery/password" element={<RecoveryPassword />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/profile" element={<Profile user={user} />} />
-          <Route path="/chaplains/:id" element={<ChaplainDetails />} />
-          <Route path="/chaplains" element={<ChaplainList />} />
-          <Route path="/appointment-history" element={<AppointmentHistory />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute user={user}>
+                <Profile user={user} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chaplains/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <ChaplainDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/chaplains"
+            element={
+              <ProtectedRoute user={user}>
+                <ChaplainList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/appointment-history"
+            element={
+              <ProtectedRoute user={user}>
+                <AppointmentHistory />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
