@@ -25,4 +25,8 @@ urlpatterns = [
         views.UserAppointmentList.as_view(),
         name="appointments",
     ),
+    path("events/", views.get_events),
+    path("addevent/", views.add_event),
+    path("events/<int:id>", views.get_event),
+    path("events/<int:id>/book", views.book_event),
 ]
