@@ -15,6 +15,8 @@ import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Header from "./components/header";
 import AppointmentHistory from "./components/appointmentHistory";
+import EventDetails from "./components/eventsDetails";
+import Events from "./components/events"
 import auth from "./services/authService";
 
 import { useEffect, useState } from "react";
@@ -88,6 +90,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/events" element={<Events/>}/>
+          <Route path="/events/:id" element={<EventDetails/>}/>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>

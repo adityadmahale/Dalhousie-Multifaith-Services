@@ -209,22 +209,34 @@ code {
 }
 
 /* Appointment History */
-.appointment-card{
+.appointment-card {
   padding: 30px;
   align-items: center;
   justify-items: center;
 }
 
-.dot{
-  
-width: 15px;
-height: 15px;
-border-radius: 50%;
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
 }
 
-.card-title{
+.card-title {
   font-weight: 600;
 }
-.card-subtitle{
+.card-subtitle {
   font-weight: 500;
+}
+/* Events Card */
+.events-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 30%;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  padding: 0px;
 }
