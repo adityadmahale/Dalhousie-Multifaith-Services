@@ -1,11 +1,13 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView, Response
 from rest_framework import status
-from dmsfront.models import DalUser, Chaplain, Appointment
+from rest_framework.decorators import api_view
+from dmsfront.models import DalUser, Chaplain, Appointment, Event
 from .serializers import (
     DalUserSerializer,
     ChaplainSerializer,
     AppointmentSerializer,
+    EventSerializer
 )
 
 
@@ -84,3 +86,38 @@ class UserAppointmentDetails(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_events(request):
+    events = Event.objects.all()
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_event(request):
+    serializer = EventSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def get_event(request, id):
+    event = Event.objects.filter(id=id)
+    serializer = EventSerializer(event, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['PUT'])
+def book_event(request, id):
+    event = get_object_or_404(Event, id=id)
+    data = {"available_seats": event.available_seats - 1}
+    serializer = EventSerializer(event, data=data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

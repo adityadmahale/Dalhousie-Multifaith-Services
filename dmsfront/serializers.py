@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.serializers import UserCreateSerializer, UserSerializer
-from .models import Appointment, DalUser, Chaplain
+from .models import Appointment, DalUser, Chaplain, Event
 
 
 class DalUserSerializer(serializers.ModelSerializer):
@@ -53,3 +53,9 @@ class AppointmentSerializer(serializers.ModelSerializer):
             "daluser",
             "chaplain",
         ]
+
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = "__all__"
