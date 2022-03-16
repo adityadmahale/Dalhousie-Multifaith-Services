@@ -8,21 +8,16 @@ const RecoveryCode = () => {
   const location = useLocation();
 
   useEffect(() => {
-    
     if (!location.state) {
       navigate("/");
     }
   });
-  
- 
-  //const res_data= res.json()
-  //console.log(res_data)
+
   const [code, setCode] = useState({ code: "" });
   const [errors, setErrors] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
     const account = { ...code };
-    console.log(account);
     account[input.name] = input.value;
     setCode(account);
   };
@@ -40,7 +35,7 @@ const RecoveryCode = () => {
     for (let item of result.error.details) {
       errors[item.path[0]] = item.message;
     }
-    
+
     return errors;
   };
 
@@ -48,16 +43,21 @@ const RecoveryCode = () => {
     e.preventDefault();
 
     let errors = validate();
-    if(errors){
-      if(errors.code.split(' ')[0]==='"code"'){
-      errors={code:"Please enter correct code."}
-    }}
+    if (errors) {
+      if (errors.code.split(" ")[0] === '"code"') {
+        errors = { code: "Please enter correct code." };
+      }
+    }
     setErrors(errors || {});
     if (errors) {
       return;
     }
     navigate("/recovery/password", {
-      state: { code: code.code, email: location.state }, 
+      state: {
+        code: code.code,
+        email: location.state,
+        user: location.state.user,
+      },
     });
   };
 
