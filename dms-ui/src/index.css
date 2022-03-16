@@ -186,6 +186,16 @@ code {
   margin-top: 120px;
 }
 
+.card-head {
+  padding: 15px;
+}
+
+.card-individual {
+  color: #2b7ad7;
+  text-align: center;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 768px) {
   .form-layout {
     width: 100%;
@@ -209,22 +219,21 @@ code {
 }
 
 /* Appointment History */
-.appointment-card{
+.appointment-card {
   padding: 30px;
   align-items: center;
   justify-items: center;
 }
 
-.dot{
-  
-width: 15px;
-height: 15px;
-border-radius: 50%;
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
 }
 
-.card-title{
+.card-title {
   font-weight: 600;
 }
-.card-subtitle{
+.card-subtitle {
   font-weight: 500;
 }

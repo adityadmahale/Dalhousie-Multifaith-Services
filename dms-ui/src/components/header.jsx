@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import Modal from "./modal";
 
 const Header = ({ user }) => {
   const collapseRef = React.createRef();
   const [screenWidth, setScreenWidth] = useState(0);
+  const navigate = useNavigate();
+  const [modalType, setModalType] = useState("");
 
   useEffect(() => {
     setScreenWidth(window.innerWidth);
@@ -88,53 +91,70 @@ const Header = ({ user }) => {
 
           {!user && (
             <li className="nav-item">
-              <NavLink
+              <span
                 className="nav-link"
-                to="/login/chaplain"
-                onClick={handleCollapse}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleCollapse();
+                  setModalType("login");
+                }}
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal1"
               >
-                Login(Chaplain)
-              </NavLink>
-            </li>
-          )}
-          {!user && (
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/register/chaplain"
-                onClick={handleCollapse}
-              >
-                Register(Chaplain)
-              </NavLink>
+                Login
+              </span>
             </li>
           )}
 
           {!user && (
             <li className="nav-item">
-              <NavLink
+              <span
                 className="nav-link"
-                to="/login/user"
-                onClick={handleCollapse}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  handleCollapse();
+                  setModalType("register");
+                }}
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal1"
               >
-                Login(User)
-              </NavLink>
-            </li>
-          )}
-
-          {!user && (
-            <li className="nav-item">
-              <NavLink
-                className="nav-link"
-                to="/register/user"
-                onClick={handleCollapse}
-              >
-                Register(User)
-              </NavLink>
+                Register
+              </span>
             </li>
           )}
         </ul>
       </div>
+      <Modal id="exampleModal1">{modalContent(modalType, navigate)}</Modal>
     </nav>
+  );
+};
+
+const modalContent = (type, navigate) => {
+  return (
+    <div className="card-head">
+      <div className="row">
+        <div
+          onClick={() => {
+            navigate(`/${type}/chaplain`);
+          }}
+          className="col-12 col-md-6 card-individual"
+          data-bs-dismiss="modal"
+        >
+          <i className="ri-health-book-fill ri-3x"></i>
+          <p>Chaplain</p>
+        </div>
+        <div
+          onClick={() => {
+            navigate(`/${type}/user`);
+          }}
+          className="col-12 col-md-6 card-individual"
+          data-bs-dismiss="modal"
+        >
+          <i className="ri-book-open-fill ri-3x"></i>
+          <p>Student</p>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import ProfileUpdateForm from "./profileUpdateForm";
 const Profile = ({ user }) => {
   return (
     <div className="profile-jumbotron">
-      <Modal>
+      <Modal id="exampleModal">
         <ProfileUpdateForm user={user} />
       </Modal>
       <div className="prl-img-container">

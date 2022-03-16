@@ -78,7 +78,7 @@ const ChaplainDetails = () => {
 
 const renderModal = (display, slot, chaplain, handleModalDisplay) => {
   return (
-    <Modal>
+    <Modal id="exampleModal">
       {display ? (
         <CardConfirmation />
       ) : (
