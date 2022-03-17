@@ -8,7 +8,7 @@ export default function EventsCard({data}){
         <div className="col-sm-3 m-2 events-card" style={{cursor:'pointer'}}   onClick= {() => (handleClick(data.id))} >
         <div className="card-img-top" style={{overflow:'hidden'}}>
         <img 
-src={process.env.PUBLIC_URL + "/events" + data.image}
+src={process.env.PUBLIC_URL + "/events/events.svg"}
 alt="profile"
 />
          </div>

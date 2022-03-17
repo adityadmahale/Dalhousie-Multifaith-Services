@@ -4,7 +4,6 @@ import EventsCard from "./eventsCard";
 const Events = () => {
     const [events, setEvents] = useState([])
     useEffect(()=>{
-        console.log(getEvents())
         setEvents(getEvents()); 
     })
    

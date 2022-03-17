@@ -8,23 +8,22 @@ const EventDetails = () => {
   const location = useLocation();
   useEffect(() => {
     setEvents(location.state.event);
-    console.log(events);
   });
   return (
     <>
-      <div className="d-flex flex-column ">
+      <div className="d-flex flex-column">
         <div
-          className="events-card"
+          className="events-card "
           style={{
             padding: "0px",
-            maxHeight: "50vh",
+            maxHeight:"50vh",
             overflow: "hidden",
             borderRadius: "25px 25px 0px 0px",
           }}
         >
           <img
             className="card-img"
-            src={process.env.PUBLIC_URL + "/events" + events.image}
+            src={process.env.PUBLIC_URL + "/events/events.svg" }
             alt="Card image"
           />
           <div
@@ -64,12 +63,12 @@ const EventDetails = () => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-between justify-content-end ">
-                    <div class={`d-flex flex-column `}>
-                      <div class="p-1 " style={{ fontSize: "24px" }}>
+                    <div className={`d-flex flex-column `}>
+                      <div className="p-1 " style={{ fontSize: "24px" }}>
                         Available Seats
                       </div>
                       <div
-                        class="p-1 d-flex justify-content-end"
+                        className="p-1 d-flex justify-content-end"
                         style={{ fontSize: "48px" }}
                       >
                         {events.seats}

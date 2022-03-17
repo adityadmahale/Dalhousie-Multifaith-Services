@@ -66,22 +66,23 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          { <Route
             path="/chaplains/:id"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainDetails />
               </ProtectedRoute>
             }
-          />
-          <Route
+          />}
+          
+          { <Route
             path="/chaplains"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainList />
               </ProtectedRoute>
             }
-          />
+          /> }
           <Route
             path="/appointment-history"
             element={
@@ -90,8 +91,22 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/events" element={<Events/>}/>
-          <Route path="/events/:id" element={<EventDetails/>}/>
+          <Route
+            path="/events"
+            element={
+              <ProtectedRoute user={user}>
+                <Events/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/events/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <EventDetails/>
+              </ProtectedRoute>
+            }
+          />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
