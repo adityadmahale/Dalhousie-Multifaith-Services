@@ -15,6 +15,8 @@ import ChaplainDetails from "./components/chaplainDetails";
 import NotFound from "./components/notFound";
 import Header from "./components/header";
 import AppointmentHistory from "./components/appointmentHistory";
+import EventDetails from "./components/eventsDetails";
+import Events from "./components/events"
 import auth from "./services/authService";
 
 import { useEffect, useState } from "react";
@@ -64,27 +66,44 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          { <Route
             path="/chaplains/:id"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainDetails />
               </ProtectedRoute>
             }
-          />
-          <Route
+          />}
+          
+          { <Route
             path="/chaplains"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainList />
               </ProtectedRoute>
             }
-          />
+          /> }
           <Route
             path="/appointment-history"
             element={
               <ProtectedRoute user={user}>
                 <AppointmentHistory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/events"
+            element={
+              <ProtectedRoute user={user}>
+                <Events/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/events/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <EventDetails/>
               </ProtectedRoute>
             }
           />
