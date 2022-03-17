@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./components/home";
 import LoginUser from "./components/loginUser";
@@ -18,8 +18,6 @@ import AppointmentHistory from "./components/appointmentHistory";
 import EventDetails from "./components/eventsDetails";
 import Events from "./components/events"
 import auth from "./services/authService";
-
-import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -29,8 +27,8 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const user = await auth.getCurrentUser();
-      setUser(user);
+      const currentUser = await auth.getCurrentUser();
+      setUser(currentUser);
     };
 
     getData();

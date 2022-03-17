@@ -56,7 +56,6 @@ const RecoveryPassword = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
   };
 
   return (
