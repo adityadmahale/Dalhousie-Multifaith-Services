@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getChaplain } from "../services/chaplains";
-import { getBookedSlots } from "../services/slots";
-import { isSlotBooked, isSlotEqual, isSlotInPast } from "../utility/booking";
-import CardConfirmation from "./cardConfirmation";
-import CardDisplay from "./cardDisplay";
-import Modal from "./modal";
-import Slots from "./slots";
+import { getChaplain } from "../../services/chaplains";
+import { getBookedSlots } from "../../services/slots";
+import { isSlotBooked, isSlotEqual, isSlotInPast } from "../../utility/booking";
+import CardConfirmation from "../cardConfirmation";
+import CardDisplay from "../cardDisplay";
+import Modal from "../modal";
+import Slots from "../slots";
 
 const ChaplainDetails = () => {
   const { id } = useParams();
