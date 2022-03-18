@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./components/home";
-import LoginUser from "./components/loginUser";
-import LoginChaplain from "./components/loginChaplain";
-import RegisterChaplain from "./components/registerChaplain";
-import RegisterUser from "./components/registerUser";
-import Logout from "./components/logout";
+import LoginUser from "./components/auth/loginUser";
+import LoginChaplain from "./components/auth/loginChaplain";
+import RegisterChaplain from "./components/auth/registerChaplain";
+import RegisterUser from "./components/auth/registerUser";
+import Logout from "./components/auth/logout";
 import Profile from "./components/profile";
 import ChaplainList from "./components/chaplains";
 import RecoveryEmail from "./components/recoveryEmail";

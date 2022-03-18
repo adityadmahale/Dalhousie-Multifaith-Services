@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
-import Input from "./inputField";
+import Input from "../inputField";
 import Joi from "joi";
-import Logo from "./logo";
-import ListError from "./listError";
+import Logo from "../logo";
+import ListError from "../listError";
 
-import { register, registerDalUser } from "../services/userService";
-import auth from "../services/authService";
+import { register, registerDalUser } from "../../services/userService";
+import auth from "../../services/authService";
 import { toast } from "react-toastify";
 
 const RegisterUser = () => {
