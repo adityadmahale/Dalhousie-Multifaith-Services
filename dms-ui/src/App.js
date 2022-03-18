@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Home from "./components/home";
-import LoginUser from "./components/loginUser";
-import LoginChaplain from "./components/loginChaplain";
-import RegisterChaplain from "./components/registerChaplain";
-import RegisterUser from "./components/registerUser";
-import Logout from "./components/logout";
-import Profile from "./components/profile";
-import ChaplainList from "./components/chaplains";
-import RecoveryEmail from "./components/recoveryEmail";
-import RecoveryCode from "./components/recoveryCode";
-import RecoveryPassword from "./components/recoveryPassword";
-import ChaplainDetails from "./components/chaplainDetails";
-import NotFound from "./components/notFound";
-import Header from "./components/header";
-import AppointmentHistory from "./components/appointmentHistory";
-import EventDetails from "./components/eventsDetails";
-import Events from "./components/events"
+import Home from "./components/common/home";
+import LoginUser from "./components/auth/loginUser";
+import LoginChaplain from "./components/auth/loginChaplain";
+import RegisterChaplain from "./components/auth/registerChaplain";
+import RegisterUser from "./components/auth/registerUser";
+import Logout from "./components/auth/logout";
+import Profile from "./components/profile/profile";
+import ChaplainList from "./components/chaplain/chaplains";
+import RecoveryEmail from "./components/recovery/recoveryEmail";
+import RecoveryCode from "./components/recovery/recoveryCode";
+import RecoveryPassword from "./components/recovery/recoveryPassword";
+import ChaplainDetails from "./components/chaplain/chaplainDetails";
+import NotFound from "./components/common/notFound";
+import Header from "./components/common/header";
+import AppointmentHistory from "./components/appointment/appointmentHistory";
+import EventDetails from "./components/event/eventsDetails";
+import Events from "./components/event/events";
 import auth from "./services/authService";
 import { ToastContainer } from "react-toastify";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
 
 function App() {
   const { pathname: route } = useLocation();
@@ -64,23 +64,25 @@ function App() {
               </ProtectedRoute>
             }
           />
-          { <Route
+
+          <Route
             path="/chaplains/:id"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainDetails />
               </ProtectedRoute>
             }
-          />}
-          
-          { <Route
+          />
+
+          <Route
             path="/chaplains"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainList />
               </ProtectedRoute>
             }
-          /> }
+          />
+
           <Route
             path="/appointment-history"
             element={
@@ -93,7 +95,7 @@ function App() {
             path="/events"
             element={
               <ProtectedRoute user={user}>
-                <Events/>
+                <Events />
               </ProtectedRoute>
             }
           />
@@ -101,7 +103,7 @@ function App() {
             path="/events/:id"
             element={
               <ProtectedRoute user={user}>
-                <EventDetails/>
+                <EventDetails />
               </ProtectedRoute>
             }
           />

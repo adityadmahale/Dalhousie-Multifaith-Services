@@ -1,35 +1,31 @@
+import Joi from "joi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Input from "./inputField";
-import Joi from "joi";
-import Logo from "./logo";
-import auth from "../services/authService";
 import { toast } from "react-toastify";
+import Input from "../common/inputField";
+import Logo from "../common/logo";
+import auth from "../../services/authService";
 
-const LoginUser = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
+const LoginChaplain = () => {
+  const [chaplain, setChaplain] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
-    const account = { ...user };
+    const account = { ...chaplain };
     account[input.name] = input.value;
-    setUser(account);
+    setChaplain(account);
   };
 
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })
-      .regex(RegExp(".*@dal.ca$"))
       .required()
-      .label("Email")
-      .messages({
-        "string.pattern.base": '"Email" must belong to the university domain',
-      }),
+      .label("Email"),
     password: Joi.string().min(8).required().label("Password"),
   });
 
   const validate = () => {
-    const result = schema.validate(user, { abortEarly: false });
+    const result = schema.validate(chaplain, { abortEarly: false });
 
     if (!result.error) {
       return null;
@@ -50,9 +46,8 @@ const LoginUser = () => {
     if (errors) {
       return;
     }
-
     try {
-      await auth.login(user.email, user.password);
+      await auth.login(chaplain.email, chaplain.password);
       window.location = "/";
     } catch (ex) {
       if (
@@ -74,21 +69,22 @@ const LoginUser = () => {
         placeholder="Email"
         name="email"
         onChange={handleChange}
-        value={user.email}
+        value={chaplain.email}
         error={errors.email}
       />
+
       <Input
         type="password"
         placeholder="Password"
         name="password"
         onChange={handleChange}
-        value={user.password}
+        value={chaplain.password}
         error={errors.password}
       />
 
       <Link
         to="/recovery/email"
-        state={{ user: "user" }}
+        state={{ user: "chaplain" }}
         className="link float-end"
       >
         Forgot Password?
@@ -96,7 +92,7 @@ const LoginUser = () => {
       <button className="btn btn-primary">Sign In</button>
       <div className="text-center">
         <span>New to DMS? </span>
-        <Link to="/register/user" className="link">
+        <Link to="/register/chaplain" className="link">
           Register
         </Link>
       </div>
@@ -104,4 +100,4 @@ const LoginUser = () => {
   );
 };
 
-export default LoginUser;
+export default LoginChaplain;

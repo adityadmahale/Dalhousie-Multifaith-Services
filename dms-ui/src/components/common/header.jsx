@@ -65,6 +65,18 @@ const Header = ({ user }) => {
             </li>
           )}
 
+          {user && !user.user.is_staff && (
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                to="/events"
+                onClick={handleCollapse}
+              >
+                Events
+              </NavLink>
+            </li>
+          )}
+
           {user && (
             <li className="nav-item">
               <NavLink
