@@ -17,6 +17,7 @@ import Header from "./components/common/header";
 import AppointmentHistory from "./components/appointment/appointmentHistory";
 import EventDetails from "./components/event/eventsDetails";
 import Events from "./components/event/events";
+import Timesheet from "./components/timesheet/timesheet"
 import auth from "./services/authService";
 import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
@@ -106,6 +107,14 @@ function App() {
             element={
               <ProtectedRoute user={user}>
                 <EventDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/timesheet"
+            element={
+              <ProtectedRoute user={user}>
+                <Timesheet />
               </ProtectedRoute>
             }
           />
