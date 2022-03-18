@@ -16,7 +16,7 @@ import NotFound from "./components/notFound";
 import Header from "./components/header";
 import AppointmentHistory from "./components/appointmentHistory";
 import EventDetails from "./components/eventsDetails";
-import Events from "./components/events"
+import Events from "./components/events";
 import auth from "./services/authService";
 import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -64,23 +64,25 @@ function App() {
               </ProtectedRoute>
             }
           />
-          { <Route
+
+          <Route
             path="/chaplains/:id"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainDetails />
               </ProtectedRoute>
             }
-          />}
-          
-          { <Route
+          />
+
+          <Route
             path="/chaplains"
             element={
               <ProtectedRoute user={user}>
                 <ChaplainList />
               </ProtectedRoute>
             }
-          /> }
+          />
+
           <Route
             path="/appointment-history"
             element={
@@ -93,7 +95,7 @@ function App() {
             path="/events"
             element={
               <ProtectedRoute user={user}>
-                <Events/>
+                <Events />
               </ProtectedRoute>
             }
           />
@@ -101,7 +103,7 @@ function App() {
             path="/events/:id"
             element={
               <ProtectedRoute user={user}>
-                <EventDetails/>
+                <EventDetails />
               </ProtectedRoute>
             }
           />
