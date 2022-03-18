@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Input from "../inputField";
+import Input from "../common/inputField";
 import Joi from "joi";
-import Logo from "../logo";
+import Logo from "../common/logo";
 import { useNavigate, useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
 import { useRef } from "react";

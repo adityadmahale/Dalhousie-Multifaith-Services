@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
-import Home from "./components/home";
+import Home from "./components/common/home";
 import LoginUser from "./components/auth/loginUser";
 import LoginChaplain from "./components/auth/loginChaplain";
 import RegisterChaplain from "./components/auth/registerChaplain";
 import RegisterUser from "./components/auth/registerUser";
 import Logout from "./components/auth/logout";
-import Profile from "./components/profile";
+import Profile from "./components/profile/profile";
 import ChaplainList from "./components/chaplain/chaplains";
 import RecoveryEmail from "./components/recovery/recoveryEmail";
 import RecoveryCode from "./components/recovery/recoveryCode";
 import RecoveryPassword from "./components/recovery/recoveryPassword";
 import ChaplainDetails from "./components/chaplain/chaplainDetails";
-import NotFound from "./components/notFound";
-import Header from "./components/header";
-import AppointmentHistory from "./components/appointmentHistory";
-import EventDetails from "./components/eventsDetails";
-import Events from "./components/events";
+import NotFound from "./components/common/notFound";
+import Header from "./components/common/header";
+import AppointmentHistory from "./components/appointment/appointmentHistory";
+import EventDetails from "./components/event/eventsDetails";
+import Events from "./components/event/events";
 import auth from "./services/authService";
 import { ToastContainer } from "react-toastify";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
 
 function App() {
   const { pathname: route } = useLocation();

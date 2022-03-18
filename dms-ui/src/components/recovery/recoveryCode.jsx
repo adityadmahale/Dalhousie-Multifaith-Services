@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Joi from "joi";
-import Input from "../inputField";
-import Logo from "../logo";
+import Input from "../common/inputField";
+import Logo from "../common/logo";
 import { useLocation, useNavigate } from "react-router-dom";
 const RecoveryCode = () => {
   const navigate = useNavigate();

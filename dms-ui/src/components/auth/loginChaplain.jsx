@@ -2,8 +2,8 @@ import Joi from "joi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import Input from "../inputField";
-import Logo from "../logo";
+import Input from "../common/inputField";
+import Logo from "../common/logo";
 import auth from "../../services/authService";
 
 const LoginChaplain = () => {

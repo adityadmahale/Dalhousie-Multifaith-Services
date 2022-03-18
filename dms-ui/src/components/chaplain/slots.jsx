@@ -1,12 +1,12 @@
 import React from "react";
-import { getSlotRange } from "../utility/booking";
 
 import {
   getCurrentWeekDates,
   isSlotEqual,
   isSlotInPast,
   isSlotBooked,
-} from "../utility/booking";
+  getSlotRange,
+} from "../../utility/booking";
 
 const Slots = ({ selected, onSlotSelect, bookedSlots }) => {
   const dates = getCurrentWeekDates();

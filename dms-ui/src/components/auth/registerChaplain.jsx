@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
-import Input from "../inputField";
-import ListError from "../listError";
+import Input from "../common/inputField";
+import ListError from "../common/listError";
 import Joi from "joi";
-import Logo from "../logo";
+import Logo from "../common/logo";
 import { registerChaplain, register } from "../../services/userService";
 import auth from "../../services/authService";
 import { toast } from "react-toastify";

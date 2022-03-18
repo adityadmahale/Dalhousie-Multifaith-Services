@@ -1,5 +1,5 @@
 import React from "react";
-import { getSlotRange } from "../utility/booking";
+import { getSlotRange } from "../../utility/booking";
 
 const CardDisplay = ({ slot, name, onClick }) => {
   if (slot === null) return null;

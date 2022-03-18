@@ -1,4 +1,4 @@
-import Modal from "./modal";
+import Modal from "../common/modal";
 import ProfileUpdateForm from "./profileUpdateForm";
 
 const Profile = ({ user }) => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PhoneInput from "react-phone-number-input";
-import Input from "./inputField";
+import Input from "../common/inputField";
 import Joi from "joi";
 
 const ProfileUpdateForm = (props) => {
