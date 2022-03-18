@@ -64,7 +64,17 @@ const Header = ({ user }) => {
               </NavLink>
             </li>
           )}
-
+          {user && !user.user.is_staff && (
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  to="/questionnaire"
+                  onClick={handleCollapse}
+                >
+                  Questionnaire
+                </NavLink>
+              </li>
+           )}
           {user && !user.user.is_staff && (
             <li className="nav-item">
               <NavLink

@@ -20,6 +20,8 @@ import Events from "./components/event/events";
 import auth from "./services/authService";
 import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
+import Questionnaire from "./components/questionnaire/questionnaire";
+
 
 function App() {
   const { pathname: route } = useLocation();
@@ -106,6 +108,14 @@ function App() {
                 <EventDetails />
               </ProtectedRoute>
             }
+          />
+          <Route
+              path="/questionnaire"
+              element={
+                <ProtectedRoute user={user}>
+                  <Questionnaire />
+                </ProtectedRoute>
+              }
           />
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
