@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getEvent } from "../services/events";
 import { useLocation } from "react-router-dom";
 const EventDetails = () => {
-  const { id } = useParams();
   const [events, setEvents] = useState({});
   const location = useLocation();
   useEffect(() => {
@@ -16,22 +13,25 @@ const EventDetails = () => {
           className="events-card "
           style={{
             padding: "0px",
-            maxHeight:"50vh",
+            maxHeight: "50vh",
             overflow: "hidden",
             borderRadius: "25px 25px 0px 0px",
+            minHeight: "380px",
           }}
         >
           <img
             className="card-img"
-            src={process.env.PUBLIC_URL + "/events/events.svg" }
-            alt="Card image"
+            src={process.env.PUBLIC_URL + "/events/events.svg"}
+            alt=""
           />
           <div
             className="card-img-overlay  "
-            style={{ background: "rgb(0, 0, 0,0.5)",borderRadius:'0' }}
+            style={{
+              background: "rgb(0, 0, 0,0.5)",
+              borderRadius: "0",
+            }}
           >
             <div className="d-flex flex-column ">
-              {/* Card 1 */}
               <div className={`row text-white`}>
                 <div className="d-flex justify-content-between p-4">
                   <div className="d-flex flex-column justify-content-start align-content-">
@@ -97,7 +97,7 @@ const EventDetails = () => {
                   <div className="d-flex justify-content-between justify-content-end ">
                     <div className={`d-flex flex-column `}>
                       <a href="#!" className="btn btn-primary px-5">
-                        Book A Seat
+                        Book
                       </a>
                     </div>
                   </div>
@@ -112,9 +112,7 @@ const EventDetails = () => {
         >
           <div className="card-body">
             <h4 className="card-title">Description</h4>
-            <p className="card-text">
-              {events.eventDetails}
-            </p>
+            <p className="card-text">{events.eventDetails}</p>
           </div>
         </div>
       </div>
