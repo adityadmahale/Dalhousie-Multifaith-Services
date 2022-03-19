@@ -4,6 +4,7 @@ import { getQuestions } from "../../services/questions";
 import { toast } from "react-toastify";
 
 const Questionnaire = () => {
+  const options = ["Very seldom", "Sometimes", "Almost always"];
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswer] = useState({});
   const [score, setScore] = useState(0);
@@ -18,18 +19,12 @@ const Questionnaire = () => {
     getData();
   }, []);
 
-  const handleRadioClick = (event) => {
-    setAnswer((prev) => ({ ...prev, [event.target.id]: event.target.value }));
+  const handleRadioClick = (event, id) => {
+    setAnswer({ ...answers, [id]: event.target.value });
   };
 
   const showScore = (displayScore) => {
-    toast.success("Your Score is:" + displayScore, {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.success("Your Score is:" + displayScore);
   };
 
   const calculateScore = (event) => {
@@ -51,39 +46,38 @@ const Questionnaire = () => {
       }
       showScore(displayScore);
     } else {
-      toast.error("Not Attended all Questions", {
-        position: "top-right",
-        autoClose: 500,
-        hideProgressBar: false,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.info("Please answer all questions");
     }
   };
 
   return (
     <div className="container pt-4">
       <div className="row">
-        <h4>Spiritual Wellness Questions</h4>
+        <h4 className="link">Spiritual Wellness Score</h4>
         {questions.map((question) => (
-          <div>
+          <div key={question.id}>
             <div className="box-card">
-              <div className={"question-bold"}>
-                <span>{question.id + ")"} </span>
+              <div className="question-bold">
                 <span>{question.question_text}</span>
               </div>
-              <hr className="horizontal-line" />
-                <div className="radiogroup">
-                  {question.options.map((option) => (
-                    <div className="wrapper">
-                    <input class="state" type="radio" name={question.id+"-"+option} id={question.id} value={option} onChange={handleRadioClick}/>
-                      <label className="label" for="question.id">
-                            <div className="indicator"></div>
-                            <span className="text">{option}</span>
-                      </label>
-                    </div>
-                  ))}
-                </div>
+              <div className="radiogroup">
+                {options.map((option) => (
+                  <div className="wrapper" key={question.id + "-" + option}>
+                    <input
+                      className="state"
+                      type="radio"
+                      name={question.id}
+                      id={question.id + option}
+                      value={option}
+                      onChange={(e) => handleRadioClick(e, question.id)}
+                    />
+                    <label className="label" htmlFor={question.id + option}>
+                      <div className="indicator"></div>
+                      <span className="text">{option}</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         ))}
@@ -94,7 +88,7 @@ const Questionnaire = () => {
           className="btn btn-primary btn-text-bold"
           onClick={calculateScore}
         >
-          Calculate the Score
+          Calculate
         </button>
       </div>
     </div>
