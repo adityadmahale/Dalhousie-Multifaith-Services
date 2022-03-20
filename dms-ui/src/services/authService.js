@@ -1,4 +1,5 @@
 import http from "./httpService";
+import jwtDecode from "jwt-decode";
 
 const apiEndpoint = "/auth/jwt/create/";
 const apiUserEndpoint = "/auth/users/me/";
@@ -27,6 +28,7 @@ async function getCurrentUser() {
   try {
     const jwt = getJwt();
     if (jwt === null) return null;
+    jwtDecode(jwt);
 
     http.setJwt(jwt);
     const { data } = await http.get(apiUserEndpoint);
