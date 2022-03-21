@@ -71,7 +71,7 @@ function App() {
 						path="/chaplains/:id"
 						element={
 							<ProtectedRoute user={user}>
-								<ChaplainDetails />
+								<ChaplainDetails user={user} />
 							</ProtectedRoute>
 						}
 					/>
@@ -80,7 +80,7 @@ function App() {
 						path="/chaplains"
 						element={
 							<ProtectedRoute user={user}>
-								<ChaplainList />
+								<ChaplainList user={user} />
 							</ProtectedRoute>
 						}
 					/>
