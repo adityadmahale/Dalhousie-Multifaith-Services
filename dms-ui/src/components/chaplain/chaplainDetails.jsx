@@ -8,7 +8,7 @@ import CardDisplay from "./cardDisplay";
 import Modal from "../common/modal";
 import Slots from "./slots";
 
-const ChaplainDetails = () => {
+const ChaplainDetails = ({user}) => {
   const { id } = useParams();
   const [slot, setSlot] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
@@ -29,7 +29,7 @@ const ChaplainDetails = () => {
       const dataBookedSlots = await getBookedSlots(new Date(), id);
       setBookedSlots(dataBookedSlots);
     };
-
+    console.log(user);
     getData();
   });
 
@@ -57,7 +57,7 @@ const ChaplainDetails = () => {
 
   return (
     <div className="m-2">
-      {renderModal(display, slot, chaplain, handleConfirmClick)}
+      {renderModal(display, slot, chaplain, handleConfirmClick, user)}
       <div className="row">
         <div className="col-12 col-md-8 col-lg-4">
           {ChaplainImage(chaplain)}
@@ -76,7 +76,7 @@ const ChaplainDetails = () => {
   );
 };
 
-const renderModal = (display, slot, chaplain, handleModalDisplay) => {
+const renderModal = (display, slot, chaplain, handleModalDisplay, user) => {
   return (
     <Modal id="exampleModal">
       {display ? (
@@ -86,6 +86,7 @@ const renderModal = (display, slot, chaplain, handleModalDisplay) => {
           slot={slot}
           name={chaplain.name}
           onClick={handleModalDisplay}
+          user={user}
         />
       )}
     </Modal>
