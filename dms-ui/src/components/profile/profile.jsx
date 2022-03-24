@@ -48,7 +48,7 @@ const Profile = ({ user }) => {
             <div className="col-0 col-md-1"></div>
             <div className="col-12 col-md-5">
               <div className="label">Description</div>
-              <div>{user.description}</div>
+              <div style={{ textAlign: "justify" }}>{user.description}</div>
             </div>
             <div className="col-12 col-md-5">
               <div className="label">Religion</div>
