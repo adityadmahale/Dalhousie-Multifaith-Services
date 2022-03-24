@@ -1,3 +1,4 @@
+import React from "react";
 import Modal from "../common/modal";
 import ProfileUpdateForm from "./profileUpdateForm";
 
@@ -41,6 +42,21 @@ const Profile = ({ user }) => {
           <div>{user.phone}</div>
         </div>
       </div>
+      {user.user.is_staff && (
+        <React.Fragment>
+          <div className="row mt-5">
+            <div className="col-0 col-md-1"></div>
+            <div className="col-12 col-md-5">
+              <div className="label">Description</div>
+              <div>{user.description}</div>
+            </div>
+            <div className="col-12 col-md-5">
+              <div className="label">Religion</div>
+              <div>{user.religion}</div>
+            </div>
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };
