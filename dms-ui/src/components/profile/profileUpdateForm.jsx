@@ -5,6 +5,7 @@ import {
   updatePassword,
   updateChaplainDetails,
   updateStudentDetails,
+  updateName,
 } from "../../services/userService";
 import Joi from "joi";
 import { toast } from "react-toastify";
@@ -74,6 +75,7 @@ const ProfileUpdateForm = (props) => {
     }
     try {
       await updatePassword(props.user.user.email, user.password);
+      await updateName(props.user.user_id, user.firstName, user.lastName);
       if (props.user.user.is_staff) {
         await updateChaplainDetails(
           props.user.user_id,

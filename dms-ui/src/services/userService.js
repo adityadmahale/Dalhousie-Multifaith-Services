@@ -2,6 +2,7 @@ import http from "./httpService";
 
 const authApiEndpoint = "/auth/users/";
 const recoveryApiEndpoint = "/auth/recovery/";
+const nameApiEndpoint = "/auth/name/";
 const dalUserApiEndpoint = "/dmsfront/dalusers/";
 const chaplainApiEndpoint = "/dmsfront/chaplains/";
 
@@ -35,6 +36,14 @@ export function updateStudentDetails(user_id, phone) {
   return http.put(`${dalUserApiEndpoint}${user_id}`, {
     user_id: user_id,
     phone: phone,
+  });
+}
+
+export function updateName(user_id, first_name, last_name) {
+  return http.put(nameApiEndpoint, {
+    user_id: user_id,
+    first_name: first_name,
+    last_name: last_name,
   });
 }
 
