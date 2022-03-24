@@ -1,16 +1,23 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import Input from "../common/inputField";
 import Joi from "joi";
 
 const ProfileUpdateForm = (props) => {
+  const userFields = props.user.user.is_staff
+    ? {
+        religion: props.user.religion,
+        description: props.user.description,
+      }
+    : {};
   const [user, setUser] = useState({
     firstName: props.user.user.first_name,
     lastName: props.user.user.last_name,
     password: "",
     confirmPassword: "",
+    ...userFields,
   });
-  const [phoneNumber, setPhoneNumber] = useState(props.user.phone);
+  const [phone, setPhone] = useState(props.user.phone);
   const [errors, setErrors] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
@@ -18,6 +25,13 @@ const ProfileUpdateForm = (props) => {
     account[input.name] = input.value;
     setUser(account);
   };
+
+  const userSchema = props.user.user.is_staff
+    ? {
+        religion: Joi.string().required().label("Religion"),
+        description: Joi.string().required().label("Description"),
+      }
+    : {};
 
   const schema = Joi.object({
     firstName: Joi.string().required().label("First Name"),
@@ -27,6 +41,7 @@ const ProfileUpdateForm = (props) => {
       .equal(Joi.ref("password"))
       .required()
       .messages({ "any.only": "Password does not match" }),
+    ...userSchema,
   });
 
   const validate = () => {
@@ -83,11 +98,31 @@ const ProfileUpdateForm = (props) => {
       <div className="mb-3"></div>
       <PhoneInput
         className="form-control mb-3"
-        value={phoneNumber}
-        onChange={setPhoneNumber}
+        value={phone}
+        onChange={setPhone}
         placeholder="Phone Number"
         defaultCountry="CA"
       />
+      {props.user.user.is_staff && (
+        <React.Fragment>
+          <Input
+            type="text"
+            placeholder="Religion"
+            name="religion"
+            onChange={handleChange}
+            value={user.religion}
+            error={errors.religion}
+          />
+          <Input
+            type="text"
+            placeholder="Description"
+            name="description"
+            onChange={handleChange}
+            value={user.description}
+            error={errors.description}
+          />
+        </React.Fragment>
+      )}
       <Input
         type="password"
         placeholder="Password"
