@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Input from "../common/inputField";
 import Joi from "joi";
 import Logo from "../common/logo";
-import { update } from "../../services/userService";
+import { updatePassword } from "../../services/userService";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -60,7 +60,7 @@ const RecoveryPassword = () => {
     }
 
     try {
-      await update(location.state.email, user.password);
+      await updatePassword(location.state.email, user.password);
       toast.success("Password updated successfully.");
       navigate(`/login/${location.state.user}`);
     } catch (ex) {

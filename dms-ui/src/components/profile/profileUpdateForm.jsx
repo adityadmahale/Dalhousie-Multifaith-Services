@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import Input from "../common/inputField";
+import { updatePassword } from "../../services/userService";
 import Joi from "joi";
+import { toast } from "react-toastify";
 
 const ProfileUpdateForm = (props) => {
   const userFields = props.user.user.is_staff
@@ -58,7 +60,7 @@ const ProfileUpdateForm = (props) => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -66,7 +68,12 @@ const ProfileUpdateForm = (props) => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+    try {
+      await updatePassword(props.user.user.email, user.password);
+      window.location = "/";
+    } catch (ex) {
+      toast.error("Something went wrong.");
+    }
   };
 
   return (

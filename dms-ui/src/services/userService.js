@@ -15,7 +15,7 @@ export function register(user) {
   });
 }
 
-export function update(email, password) {
+export function updatePassword(email, password) {
   return http.put(recoveryApiEndpoint, {
     email: email,
     password: password,
