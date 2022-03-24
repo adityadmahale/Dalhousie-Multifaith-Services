@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import PhoneInput from "react-phone-number-input";
 import Input from "../common/inputField";
-import { updatePassword } from "../../services/userService";
+import {
+  updatePassword,
+  updateChaplainDetails,
+  updateStudentDetails,
+} from "../../services/userService";
 import Joi from "joi";
 import { toast } from "react-toastify";
 
@@ -70,6 +74,16 @@ const ProfileUpdateForm = (props) => {
     }
     try {
       await updatePassword(props.user.user.email, user.password);
+      if (props.user.user.is_staff) {
+        await updateChaplainDetails(
+          props.user.user_id,
+          phone,
+          user.religion,
+          user.description
+        );
+      } else {
+        await updateStudentDetails(props.user.user_id, phone);
+      }
       window.location = "/";
     } catch (ex) {
       toast.error("Something went wrong.");

@@ -22,6 +22,22 @@ export function updatePassword(email, password) {
   });
 }
 
+export function updateChaplainDetails(user_id, phone, religion, description) {
+  return http.put(`${chaplainApiEndpoint}${user_id}`, {
+    user_id: user_id,
+    phone: phone,
+    religion: religion,
+    description: description,
+  });
+}
+
+export function updateStudentDetails(user_id, phone) {
+  return http.put(`${dalUserApiEndpoint}${user_id}`, {
+    user_id: user_id,
+    phone: phone,
+  });
+}
+
 export function registerDalUser(user) {
   return http.post(dalUserApiEndpoint, {
     user_id: user.user_id,
