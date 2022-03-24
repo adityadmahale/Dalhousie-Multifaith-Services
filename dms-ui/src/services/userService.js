@@ -1,6 +1,7 @@
 import http from "./httpService";
 
 const authApiEndpoint = "/auth/users/";
+const recoveryApiEndpoint = "/auth/recovery/";
 const dalUserApiEndpoint = "/dmsfront/dalusers/";
 const chaplainApiEndpoint = "/dmsfront/chaplains/";
 
@@ -11,6 +12,13 @@ export function register(user) {
     last_name: user.lastName,
     password: user.password,
     is_staff: user.is_staff,
+  });
+}
+
+export function update(email, password) {
+  return http.put(recoveryApiEndpoint, {
+    email: email,
+    password: password,
   });
 }
 

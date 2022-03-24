@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import Input from "../common/inputField";
 import Joi from "joi";
 import Logo from "../common/logo";
+import { update } from "../../services/userService";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const RecoveryPassword = () => {
   const navigate = useNavigate();
@@ -48,13 +50,23 @@ const RecoveryPassword = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
     setErrors(errors || {});
     if (errors) {
       return;
+    }
+
+    try {
+      await update(location.state.email, user.password);
+      toast.success("Password updated successfully.");
+      navigate(`/login/${location.state.user}`);
+    } catch (ex) {
+      toast.error(
+        "user with this email address does not exist in the database."
+      );
     }
   };
 

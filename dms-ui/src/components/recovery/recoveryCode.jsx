@@ -55,7 +55,7 @@ const RecoveryCode = () => {
     navigate("/recovery/password", {
       state: {
         code: code.code,
-        email: location.state,
+        email: location.state.email,
         user: location.state.user,
       },
     });
