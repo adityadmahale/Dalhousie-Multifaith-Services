@@ -5,12 +5,12 @@ import Joi from "joi";
 
 const ProfileUpdateForm = (props) => {
   const [user, setUser] = useState({
-    firstName: props.user.firstName,
-    lastName: props.user.lastName,
+    firstName: props.user.user.first_name,
+    lastName: props.user.user.last_name,
     password: "",
     confirmPassword: "",
   });
-  const [phoneNumber, setPhoneNumber] = useState(props.user.contactNo);
+  const [phoneNumber, setPhoneNumber] = useState(props.user.phone);
   const [errors, setErrors] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
