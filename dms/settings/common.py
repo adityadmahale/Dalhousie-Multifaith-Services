@@ -138,14 +138,10 @@ AUTH_USER_MODEL = "core.User"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://dms-g10-qa.herokuapp.com',
-    'https://dms-g10-qa.herokuapp.com'
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://dms-g10-qa.herokuapp.com",
+    "https://dms-g10-qa.herokuapp.com",
 ]
 
-CORS_ALLOW_HEADERS = [
-    "x-auth-token",
-    "content-type",
-    "Authorization"
-]
+CORS_ALLOW_HEADERS = ["x-auth-token", "content-type", "Authorization"]
