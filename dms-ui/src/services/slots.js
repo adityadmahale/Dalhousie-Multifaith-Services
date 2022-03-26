@@ -1,16 +1,16 @@
-const bookedSlots = [
-  {
-    id: "1",
-    slot: "2022-02-11 13:00:00",
-    user_id: "",
-  },
-  {
-    id: "2",
-    slot: "2022-02-11 10:00:00",
-    user_id: "",
-  },
-];
+import http from "./httpService";
 
-export const getBookedSlots = (date, chaplainId) => {
-  return bookedSlots;
+const appointmentAPIEndpoint = "/dmsfront/appointments/";
+
+export const getBookedSlots = (chaplainId) => {
+  return http.get(`${appointmentAPIEndpoint}0/${chaplainId}`);
 };
+
+export function bookSlot(user_id, chaplain_id, slot) {
+  return http.post(appointmentAPIEndpoint, {
+    user_id: user_id,
+    chaplain_id: chaplain_id,
+    slot: slot,
+    status: "pending",
+  });
+}

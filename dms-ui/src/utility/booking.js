@@ -2,7 +2,9 @@ export const getCurrentWeekDates = () => {
   const currentDay = new Date();
   const week = [];
 
-  if (currentDay.getDay() >= 5 && currentDay.getHours() >= 13) {
+  if (currentDay.getDay() === 5 && currentDay.getHours() >= 13) {
+    currentDay.setDate(currentDay.getDate() + 2);
+  } else if (currentDay.getDay() === 6) {
     currentDay.setDate(currentDay.getDate() + 2);
   }
 
