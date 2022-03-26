@@ -1,34 +1,49 @@
 const appointments = [
-    {
-      id: "#DAL234567",
-      name: "Andrew Williams",
-      title: "Health Specialist",
-      status:'confirmation pending'  ,
-      date:'23/08/2022',
-      time:'8:00 AM to 9:00 AM'
+  {
+    id: "1",
+    chaplain: {
+      user: {
+        id: 4,
+        email: "userchaplain@gmail.com",
+        first_name: "User",
+        last_name: "Chaplain",
+        is_staff: true,
+      },
     },
-    {
-        id: "#DAL234567",
-        name: "Andrew Williams",
-        title: "Health Specialist",
-      status:'cancelled' ,
-      date:'23/08/2022',
-      time:'8:00 AM to 9:00 AM'
+    status: "pending",
+    slot: "2022-03-28T15:00:00Z",
+  },
+  {
+    id: "2",
+    name: "Andrew Williams",
+    status: "cancelled",
+    slot: "2022-03-30T14:00:00Z",
+    chaplain: {
+      user: {
+        id: 4,
+        email: "userchaplain@gmail.com",
+        first_name: "User1",
+        last_name: "Chaplain1",
+        is_staff: true,
+      },
     },
-    {
-        id: "#DAL234567",
-        name: "Andrew Williams",
-        title: "Health Specialist",
-      status:'confirmed' ,
-      date:'23/08/2022',
-      time:'8:00 AM to 9:00 AM'
+  },
+  {
+    id: "3",
+    status: "confirmed",
+    slot: "2022-03-30T14:00:00Z",
+    chaplain: {
+      user: {
+        id: 4,
+        email: "userchaplain@gmail.com",
+        first_name: "User2",
+        last_name: "Chaplain2",
+        is_staff: true,
+      },
     },
-    
-  ];
-  
-export const getAppointments = () => {
-    return appointments;
-};
-  
+  },
+];
 
-  
+export const getAppointments = () => {
+  return appointments;
+};
