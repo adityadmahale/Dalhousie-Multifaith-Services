@@ -5,12 +5,27 @@ import Modal from "../common/modal";
 const AppointmentHistory = ({ user }) => {
   const [display, setDisplay] = useState(false);
   const [action, setAction] = useState("");
-  const [appointment, setAppointment] = useState([]); //updated data => state
+  const [appointment, setAppointment] = useState([]);
   const [appointmentId, setAppointmentId] = useState("");
 
   useEffect(() => {
-    setAppointment(getAppointments());
-  }, []);
+    const getData = async () => {
+      let user_id, chaplain_id;
+      if (user.user.is_staff) {
+        user_id = 0;
+        chaplain_id = user.id;
+      } else {
+        user_id = user.id;
+        chaplain_id = 0;
+      }
+      const { data: dataAppointments } = await getAppointments(
+        user_id,
+        chaplain_id
+      );
+      setAppointment(dataAppointments);
+    };
+    getData();
+  }, [user]);
 
   const onclick = (id, action) => {
     setAction(action);

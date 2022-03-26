@@ -2,6 +2,14 @@ const AppointmentCard = ({ cardData, onclick, user }) => {
   const slotDate = new Date(cardData.slot);
   const date = slotDate.toLocaleDateString("en-US");
   const time = slotDate.toLocaleTimeString();
+  let firstName, lastName;
+  if (user.user.is_staff) {
+    firstName = cardData.daluser.user.first_name;
+    lastName = cardData.daluser.user.last_name;
+  } else {
+    firstName = cardData.chaplain.user.first_name;
+    lastName = cardData.chaplain.user.last_name;
+  }
   return (
     <>
       <div className="d-flex flex-column ">
@@ -13,7 +21,7 @@ const AppointmentCard = ({ cardData, onclick, user }) => {
           <div className="d-flex justify-content-between">
             <div className="d-flex flex-column justify-content-start">
               <span className="h6">{`#DAL${cardData.id}`}</span>
-              <h5 className="card-title">{`${cardData.chaplain.user.first_name} ${cardData.chaplain.user.last_name}`}</h5>
+              <h5 className="card-title">{`${firstName} ${lastName}`}</h5>
               <div
                 className={`${
                   cardData.status === "pending"
