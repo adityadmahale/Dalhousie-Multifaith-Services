@@ -58,10 +58,10 @@ const AppointmentCard = ({ cardData, onclick, user }) => {
                     <div className="px-2">
                       <button
                         className="btn btn-primary"
-                        onClick={() => onclick(cardData.id, "confirm")}
+                        onClick={() => onclick(cardData, "confirm")}
                         style={{ width: "100px" }}
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal3"
+                        data-bs-target="#exampleModal5"
                       >
                         Confirm
                       </button>
@@ -70,10 +70,10 @@ const AppointmentCard = ({ cardData, onclick, user }) => {
                       {" "}
                       <button
                         className="btn btn-primary"
-                        onClick={() => onclick(cardData.id, "reject")}
+                        onClick={() => onclick(cardData, "reject")}
                         style={{ width: "100px" }}
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal3"
+                        data-bs-target="#exampleModal5"
                       >
                         Reject
                       </button>

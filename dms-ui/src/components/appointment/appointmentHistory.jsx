@@ -1,12 +1,15 @@
 import { Fragment, useEffect, useState } from "react";
 import AppointmentCard from "./appointmentCard";
-import { getAppointments } from "../../services/appointment";
+import { getAppointments, updateAppointment } from "../../services/appointment";
 import Modal from "../common/modal";
+import { toast } from "react-toastify";
+import ListError from "../common/listError";
+
 const AppointmentHistory = ({ user }) => {
   const [display, setDisplay] = useState(false);
   const [action, setAction] = useState("");
-  const [appointment, setAppointment] = useState([]);
-  const [appointmentId, setAppointmentId] = useState("");
+  const [appointments, setAppointments] = useState([]);
+  const [selectedAppointment, setSelectedAppointment] = useState({});
 
   useEffect(() => {
     const getData = async () => {
@@ -22,25 +25,37 @@ const AppointmentHistory = ({ user }) => {
         user_id,
         chaplain_id
       );
-      setAppointment(dataAppointments);
+      setAppointments(dataAppointments);
     };
     getData();
   }, [user]);
 
-  const onclick = (id, action) => {
+  const onclick = (selected, action) => {
     setAction(action);
     setDisplay(true);
-    setAppointmentId(id);
+    setSelectedAppointment(selected);
   };
 
-  const onConfirmClick = () => {
-    const data = appointment.filter((item) => appointmentId === item.id)[0];
+  const onConfirmClick = async () => {
+    let status;
     if (action === "confirm") {
-      data["status"] = "confirmed";
+      status = "confirmed";
     } else if (action === "reject") {
-      data["status"] = "cancelled";
+      status = "cancelled";
     }
     setDisplay(false);
+    try {
+      await updateAppointment(selectedAppointment, status);
+      window.location = "/";
+    } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(<ListError errors={Object.values(ex.response.data)} />);
+      }
+    }
   };
 
   const onRejectClick = () => {
@@ -55,8 +70,8 @@ const AppointmentHistory = ({ user }) => {
           Appointment History
         </h3>
 
-        {appointment.map((appointment, index) => (
-          <div key={index}>
+        {appointments.map((appointment) => (
+          <div key={appointment.id}>
             <AppointmentCard
               onclick={onclick}
               user={user}
@@ -73,7 +88,7 @@ const renderModal = (display, action, onConfirmClick, onRejectClick) => {
   return (
     <div>
       {display && (
-        <Modal id="exampleModal3">
+        <Modal id="exampleModal5">
           <div className="text-center card-confirmation">
             <i
               className="ri-mental-health-fill"
