@@ -37,9 +37,10 @@ export const isSlotInPast = (slot) => {
 };
 
 export const isSlotBooked = (slot, bookedSlots) => {
-  return bookedSlots.some((bookedSlot) =>
-    isSlotEqual(new Date(bookedSlot.slot), slot)
-  );
+  return bookedSlots.some((bookedSlot) => {
+    if (bookedSlot.status === "cancelled") return false;
+    return isSlotEqual(new Date(bookedSlot.slot), slot);
+  });
 };
 
 export const getSlotRange = (time) => {
