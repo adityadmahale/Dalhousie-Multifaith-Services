@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import ListError from "../common/listError";
 
 const AppointmentHistory = ({ user }) => {
-  const [display, setDisplay] = useState(false);
   const [action, setAction] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState({});
@@ -32,7 +31,6 @@ const AppointmentHistory = ({ user }) => {
 
   const onclick = (selected, action) => {
     setAction(action);
-    setDisplay(true);
     setSelectedAppointment(selected);
   };
 
@@ -43,7 +41,6 @@ const AppointmentHistory = ({ user }) => {
     } else if (action === "reject") {
       status = "cancelled";
     }
-    setDisplay(false);
     try {
       await updateAppointment(selectedAppointment, status);
       window.location = "/";
@@ -58,13 +55,9 @@ const AppointmentHistory = ({ user }) => {
     }
   };
 
-  const onRejectClick = () => {
-    setDisplay(false);
-  };
-
   return (
     <Fragment>
-      {renderModal(display, action, onConfirmClick, onRejectClick)}
+      {renderModal(action, onConfirmClick)}
       <div className="height600 ">
         <h3 className=" mb-4" style={{ color: "#727272" }}>
           Appointment History
@@ -84,44 +77,36 @@ const AppointmentHistory = ({ user }) => {
   );
 };
 
-const renderModal = (display, action, onConfirmClick, onRejectClick) => {
+const renderModal = (action, onConfirmClick) => {
   return (
     <div>
-      {display && (
-        <Modal id="exampleModal5">
-          <div className="text-center card-confirmation">
-            <i
-              className="ri-mental-health-fill"
-              style={{ color: "#4d97d4" }}
-            ></i>
-            <p className="card-text link">
-              Are you sure you want to {action} ?
-            </p>
-            <div className="d-flex justify-content-center flex-wrap ">
-              <div className="px-2">
-                <button
-                  className="btn btn-primary"
-                  onClick={onConfirmClick}
-                  style={{ width: "100px" }}
-                  data-bs-dismiss="modal"
-                >
-                  Confirm
-                </button>
-              </div>
-              <div>
-                <button
-                  className="btn btn-primary"
-                  onClick={onRejectClick}
-                  style={{ width: "100px" }}
-                  data-bs-dismiss="modal"
-                >
-                  Cancel
-                </button>
-              </div>
+      <Modal id="exampleModal5">
+        <div className="text-center card-confirmation">
+          <i className="ri-mental-health-fill" style={{ color: "#4d97d4" }}></i>
+          <p className="card-text link">Are you sure you want to {action} ?</p>
+          <div className="d-flex justify-content-center flex-wrap ">
+            <div className="px-2">
+              <button
+                className="btn btn-primary"
+                onClick={onConfirmClick}
+                style={{ width: "100px" }}
+                data-bs-dismiss="modal"
+              >
+                Confirm
+              </button>
+            </div>
+            <div>
+              <button
+                className="btn btn-primary"
+                style={{ width: "100px" }}
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
             </div>
           </div>
-        </Modal>
-      )}
+        </div>
+      </Modal>
     </div>
   );
 };
