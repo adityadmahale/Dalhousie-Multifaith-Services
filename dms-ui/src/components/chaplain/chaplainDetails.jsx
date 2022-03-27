@@ -48,21 +48,22 @@ const ChaplainDetails = ({ user }) => {
   };
 
   const handleConfirmClick = async () => {
+    const originalSlots = bookedSlots;
     setDisplay(true);
     setSlot(null);
 
+    const slots = [...bookedSlots, { slot, status: "pending" }];
+    setBookedSlots(slots);
     try {
       await bookSlot(user.id, id, slot);
-      window.location = "/";
     } catch (ex) {
       if (
         ex.response &&
         ex.response.status >= 400 &&
         ex.response.status < 500
       ) {
-        toast.error(<ListError errors={Object.values(ex.response.data)} />, {
-          icon: false,
-        });
+        setBookedSlots(originalSlots);
+        toast.error(<ListError errors={Object.values(ex.response.data)} />);
       }
     }
   };
