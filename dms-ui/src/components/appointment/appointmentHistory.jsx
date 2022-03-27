@@ -1,73 +1,31 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import AppointmentCard from "./appointmentCard";
-import { getAppointments, updateAppointment } from "../../services/appointment";
 import Modal from "../common/modal";
-import { toast } from "react-toastify";
-import ListError from "../common/listError";
+import AppointmentContext from "../../context/appointmentContext";
 
 const AppointmentHistory = ({ user }) => {
   const [action, setAction] = useState("");
-  const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      let user_id, chaplain_id;
-      if (user.user.is_staff) {
-        user_id = 0;
-        chaplain_id = user.id;
-      } else {
-        user_id = user.id;
-        chaplain_id = 0;
-      }
-      const { data: dataAppointments } = await getAppointments(
-        user_id,
-        chaplain_id
-      );
-      setAppointments(dataAppointments);
-    };
-    getData();
-  }, [user]);
+  const appointmentContext = useContext(AppointmentContext);
 
   const onclick = (selected, action) => {
     setAction(action);
     setSelectedAppointment(selected);
   };
 
-  const onConfirmClick = async (action, selectedAppointment) => {
-    const originalAppointments = appointments;
-    const appointmentsData = [...appointments];
-    const index = appointmentsData.indexOf(selectedAppointment);
-    appointmentsData[index] = { ...selectedAppointment };
-    if (action === "confirm") {
-      appointmentsData[index].status = "confirmed";
-    } else if (action === "reject") {
-      appointmentsData[index].status = "cancelled";
-    }
-    setAppointments(appointmentsData);
-    try {
-      await updateAppointment(appointmentsData[index]);
-    } catch (ex) {
-      if (
-        ex.response &&
-        ex.response.status >= 400 &&
-        ex.response.status < 500
-      ) {
-        setAppointments(originalAppointments);
-        toast.error(<ListError errors={Object.values(ex.response.data)} />);
-      }
-    }
-  };
-
   return (
     <Fragment>
-      {renderModal(action, onConfirmClick, selectedAppointment)}
+      {renderModal(
+        action,
+        appointmentContext.handleConfirmClick,
+        selectedAppointment
+      )}
       <div className="height600 ">
         <h3 className=" mb-4" style={{ color: "#727272" }}>
           Appointment History
         </h3>
 
-        {appointments.map((appointment) => (
+        {appointmentContext.appointments.map((appointment) => (
           <div key={appointment.id}>
             <AppointmentCard
               onclick={onclick}
@@ -81,7 +39,7 @@ const AppointmentHistory = ({ user }) => {
   );
 };
 
-const renderModal = (action, onConfirmClick, selectedAppointment) => {
+const renderModal = (action, handleConfirmClick, selectedAppointment) => {
   return (
     <div>
       <Modal id="exampleModal5">
@@ -92,7 +50,7 @@ const renderModal = (action, onConfirmClick, selectedAppointment) => {
             <div className="px-2">
               <button
                 className="btn btn-primary"
-                onClick={() => onConfirmClick(action, selectedAppointment)}
+                onClick={() => handleConfirmClick(action, selectedAppointment)}
                 style={{ width: "100px" }}
                 data-bs-dismiss="modal"
               >
