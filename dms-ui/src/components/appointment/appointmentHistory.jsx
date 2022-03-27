@@ -8,7 +8,7 @@ import ListError from "../common/listError";
 const AppointmentHistory = ({ user }) => {
   const [action, setAction] = useState("");
   const [appointments, setAppointments] = useState([]);
-  const [selectedAppointment, setSelectedAppointment] = useState({});
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
@@ -34,22 +34,26 @@ const AppointmentHistory = ({ user }) => {
     setSelectedAppointment(selected);
   };
 
-  const onConfirmClick = async () => {
-    let status;
+  const onConfirmClick = async (action, selectedAppointment) => {
+    const originalAppointments = appointments;
+    const appointmentsData = [...appointments];
+    const index = appointmentsData.indexOf(selectedAppointment);
+    appointmentsData[index] = { ...selectedAppointment };
     if (action === "confirm") {
-      status = "confirmed";
+      appointmentsData[index].status = "confirmed";
     } else if (action === "reject") {
-      status = "cancelled";
+      appointmentsData[index].status = "cancelled";
     }
+    setAppointments(appointmentsData);
     try {
-      await updateAppointment(selectedAppointment, status);
-      window.location = "/";
+      await updateAppointment(appointmentsData[index]);
     } catch (ex) {
       if (
         ex.response &&
         ex.response.status >= 400 &&
         ex.response.status < 500
       ) {
+        setAppointments(originalAppointments);
         toast.error(<ListError errors={Object.values(ex.response.data)} />);
       }
     }
@@ -57,7 +61,7 @@ const AppointmentHistory = ({ user }) => {
 
   return (
     <Fragment>
-      {renderModal(action, onConfirmClick)}
+      {renderModal(action, onConfirmClick, selectedAppointment)}
       <div className="height600 ">
         <h3 className=" mb-4" style={{ color: "#727272" }}>
           Appointment History
@@ -77,7 +81,7 @@ const AppointmentHistory = ({ user }) => {
   );
 };
 
-const renderModal = (action, onConfirmClick) => {
+const renderModal = (action, onConfirmClick, selectedAppointment) => {
   return (
     <div>
       <Modal id="exampleModal5">
@@ -88,7 +92,7 @@ const renderModal = (action, onConfirmClick) => {
             <div className="px-2">
               <button
                 className="btn btn-primary"
-                onClick={onConfirmClick}
+                onClick={() => onConfirmClick(action, selectedAppointment)}
                 style={{ width: "100px" }}
                 data-bs-dismiss="modal"
               >
