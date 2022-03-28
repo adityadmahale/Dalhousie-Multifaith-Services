@@ -1,47 +1,32 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import AppointmentCard from "./appointmentCard";
-import { getAppointments } from "../../services/appointment";
 import Modal from "../common/modal";
+import AppointmentContext from "../../context/appointmentContext";
+
 const AppointmentHistory = ({ user }) => {
-  const [display, setDisplay] = useState(false);
   const [action, setAction] = useState("");
-  const [appointment, setAppointment] = useState([]); //updated data => state
-  const [appointmentId, setAppointmentId] = useState("");
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const appointmentContext = useContext(AppointmentContext);
 
-  useEffect(() => {
-    setAppointment(getAppointments());
-  }, []);
-
-  const onclick = (id, action) => {
+  const onclick = (selected, action) => {
     setAction(action);
-    setDisplay(true);
-    setAppointmentId(id);
-  };
-
-  const onConfirmClick = () => {
-    const data = appointment.filter((item) => appointmentId === item.id)[0];
-    if (action === "confirm") {
-      data["status"] = "confirmed";
-    } else if (action === "reject") {
-      data["status"] = "cancelled";
-    }
-    setDisplay(false);
-  };
-
-  const onRejectClick = () => {
-    setDisplay(false);
+    setSelectedAppointment(selected);
   };
 
   return (
     <Fragment>
-      {renderModal(display, action, onConfirmClick, onRejectClick)}
+      {renderModal(
+        action,
+        appointmentContext.handleConfirmClick,
+        selectedAppointment
+      )}
       <div className="height600 ">
         <h3 className=" mb-4" style={{ color: "#727272" }}>
           Appointment History
         </h3>
 
-        {appointment.map((appointment, index) => (
-          <div key={index}>
+        {appointmentContext.appointments.map((appointment) => (
+          <div key={appointment.id}>
             <AppointmentCard
               onclick={onclick}
               user={user}
@@ -54,44 +39,36 @@ const AppointmentHistory = ({ user }) => {
   );
 };
 
-const renderModal = (display, action, onConfirmClick, onRejectClick) => {
+const renderModal = (action, handleConfirmClick, selectedAppointment) => {
   return (
     <div>
-      {display && (
-        <Modal id="exampleModal3">
-          <div className="text-center card-confirmation">
-            <i
-              className="ri-mental-health-fill"
-              style={{ color: "#4d97d4" }}
-            ></i>
-            <p className="card-text link">
-              Are you sure you want to {action} ?
-            </p>
-            <div className="d-flex justify-content-center flex-wrap ">
-              <div className="px-2">
-                <button
-                  className="btn btn-primary"
-                  onClick={onConfirmClick}
-                  style={{ width: "100px" }}
-                  data-bs-dismiss="modal"
-                >
-                  Confirm
-                </button>
-              </div>
-              <div>
-                <button
-                  className="btn btn-primary"
-                  onClick={onRejectClick}
-                  style={{ width: "100px" }}
-                  data-bs-dismiss="modal"
-                >
-                  Cancel
-                </button>
-              </div>
+      <Modal id="exampleModal5">
+        <div className="text-center card-confirmation">
+          <i className="ri-mental-health-fill" style={{ color: "#4d97d4" }}></i>
+          <p className="card-text link">Are you sure you want to {action} ?</p>
+          <div className="d-flex justify-content-center flex-wrap ">
+            <div className="px-2">
+              <button
+                className="btn btn-primary"
+                onClick={() => handleConfirmClick(action, selectedAppointment)}
+                style={{ width: "100px" }}
+                data-bs-dismiss="modal"
+              >
+                Confirm
+              </button>
+            </div>
+            <div>
+              <button
+                className="btn btn-primary"
+                style={{ width: "100px" }}
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
             </div>
           </div>
-        </Modal>
-      )}
+        </div>
+      </Modal>
     </div>
   );
 };
