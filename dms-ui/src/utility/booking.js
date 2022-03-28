@@ -2,6 +2,12 @@ export const getCurrentWeekDates = () => {
   const currentDay = new Date();
   const week = [];
 
+  if (currentDay.getDay() === 5 && currentDay.getHours() >= 13) {
+    currentDay.setDate(currentDay.getDate() + 2);
+  } else if (currentDay.getDay() === 6) {
+    currentDay.setDate(currentDay.getDate() + 2);
+  }
+
   const slotTimeStart = [10, 11, 12, 13].map(
     (timing) => timing + currentDay.getTimezoneOffset() / 60
   );
@@ -31,9 +37,10 @@ export const isSlotInPast = (slot) => {
 };
 
 export const isSlotBooked = (slot, bookedSlots) => {
-  return bookedSlots.some((bookedSlot) =>
-    isSlotEqual(new Date(bookedSlot.slot), slot)
-  );
+  return bookedSlots.some((bookedSlot) => {
+    if (bookedSlot.status === "cancelled") return false;
+    return isSlotEqual(new Date(bookedSlot.slot), slot);
+  });
 };
 
 export const getSlotRange = (time) => {

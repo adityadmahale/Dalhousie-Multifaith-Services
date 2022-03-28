@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getChaplains } from "../services/chaplains";
+import { getChaplains } from "../../services/chaplains";
 import AvailabilityBar from "./availabilityBar";
 import ChaplainImage from "./chaplainImage";
 import { useNavigate } from "react-router-dom";

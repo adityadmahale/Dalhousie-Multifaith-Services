@@ -28,3 +28,23 @@ class Chaplain(models.Model):
 
     class Meta:
         ordering = ["user__first_name", "user__last_name"]
+
+
+class Appointment(models.Model):
+    slot = models.DateTimeField(null=True)
+    user_id = models.ForeignKey(DalUser, on_delete=models.CASCADE)
+    chaplain_id = models.ForeignKey(Chaplain, on_delete=models.CASCADE)
+    status = models.CharField(max_length=255)
+
+
+class Event(models.Model):
+    event_title = models.CharField(max_length=150)
+    event_date = models.DateTimeField()
+    event_location = models.TextField()
+    event_description = models.TextField()
+    available_seats = models.PositiveSmallIntegerField()
+    host_name = models.CharField(max_length=100)
+    host_details = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.event_title

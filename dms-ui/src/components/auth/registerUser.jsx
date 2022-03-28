@@ -1,16 +1,24 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
-import Input from "./inputField";
+import Input from "../common/inputField";
 import Joi from "joi";
+import Logo from "../common/logo";
+import ListError from "../common/listError";
 
-const ProfileUpdateForm = (props) => {
+import { register, registerDalUser } from "../../services/userService";
+import auth from "../../services/authService";
+import { toast } from "react-toastify";
+
+const RegisterUser = () => {
   const [user, setUser] = useState({
-    firstName: props.user.firstName,
-    lastName: props.user.lastName,
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
     confirmPassword: "",
   });
-  const [phoneNumber, setPhoneNumber] = useState(props.user.contactNo);
+  const [phoneNumber, setPhoneNumber] = useState(undefined);
   const [errors, setErrors] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
@@ -22,6 +30,14 @@ const ProfileUpdateForm = (props) => {
   const schema = Joi.object({
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .regex(RegExp(".*@dal.ca$"))
+      .required()
+      .label("Email")
+      .messages({
+        "string.pattern.base": '"Email" must belong to the university domain',
+      }),
     password: Joi.string().min(8).required().label("Password"),
     confirmPassword: Joi.any()
       .equal(Joi.ref("password"))
@@ -43,7 +59,7 @@ const ProfileUpdateForm = (props) => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -51,11 +67,34 @@ const ProfileUpdateForm = (props) => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+
+    try {
+      const { data } = await register({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        is_staff: false,
+      });
+      await registerDalUser({ user_id: data.id, phone: phoneNumber });
+      await auth.login(user.email, user.password);
+      window.location = "/";
+    } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(<ListError errors={Object.values(ex.response.data)} />, {
+          icon: false,
+        });
+      }
+    }
   };
 
   return (
-    <form className="text-center" onSubmit={handleSubmit}>
+    <form className="form-layout text-center" onSubmit={handleSubmit}>
+      <Logo />
       <div className="input-group">
         <input
           type="text"
@@ -89,6 +128,14 @@ const ProfileUpdateForm = (props) => {
         defaultCountry="CA"
       />
       <Input
+        type="text"
+        placeholder="Email"
+        name="email"
+        onChange={handleChange}
+        value={user.email}
+        error={errors.email}
+      />
+      <Input
         type="password"
         placeholder="Password"
         name="password"
@@ -104,9 +151,14 @@ const ProfileUpdateForm = (props) => {
         value={user.confirmPassword}
         error={errors.confirmPassword}
       />
-      <button className="btn btn-primary">Update</button>
+      <button className="btn btn-primary">Sign Up</button>
+      <div className="text-center">
+        <Link to="/login/user" className="link">
+          Already have an account?
+        </Link>
+      </div>
     </form>
   );
 };
 
-export default ProfileUpdateForm;
+export default RegisterUser;

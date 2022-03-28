@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 import "react-phone-number-input/style.css";
+import "./questionnaire.css";
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import "jquery/dist/jquery.slim";
 import "bootstrap/dist/js/bootstrap.bundle.min";

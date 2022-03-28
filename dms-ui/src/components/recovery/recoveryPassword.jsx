@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import Input from "./inputField";
+import Input from "../common/inputField";
 import Joi from "joi";
-import Logo from "./logo";
+import Logo from "../common/logo";
+import { updatePassword } from "../../services/userService";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const RecoveryPassword = () => {
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ const RecoveryPassword = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -56,7 +58,16 @@ const RecoveryPassword = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+
+    try {
+      await updatePassword(location.state.email, user.password);
+      toast.success("Password updated successfully.");
+      navigate(`/login/${location.state.user}`);
+    } catch (ex) {
+      toast.error(
+        "user with this email address does not exist in the database."
+      );
+    }
   };
 
   return (

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getChaplain } from "../services/chaplains";
-import { getBookedSlots } from "../services/slots";
-import { isSlotBooked, isSlotEqual, isSlotInPast } from "../utility/booking";
+import { getChaplain } from "../../services/chaplains";
+import { getBookedSlots, bookSlot } from "../../services/slots";
+import { isSlotBooked, isSlotEqual, isSlotInPast } from "../../utility/booking";
 import CardConfirmation from "./cardConfirmation";
 import CardDisplay from "./cardDisplay";
-import Modal from "./modal";
+import Modal from "../common/modal";
 import Slots from "./slots";
+import { toast } from "react-toastify";
+import ListError from "../common/listError";
 
-const ChaplainDetails = () => {
+const ChaplainDetails = ({ user }) => {
   const { id } = useParams();
   const [slot, setSlot] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
@@ -26,12 +28,11 @@ const ChaplainDetails = () => {
     const getData = async () => {
       const dataChaplain = await getChaplain(id);
       setChaplain(dataChaplain);
-      const dataBookedSlots = await getBookedSlots(new Date(), id);
+      const { data: dataBookedSlots } = await getBookedSlots(id);
       setBookedSlots(dataBookedSlots);
     };
-
     getData();
-  });
+  }, [id]);
 
   const handleSlotSelect = (selectedSlot) => {
     if (isSlotEqual(slot, selectedSlot)) {
@@ -46,18 +47,30 @@ const ChaplainDetails = () => {
     setSlot(selectedSlot);
   };
 
-  const handleConfirmClick = () => {
-    const slotTime =
-      slot.toISOString().split("T")[0] +
-      " " +
-      slot.toTimeString().split(" ")[0];
+  const handleConfirmClick = async () => {
+    const originalSlots = bookedSlots;
     setDisplay(true);
     setSlot(null);
+
+    const slots = [...bookedSlots, { slot, status: "pending" }];
+    setBookedSlots(slots);
+    try {
+      await bookSlot(user.id, id, slot);
+    } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        setBookedSlots(originalSlots);
+        toast.error(<ListError errors={Object.values(ex.response.data)} />);
+      }
+    }
   };
 
   return (
     <div className="m-2">
-      {renderModal(display, slot, chaplain, handleConfirmClick)}
+      {renderModal(display, slot, chaplain, handleConfirmClick, user)}
       <div className="row">
         <div className="col-12 col-md-8 col-lg-4">
           {ChaplainImage(chaplain)}
@@ -76,9 +89,9 @@ const ChaplainDetails = () => {
   );
 };
 
-const renderModal = (display, slot, chaplain, handleModalDisplay) => {
+const renderModal = (display, slot, chaplain, handleModalDisplay, user) => {
   return (
-    <Modal>
+    <Modal id="exampleModal">
       {display ? (
         <CardConfirmation />
       ) : (
@@ -86,6 +99,7 @@ const renderModal = (display, slot, chaplain, handleModalDisplay) => {
           slot={slot}
           name={chaplain.name}
           onClick={handleModalDisplay}
+          user={user}
         />
       )}
     </Modal>

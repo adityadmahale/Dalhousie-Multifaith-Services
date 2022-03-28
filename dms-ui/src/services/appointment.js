@@ -1,34 +1,16 @@
-const appointments = [
-    {
-      id: "#DAL234567",
-      name: "Andrew Williams",
-      title: "Health Specialist",
-      status:'confirmation pending'  ,
-      date:'23/08/2022',
-      time:'8:00 AM to 9:00 AM'
-    },
-    {
-        id: "#DAL234567",
-        name: "Andrew Williams",
-        title: "Health Specialist",
-      status:'cancelled' ,
-      date:'23/08/2022',
-      time:'8:00 AM to 9:00 AM'
-    },
-    {
-        id: "#DAL234567",
-        name: "Andrew Williams",
-        title: "Health Specialist",
-      status:'confirmed' ,
-      date:'23/08/2022',
-      time:'8:00 AM to 9:00 AM'
-    },
-    
-  ];
-  
-export const getAppointments = () => {
-    return appointments;
-};
-  
+import http from "./httpService";
 
-  
+const appointmentAPIEndpoint = "/dmsfront/appointments/";
+
+export const getAppointments = (userId, chaplainId) => {
+  return http.get(`${appointmentAPIEndpoint}${userId}/${chaplainId}`);
+};
+
+export const updateAppointment = (appointment) => {
+  return http.put(`${appointmentAPIEndpoint}${appointment.id}`, {
+    user_id: appointment.user_id,
+    chaplain_id: appointment.chaplain_id,
+    slot: appointment.slot,
+    status: appointment.status,
+  });
+};

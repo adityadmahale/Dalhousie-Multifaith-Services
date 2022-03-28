@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Joi from "joi";
-import Input from "./inputField";
-import Logo from "./logo";
+import Input from "../common/inputField";
+import Logo from "../common/logo";
 import { useLocation, useNavigate } from "react-router-dom";
-
 const RecoveryCode = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,12 +23,11 @@ const RecoveryCode = () => {
   };
 
   const schema = Joi.object({
-    code: Joi.string().required().min(6).max(6).label("Code"),
+    code: Joi.string().required().equal(location.state.code),
   });
 
   const validate = () => {
-    const result = schema.validate(code, { abortEarly: false });
-
+    const result = schema.validate(code, { abortEaxrly: false });
     if (!result.error) {
       return null;
     }
@@ -44,13 +42,22 @@ const RecoveryCode = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = validate();
+    let errors = validate();
+    if (errors) {
+      if (errors.code.split(" ")[0] === '"code"') {
+        errors = { code: "Please enter correct code." };
+      }
+    }
     setErrors(errors || {});
     if (errors) {
       return;
     }
     navigate("/recovery/password", {
-      state: { code: code.code, email: location.state },
+      state: {
+        code: code.code,
+        email: location.state.email,
+        user: location.state.user,
+      },
     });
   };
 

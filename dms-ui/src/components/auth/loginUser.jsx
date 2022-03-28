@@ -1,8 +1,10 @@
+import Joi from "joi";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Input from "./inputField";
-import Joi from "joi";
-import Logo from "./logo";
+import { toast } from "react-toastify";
+import Input from "../common/inputField";
+import Logo from "../common/logo";
+import auth from "../../services/authService";
 
 const LoginUser = () => {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -40,7 +42,7 @@ const LoginUser = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = validate();
@@ -48,7 +50,19 @@ const LoginUser = () => {
     if (errors) {
       return;
     }
-    console.log("Submitted");
+
+    try {
+      await auth.login(user.email, user.password);
+      window.location = "/";
+    } catch (ex) {
+      if (
+        ex.response &&
+        ex.response.status >= 400 &&
+        ex.response.status < 500
+      ) {
+        toast.error(ex.response.data.detail);
+      }
+    }
   };
 
   return (
@@ -72,7 +86,11 @@ const LoginUser = () => {
         error={errors.password}
       />
 
-      <Link to="/recovery/email" className="link float-end">
+      <Link
+        to="/recovery/email"
+        state={{ user: "user" }}
+        className="link float-end"
+      >
         Forgot Password?
       </Link>
       <button className="btn btn-primary">Sign In</button>
