@@ -1,8 +1,10 @@
 import json
-from rest_framework.views import Response
+from rest_framework.views import Response, APIView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework import status
+
+from .serializers import UserImageSerializer
 from .models import User
 
 
@@ -53,5 +55,13 @@ def update_name(request):
 
     user.first_name = body["first_name"]
     user.last_name = body["last_name"]
-    user.save(update_fields=['first_name', 'last_name'])
+    user.save(update_fields=["first_name", "last_name"])
     return Response({}, status=status.HTTP_200_OK)
+
+
+class UserImageView(APIView):
+    def post(self, request):
+        serializer = UserImageSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
