@@ -145,7 +145,7 @@ function App() {
               path="/timesheet"
               element={
                 <ProtectedRoute user={user}>
-                  <Timesheet />
+                  <Timesheet user={user} />
                 </ProtectedRoute>
               }
             />
@@ -154,7 +154,7 @@ function App() {
               path="/events"
               element={
                 <ProtectedRoute user={user}>
-                  <Events />
+                  <Events user={user} />
                 </ProtectedRoute>
               }
             />
@@ -162,7 +162,7 @@ function App() {
               path="/events/:id"
               element={
                 <ProtectedRoute user={user}>
-                  <EventDetails />
+                  <EventDetails user={user}/>
                 </ProtectedRoute>
               }
             />
@@ -171,7 +171,7 @@ function App() {
               path="/questionnaire"
               element={
                 <ProtectedRoute user={user}>
-                  <Questionnaire />
+                  <Questionnaire user={user}/>
                 </ProtectedRoute>
               }
             />

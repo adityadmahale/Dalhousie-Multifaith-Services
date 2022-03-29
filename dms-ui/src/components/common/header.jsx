@@ -84,7 +84,7 @@ const Header = ({ user }) => {
                 </NavLink>
               </li>
            )}
-          {user && !user.user.is_staff && (
+          {user && (
             <li className="nav-item">
               <NavLink
                 className="nav-link"
