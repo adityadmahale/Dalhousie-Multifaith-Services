@@ -7,14 +7,20 @@ const ChaplainImage = ({ chaplain }) => {
         <div className="apt-img-container">
           <img
             className="profile-img"
-            src={process.env.PUBLIC_URL + chaplain.image}
+            src={
+              chaplain.user.image
+                ? process.env.REACT_APP_API_URL + chaplain.user.image.image
+                : process.env.PUBLIC_URL + "/profile_holder.png"
+            }
             alt="profile"
           />
         </div>
       </div>
       <div className="col-12 col-xl-7 text-center align-self-center">
-        <div style={{ fontWeight: "bold" }}>{chaplain.name}</div>
-        <div className="title">{chaplain.title}</div>
+        <div style={{ fontWeight: "bold" }}>
+          {`${chaplain.user.first_name} ${chaplain.user.last_name}`}
+        </div>
+        <div className="title">{chaplain.religion}</div>
       </div>
     </div>
   );
