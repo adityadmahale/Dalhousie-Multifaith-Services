@@ -2,12 +2,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView, Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from dmsfront.models import DalUser, Chaplain, Appointment, Event
+from dmsfront.models import DalUser, Chaplain, Appointment, Event, TimeSheet
 from .serializers import (
     DalUserSerializer,
     ChaplainSerializer,
     AppointmentSerializer,
     EventSerializer,
+    TimeSheetSerializer,
 )
 
 
@@ -85,6 +86,21 @@ class UserAppointmentDetails(APIView):
         serializer = AppointmentSerializer(appointment, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(serializer.data)
+
+
+class TimeSheetList(APIView):
+    def post(self, request):
+        serializer = TimeSheetSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class TimeSheetDetail(APIView):
+    def get(self, request, chaplain_id):
+        queryset = TimeSheet.objects.filter(chaplain_id=chaplain_id)
+        serializer = TimeSheetSerializer(queryset, many=True)
         return Response(serializer.data)
 
 

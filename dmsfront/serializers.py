@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from core.serializers import UserCreateSerializer, UserSerializer
-from .models import Appointment, DalUser, Chaplain, Event
+from .models import Appointment, DalUser, Chaplain, Event, TimeSheet
 
 
 class DalUserSerializer(serializers.ModelSerializer):
@@ -53,6 +53,21 @@ class AppointmentSerializer(serializers.ModelSerializer):
             "status",
             "daluser",
             "chaplain",
+        ]
+
+
+class TimeSheetSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=150)
+    start_time = serializers.DateTimeField()
+    end_time = serializers.DateTimeField()
+
+    class Meta:
+        model = TimeSheet
+        fields = [
+            "chaplain_id",
+            "title",
+            "start_time",
+            "end_time",
         ]
 
 
