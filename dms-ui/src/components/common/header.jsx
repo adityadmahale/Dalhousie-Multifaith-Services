@@ -33,13 +33,11 @@ const Header = ({ user }) => {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mx-auto">
-          {user && (
             <li className="nav-item active">
               <NavLink className="nav-link" to="/" onClick={handleCollapse}>
                 Home
               </NavLink>
             </li>
-          )}
 
           {user && (
             <li className="nav-item">
@@ -86,7 +84,7 @@ const Header = ({ user }) => {
                 </NavLink>
               </li>
            )}
-          {user && !user.user.is_staff && (
+          {user && (
             <li className="nav-item">
               <NavLink
                 className="nav-link"
@@ -122,7 +120,7 @@ const Header = ({ user }) => {
             </li>
           )}
 
-          {!user && (
+         {!user && (
             <li className="nav-item">
               <span
                 className="nav-link"
