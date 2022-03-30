@@ -1,35 +1,32 @@
-import { useEffect, useState } from "react";
-import { getChaplains } from "../../services/chaplains";
-import AvailabilityBar from "./availabilityBar";
+import { useContext } from "react";
 import ChaplainImage from "./chaplainImage";
 import { useNavigate } from "react-router-dom";
+import ChaplainContext from "../../context/chaplainContext";
 
 const ChaplainList = () => {
-  const [chaplains, setChaplains] = useState([]);
   const navigate = useNavigate();
+  const chaplainContext = useContext(ChaplainContext);
 
-  useEffect(() => {
-    const getData = async () => {
-      const chaplains = await getChaplains();
-      setChaplains(chaplains);
-    };
-
-    getData();
-  });
-
-  const handleClick = (chaplainId) => {
-    navigate(`/chaplains/${chaplainId}`);
+  const handleClick = (chaplain) => {
+    navigate(`/chaplains/${chaplain.id}`, {
+      state: {
+        first_name: chaplain.user.first_name,
+        last_name: chaplain.user.last_name,
+        religion: chaplain.religion,
+        description: chaplain.description,
+        image: chaplain.user.image,
+      },
+    });
   };
 
   return (
     <div className="row">
-      {chaplains.map((chaplain) => (
+      {chaplainContext.chaplains.map((chaplain) => (
         <div className="col-12 col-md-4" key={chaplain.id}>
           <div className="card">
             <ChaplainImage chaplain={chaplain} />
-            <AvailabilityBar availability={chaplain.availability} />
             <div className="row description">{chaplain.description}</div>
-            {renderButton(chaplain.availability, handleClick, chaplain.id)}
+            {renderButton(handleClick, chaplain)}
           </div>
         </div>
       ))}
@@ -37,20 +34,12 @@ const ChaplainList = () => {
   );
 };
 
-const renderButton = (availability, onClick, chaplainId) => {
+const renderButton = (onClick, chaplain) => {
   let classes = "btn btn-primary mb-0";
-
-  if (availability === 0) {
-    classes += " disabled-button";
-  }
 
   return (
     <div className="row">
-      <button
-        disabled={availability === 0}
-        className={classes}
-        onClick={() => onClick(chaplainId)}
-      >
+      <button className={classes} onClick={() => onClick(chaplain)}>
         Book
       </button>
     </div>

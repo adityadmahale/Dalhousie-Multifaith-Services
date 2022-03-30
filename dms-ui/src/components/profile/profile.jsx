@@ -11,7 +11,11 @@ const Profile = ({ user }) => {
       <div className="prl-img-container">
         <img
           className="profile-img"
-          src={process.env.PUBLIC_URL + "/andrew.png"}
+          src={
+            user.user.image
+              ? process.env.REACT_APP_API_URL + user.user.image.image
+              : process.env.PUBLIC_URL + "/profile_holder.png"
+          }
           alt="profile"
         />
       </div>

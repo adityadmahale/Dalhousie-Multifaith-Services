@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getChaplain } from "../../services/chaplains";
 import { getBookedSlots, bookSlot } from "../../services/slots";
 import { isSlotBooked, isSlotEqual, isSlotInPast } from "../../utility/booking";
 import CardConfirmation from "./cardConfirmation";
@@ -9,30 +8,28 @@ import Modal from "../common/modal";
 import Slots from "./slots";
 import { toast } from "react-toastify";
 import ListError from "../common/listError";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ChaplainDetails = ({ user }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [slot, setSlot] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
   const [display, setDisplay] = useState(false);
-  const [chaplain, setChaplain] = useState({
-    id: "",
-    name: "",
-    title: "",
-    image: "",
-    availability: "",
-    description: "",
-  });
+  const [chaplain, setChaplain] = useState({});
+  const location = useLocation();
 
   useEffect(() => {
+    if (!location.state) {
+      navigate("/");
+    }
+    setChaplain(location.state);
     const getData = async () => {
-      const dataChaplain = await getChaplain(id);
-      setChaplain(dataChaplain);
       const { data: dataBookedSlots } = await getBookedSlots(id);
       setBookedSlots(dataBookedSlots);
     };
     getData();
-  }, [id]);
+  }, [id, location, navigate]);
 
   const handleSlotSelect = (selectedSlot) => {
     if (isSlotEqual(slot, selectedSlot)) {
@@ -76,7 +73,7 @@ const ChaplainDetails = ({ user }) => {
           {ChaplainImage(chaplain)}
         </div>
         <div className="col-12 col-md-4 col-lg-8 align-self-center">
-          {renderButton(chaplain.availability, slot)}
+          {renderButton(slot)}
         </div>
       </div>
       <div className="row description p-2">{chaplain.description}</div>
@@ -97,7 +94,8 @@ const renderModal = (display, slot, chaplain, handleModalDisplay, user) => {
       ) : (
         <CardDisplay
           slot={slot}
-          name={chaplain.name}
+          first_name={chaplain.first_name}
+          last_name={chaplain.last_name}
           onClick={handleModalDisplay}
           user={user}
         />
@@ -113,31 +111,31 @@ const ChaplainImage = (chaplain) => {
         <div className="apt-img-container">
           <img
             className="profile-img"
-            src={process.env.PUBLIC_URL + chaplain.image}
+            src={
+              chaplain.image
+                ? process.env.REACT_APP_API_URL + chaplain.image.image
+                : process.env.PUBLIC_URL + "/profile_holder.png"
+            }
             alt="profile"
           />
         </div>
       </div>
       <div className="col-12 col-md-6 col-lg-8 text-center align-self-center">
         <div style={{ fontWeight: "bold", fontSize: "30px" }}>
-          {chaplain.name}
+          {`${chaplain.first_name} ${chaplain.last_name}`}
         </div>
-        <div className="title">{chaplain.title}</div>
+        <div className="title">{chaplain.religion}</div>
       </div>
     </div>
   );
 };
 
-const renderButton = (availability, slot) => {
+const renderButton = (slot) => {
   let classes = "btn btn-primary btn-detail";
-
-  if (availability === 0) {
-    classes += " disabled-button";
-  }
 
   return (
     <button
-      disabled={availability === 0 || slot === null}
+      disabled={slot === null}
       className={classes}
       style={{ maxWidth: "300px" }}
       data-bs-toggle="modal"

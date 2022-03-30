@@ -47,3 +47,15 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+def upload_location(instance, filename):
+    filebase, extension = filename.split(".")
+    return "profile/images/%s.%s" % (instance.user.id, extension)
+
+
+class UserImage(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="image"
+    )
+    image = models.ImageField(upload_to=upload_location)
