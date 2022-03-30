@@ -28,6 +28,7 @@ import { toast } from "react-toastify";
 import ListError from "./components/common/listError";
 import { getAppointments, updateAppointment } from "./services/appointment";
 import { getChaplains } from "./services/chaplains";
+import Homepage from "./components/homepage/homepage";
 
 function App() {
   const { pathname: route } = useLocation();
@@ -180,7 +181,8 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Homepage />} />
+              <Route path="/" element={<Homepage />} />
               <Route path="*" element={<Navigate to="/not-found" />} />
             </Routes>
           </div>
