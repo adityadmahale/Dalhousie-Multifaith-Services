@@ -29,4 +29,11 @@ urlpatterns = [
     path("addevent/", views.add_event),
     path("events/<int:id>", views.get_event),
     path("events/<int:id>/book", views.book_event),
+    path("timesheet/", views.TimeSheetList.as_view(), name="timesheet"),
+    path(
+        "timesheet/<int:chaplain_id>",
+        views.TimeSheetDetail.as_view(),
+        name="timesheet_detail",
+    )
+
 ]
