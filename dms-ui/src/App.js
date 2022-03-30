@@ -23,15 +23,17 @@ import { ToastContainer } from "react-toastify";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import Questionnaire from "./components/questionnaire/questionnaire";
 import AppointmentContext from "./context/appointmentContext";
+import ChaplainContext from "./context/chaplainContext";
 import { toast } from "react-toastify";
 import ListError from "./components/common/listError";
 import { getAppointments, updateAppointment } from "./services/appointment";
-import Homepage from "./components/homepage/homepage";
+import { getChaplains } from "./services/chaplains";
 
 function App() {
   const { pathname: route } = useLocation();
   const [user, setUser] = useState(null);
   const [appointments, setAppointments] = useState([]);
+  const [chaplains, setChaplains] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -52,6 +54,8 @@ function App() {
           chaplain_id
         );
         setAppointments(dataAppointments);
+        const { data: dataChaplains } = await getChaplains();
+        setChaplains(dataChaplains);
       }
     };
 
@@ -85,108 +89,103 @@ function App() {
 
   return (
     <AppointmentContext.Provider value={{ appointments, handleConfirmClick }}>
-      <React.Fragment>
-        <ToastContainer />
-        {isHeaderRequired(route) ? <Header user={user} /> : null}
-        <div className="container pt-4">
-          <Routes>
-            <Route path="/register/user" element={<RegisterUser />} />
-            <Route path="/register/chaplain" element={<RegisterChaplain />} />
-            <Route path="/login/user" element={<LoginUser />} />
-            <Route path="/login/chaplain" element={<LoginChaplain />} />
-            <Route path="/recovery/email" element={<RecoveryEmail />} />
-            <Route path="/recovery/code" element={<RecoveryCode />} />
-            <Route path="/recovery/password" element={<RecoveryPassword />} />
-            <Route path="/not-found" element={<NotFound />} />
-            <Route
-              path="/logout"
-              element={
-                <ProtectedRoute user={user}>
-                  <Logout />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute user={user}>
-                  <Profile user={user} />
-                </ProtectedRoute>
-              }
-            />
+      <ChaplainContext.Provider value={{ chaplains }}>
+        <React.Fragment>
+          <ToastContainer />
+          {isHeaderRequired(route) ? <Header user={user} /> : null}
+          <div className="container pt-4">
+            <Routes>
+              <Route path="/register/user" element={<RegisterUser />} />
+              <Route path="/register/chaplain" element={<RegisterChaplain />} />
+              <Route path="/login/user" element={<LoginUser />} />
+              <Route path="/login/chaplain" element={<LoginChaplain />} />
+              <Route path="/recovery/email" element={<RecoveryEmail />} />
+              <Route path="/recovery/code" element={<RecoveryCode />} />
+              <Route path="/recovery/password" element={<RecoveryPassword />} />
+              <Route path="/not-found" element={<NotFound />} />
+              <Route
+                path="/logout"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Logout />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Profile user={user} />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/chaplains/:id"
-              element={
-                <ProtectedRoute user={user}>
-                  <ChaplainDetails user={user} />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/chaplains/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <ChaplainDetails user={user} />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/chaplains"
-              element={
-                <ProtectedRoute user={user}>
-                  <ChaplainList user={user} />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/chaplains"
+                element={
+                  <ProtectedRoute user={user}>
+                    <ChaplainList user={user} />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/appointment-history"
-              element={
-                <ProtectedRoute user={user}>
-                  <AppointmentHistory user={user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/timesheet"
-              element={
-                <ProtectedRoute user={user}>
-                  <Timesheet user={user} />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/appointment-history"
+                element={
+                  <ProtectedRoute user={user}>
+                    <AppointmentHistory user={user} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/timesheet"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Timesheet />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/events"
-              element={
-                <ProtectedRoute user={user}>
-                  <Events user={user} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/events/:id"
-              element={
-                <ProtectedRoute user={user}>
-                  <EventDetails user={user}/>
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="/events"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Events />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/events/:id"
+                element={
+                  <ProtectedRoute user={user}>
+                    <EventDetails />
+                  </ProtectedRoute>
+                }
+              />
 
-            <Route
-              path="/questionnaire"
-              element={
-                <ProtectedRoute user={user}>
-                  <Questionnaire user={user}/>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/home"
-              element={
-                  <Homepage />
-              }
-            />
-
-            <Route path="/" element={<Homepage />} />
-            <Route path="*" element={<Navigate to="/not-found" />} />
-          </Routes>
-        </div>
-      </React.Fragment>
+              <Route
+                path="/questionnaire"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Questionnaire />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<Navigate to="/not-found" />} />
+            </Routes>
+          </div>
+        </React.Fragment>
+      </ChaplainContext.Provider>
     </AppointmentContext.Provider>
   );
 }

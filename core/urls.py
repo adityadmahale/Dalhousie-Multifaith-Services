@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path("recovery/", views.recovery),
-    path("name/", views.update_name)
+    path("name/", views.update_name),
+    path("image/", views.UserImageView.as_view()),
 ]

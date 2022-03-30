@@ -6,7 +6,7 @@ import { useRef } from "react";
 import Input from "../common/inputField";
 import CardConfirmation from "./cardConfirmation";
 
-const CardDisplay = ({ slot, name, user, onClick }) => {
+const CardDisplay = ({ slot, first_name, last_name, user, onClick }) => {
   const [display, setDisplay] = useState(false);
   const form = useRef();
   const sendEmail = (e) => {
@@ -45,7 +45,7 @@ const CardDisplay = ({ slot, name, user, onClick }) => {
       {!display && (
         <div className="text-center card-confirmation">
           <i className="ri-mental-health-fill" style={{ color: "#4d97d4" }}></i>
-          <p className="card-text">{name}</p>
+          <p className="card-text">{`${first_name} ${last_name}`}</p>
           <p className="link">
             {`${day}/${month}/${year}`} - {getSlotRange(slot.getHours())}
           </p>
