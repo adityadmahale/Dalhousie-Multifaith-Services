@@ -34,7 +34,7 @@ const CardDisplay = ({ slot, first_name, last_name, user, onClick }) => {
   if (slot === null) return null;
 
   const day = slot.getDate();
-  const month = slot.getMonth();
+  const month = slot.getMonth() + 1;
   const year = slot.getFullYear();
   const slotTime =
     day + "/" + month + "/" + year + "-" + getSlotRange(slot.getHours());
