@@ -4,6 +4,7 @@ export default function EventsCard({ data }) {
   const handleClick = (eventsId) => {
     navigate(`/events/${eventsId}`, { state: { event: data } });
   };
+  const day = new Date(data.event_date);
   return (
     <div
       className="col-sm-3 m-2 events-card"
@@ -17,9 +18,11 @@ export default function EventsCard({ data }) {
         />
       </div>
       <div className="card-body">
-        <div style={{ fontWeight: "bold" }}>{data.eventName}</div>
+        <div style={{ fontWeight: "bold" }}>{data.event_title}</div>
         <div className="title text-primary" style={{ fontWeight: 900 }}>
-          {data.date}
+          {`${day.getDate()} ${day.toLocaleString("default", {
+            month: "long",
+          })}, ${day.getFullYear()}`}
         </div>
       </div>
     </div>
