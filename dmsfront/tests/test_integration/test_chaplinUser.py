@@ -29,7 +29,6 @@ class TestChaplinAuth:
         data = {
             "user_id": id,
             "phone": "9024538293",
-            "user": "harshit",
             "religion": "Hindu",
             "description": "i am a chaplin",
         }
@@ -54,7 +53,6 @@ class TestChaplinAuth:
         data = {
             "user_id": id,
             "phone": "9024538293",
-            "user": "harshit",
             "religion": "Hindu",
             "description": "i am a chaplin",
         }
@@ -81,7 +79,6 @@ class TestChaplinAuth:
         data = {
             "user_id": id,
             "phone": "9024538293",
-            "user": "anas",
             "religion": "Hindu",
             "description": "i am a chaplin",
         }

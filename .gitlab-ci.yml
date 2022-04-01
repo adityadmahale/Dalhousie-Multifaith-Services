@@ -43,6 +43,8 @@ test:
     - sleep 5
     # Integration Testing
     - python3 -m pipenv run pytest -m integration
+    # Unit Testing
+    - python3 -m pipenv run pytest -m unit
   after_script:
     - *ssh-configure
     - scp -r -o StrictHostKeyChecking=no report.html "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_integration.html"
