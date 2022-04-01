@@ -53,5 +53,5 @@ class Event(models.Model):
 class TimeSheet(models.Model):
     chaplain_id = models.ForeignKey(Chaplain, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
-    start_time = models.DateTimeField(null=False)
-    end_time = models.DateTimeField(null=False)
+    start = models.TextField(blank=False)
+    end = models.TextField(blank=False)

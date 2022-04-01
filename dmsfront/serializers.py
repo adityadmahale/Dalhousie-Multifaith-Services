@@ -83,16 +83,16 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
 class TimeSheetSerializer(serializers.ModelSerializer):
     title = serializers.CharField(max_length=150)
-    start_time = serializers.DateTimeField()
-    end_time = serializers.DateTimeField()
+    start = serializers.CharField(max_length=150)
+    end = serializers.CharField(max_length=150)
 
     class Meta:
         model = TimeSheet
         fields = [
             "chaplain_id",
             "title",
-            "start_time",
-            "end_time",
+            "start",
+            "end",
         ]
 
 
