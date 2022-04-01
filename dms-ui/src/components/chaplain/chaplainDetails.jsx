@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { getBookedSlots, bookSlot } from "../../services/slots";
 import { isSlotBooked, isSlotEqual, isSlotInPast } from "../../utility/booking";
 import CardConfirmation from "./cardConfirmation";
@@ -8,7 +7,7 @@ import Modal from "../common/modal";
 import Slots from "./slots";
 import { toast } from "react-toastify";
 import ListError from "../common/listError";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const ChaplainDetails = ({ user }) => {
   const { id } = useParams();

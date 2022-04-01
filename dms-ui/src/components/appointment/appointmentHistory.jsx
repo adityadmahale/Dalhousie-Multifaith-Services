@@ -8,8 +8,8 @@ const AppointmentHistory = ({ user }) => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const appointmentContext = useContext(AppointmentContext);
 
-  const onclick = (selected, action) => {
-    setAction(action);
+  const onclick = (selected, userAction) => {
+    setAction(userAction);
     setSelectedAppointment(selected);
   };
 

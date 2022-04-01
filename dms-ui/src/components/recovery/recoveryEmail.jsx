@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Input from "../common/inputField";
 import Joi from "joi";
 import Logo from "../common/logo";
 import { useNavigate, useLocation } from "react-router-dom";
 import emailjs from "emailjs-com";
-import { useRef } from "react";
+
 const RecoveryEmail = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ email: "" });
@@ -37,20 +37,20 @@ const RecoveryEmail = () => {
     if (!result.error) {
       return null;
     }
-    const errors = {};
+    const allErrors = {};
     for (let item of result.error.details) {
-      errors[item.path[0]] = item.message;
+      allErrors[item.path[0]] = item.message;
     }
 
-    return errors;
+    return allErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = validate();
-    setErrors(errors || {});
-    if (errors) {
+    const allErrors = validate();
+    setErrors(allErrors || {});
+    if (allErrors) {
       return;
     }
     sendEmail(e);

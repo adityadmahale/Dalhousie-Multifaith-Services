@@ -138,8 +138,8 @@ const Events = () => {
         </div>
 
         <div className="d-flex flex-wrap">
-          {eventContext.events.map((event) => (
-            <EventsCard key={event.id} data={event} />
+          {eventContext.events.map((eventData) => (
+            <EventsCard key={eventData.id} data={eventData} />
           ))}
         </div>
       </div>
