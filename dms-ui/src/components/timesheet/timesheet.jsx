@@ -91,7 +91,7 @@ export default function Resource({ user }) {
 							<span className="font-weight-bold">Title:</span>
 							<Input
 								type="text"
-								placeholder="Enter Event Name"
+								placeholder="Enter Title"
 								name="title"
 								onChange={handleChange}
 								value={event.title}
