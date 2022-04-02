@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ type, placeholder, name, onChange, error, value }) => {
+const InputField = ({ type, placeholder, name, onChange, error, value }) => {
   return (
     <div className="form-group">
       <input
@@ -16,4 +16,4 @@ const Input = ({ type, placeholder, name, onChange, error, value }) => {
   );
 };
 
-export default Input;
+export default InputField;

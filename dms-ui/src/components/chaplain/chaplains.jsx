@@ -3,7 +3,7 @@ import ChaplainImage from "./chaplainImage";
 import { useNavigate } from "react-router-dom";
 import ChaplainContext from "../../context/chaplainContext";
 
-const ChaplainList = () => {
+const Chaplains = () => {
   const navigate = useNavigate();
   const chaplainContext = useContext(ChaplainContext);
 
@@ -21,6 +21,7 @@ const ChaplainList = () => {
 
   return (
     <div className="row">
+      <h4 className="link mb-4">Spiritual Support Team</h4>
       {chaplainContext.chaplains.map((chaplain) => (
         <div className="col-12 col-md-4" key={chaplain.id}>
           <div className="card">
@@ -46,4 +47,4 @@ const renderButton = (onClick, chaplain) => {
   );
 };
 
-export default ChaplainList;
+export default Chaplains;

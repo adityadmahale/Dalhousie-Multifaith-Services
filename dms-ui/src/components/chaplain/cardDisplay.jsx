@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { getSlotRange } from "../../utility/booking";
-import { useState } from "react";
 import emailjs from "emailjs-com";
-import { useRef } from "react";
 import Input from "../common/inputField";
 import CardConfirmation from "./cardConfirmation";
 
@@ -34,7 +32,7 @@ const CardDisplay = ({ slot, first_name, last_name, user, onClick }) => {
   if (slot === null) return null;
 
   const day = slot.getDate();
-  const month = slot.getMonth();
+  const month = slot.getMonth() + 1;
   const year = slot.getFullYear();
   const slotTime =
     day + "/" + month + "/" + year + "-" + getSlotRange(slot.getHours());

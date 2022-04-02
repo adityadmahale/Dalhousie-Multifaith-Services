@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
-const EventDetails = () => {
-  const [events, setEvents] = useState({});
+import EventContext from "../../context/eventContext";
+
+const EventsDetails = () => {
+  const eventContext = useContext(EventContext);
+  const [event, setEvent] = useState({});
   const location = useLocation();
+  const day = new Date(event.event_date);
   useEffect(() => {
-    setEvents(location.state.event);
-  });
+    setEvent(location.state.event);
+  }, [location]);
   return (
     <>
       <div className="d-flex flex-column">
@@ -37,13 +41,15 @@ const EventDetails = () => {
                   <div className="d-flex flex-column justify-content-start align-content-">
                     <div>
                       <h4 className="card-title" style={{ fontSize: "32px" }}>
-                        {events.eventName}
+                        {event.event_title}
                       </h4>
                       <div
                         className=" d-flex align-items-center card-subtitle mb-4  "
                         style={{ fontSize: "18px" }}
                       >
-                        {events.date}
+                        {`${day.getDate()} ${day.toLocaleString("default", {
+                          month: "long",
+                        })}, ${day.getFullYear()}`}
                         <div className="p-2">
                           <svg
                             width="18"
@@ -58,7 +64,7 @@ const EventDetails = () => {
                             />
                           </svg>
                         </div>
-                        {events.address}
+                        {event.event_location}
                       </div>
                     </div>
                   </div>
@@ -71,7 +77,7 @@ const EventDetails = () => {
                         className="p-1 d-flex justify-content-end"
                         style={{ fontSize: "48px" }}
                       >
-                        {events.seats}
+                        {event.available_seats}
                       </div>
                     </div>
                   </div>
@@ -88,17 +94,20 @@ const EventDetails = () => {
                         />{" "}
                       </div>
                       <div className="card-body">
-                        {events.hostname}
+                        {event.host_name}
                         <br />
-                        {events.hostDesignation}
+                        {event.host_details}
                       </div>
                     </div>
                   </div>
                   <div className="d-flex justify-content-between justify-content-end ">
                     <div className={`d-flex flex-column `}>
-                      <a href="#!" className="btn btn-primary px-5">
+                      <button
+                        className="btn btn-primary px-5"
+                        onClick={() => eventContext.handleBooking(event)}
+                      >
                         Book
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -112,7 +121,7 @@ const EventDetails = () => {
         >
           <div className="card-body">
             <h4 className="card-title">Description</h4>
-            <p className="card-text">{events.eventDetails}</p>
+            <p className="card-text">{event.event_description}</p>
           </div>
         </div>
       </div>
@@ -120,4 +129,4 @@ const EventDetails = () => {
   );
 };
 
-export default EventDetails;
+export default EventsDetails;

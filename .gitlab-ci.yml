@@ -43,21 +43,30 @@ test:
     - sleep 5
     # Integration Testing
     - python3 -m pipenv run pytest -m integration
+    # Unit Testing
+    - python3 -m pipenv run pytest -m unit
   after_script:
     - *ssh-configure
     - scp -r -o StrictHostKeyChecking=no report.html "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_integration.html"
-  only:
-    - develop
-    - main
 
 code_quality:
   stage: code_quality
   script:
     - python3 -m pipenv install --dev
     - python3 -m pipenv run flake8 --output-file=code_quality.txt
+    # Integration with sonarqube
+    - apt install -y unzip wget
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+    - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+    - mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
+    - export PATH="$PATH:/opt/sonar-scanner/bin"
+    - sonar-scanner -Dsonar.organization=group10-dms -Dsonar.projectKey=group10-dms -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io
   after_script:
     - *ssh-configure
     - scp -r -o StrictHostKeyChecking=no code_quality.txt "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_code_quality.txt"
+  only:
+    - develop
+    - main
 
 deploy_frontend:
   image: node:12.16.1

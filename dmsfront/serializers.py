@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from datetime import datetime, timedelta
+from django.db.models import Q
 from core.serializers import UserCreateSerializer, UserSerializer
-from .models import Appointment, DalUser, Chaplain, Event
+from .models import Appointment, DalUser, Chaplain, Event, TimeSheet
 
 
 class DalUserSerializer(serializers.ModelSerializer):
@@ -15,10 +17,33 @@ class DalUserSerializer(serializers.ModelSerializer):
 class ChaplainSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField()
     user = UserCreateSerializer(read_only=True)
+    booked_slots = serializers.SerializerMethodField()
 
     class Meta:
         model = Chaplain
-        fields = ["id", "user_id", "phone", "religion", "description", "user"]
+        fields = ["id", "user_id", "phone", "religion", "description",
+                  "user", "booked_slots"]
+
+    def get_booked_slots(self, obj):
+        booked_slots = Appointment.objects.all()
+        booked_slots = booked_slots.filter(chaplain_id=obj.user_id)
+        lastfriday = datetime.now()
+        curfriday = datetime.now()
+        lastfriday -= timedelta(1)
+        while curfriday.weekday() != 4:
+            curfriday += timedelta(1)
+        while(lastfriday.weekday() != 4):
+            lastfriday -= timedelta(1)
+        current_friday = curfriday.strftime("%Y-%m-%d %H:%M:%S")
+        current_friday = current_friday[:10]+" 15:00:00.00000"
+        last_friday = lastfriday.strftime("%Y-%m-%d %H:%M:%S")
+        last_friday = last_friday[:10]+" 15:00:00.00000"
+        booked_slots = booked_slots.filter(
+            slot__gt=last_friday,
+            slot__lt=current_friday
+        )
+        booked_slots = booked_slots.filter(~Q(status="cancelled"))
+        return booked_slots.count()
 
 
 class UserInfoSeriaizer(serializers.ModelSerializer):
@@ -53,6 +78,21 @@ class AppointmentSerializer(serializers.ModelSerializer):
             "status",
             "daluser",
             "chaplain",
+        ]
+
+
+class TimeSheetSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=150)
+    start = serializers.CharField(max_length=150)
+    end = serializers.CharField(max_length=150)
+
+    class Meta:
+        model = TimeSheet
+        fields = [
+            "chaplain_id",
+            "title",
+            "start",
+            "end",
         ]
 
 

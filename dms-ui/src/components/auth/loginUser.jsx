@@ -19,7 +19,7 @@ const LoginUser = () => {
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })
-      .regex(RegExp(".*@dal.ca$"))
+      .regex(/.*@dal.ca$/)
       .required()
       .label("Email")
       .messages({
@@ -34,20 +34,20 @@ const LoginUser = () => {
     if (!result.error) {
       return null;
     }
-    const errors = {};
+    const allErrors = {};
     for (let item of result.error.details) {
-      errors[item.path[0]] = item.message;
+      allErrors[item.path[0]] = item.message;
     }
 
-    return errors;
+    return allErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = validate();
-    setErrors(errors || {});
-    if (errors) {
+    const allErrors = validate();
+    setErrors(allErrors || {});
+    if (allErrors) {
       return;
     }
 

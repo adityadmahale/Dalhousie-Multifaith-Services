@@ -2,9 +2,10 @@ export const getCurrentWeekDates = () => {
   const currentDay = new Date();
   const week = [];
 
-  if (currentDay.getDay() === 5 && currentDay.getHours() >= 13) {
-    currentDay.setDate(currentDay.getDate() + 2);
-  } else if (currentDay.getDay() === 6) {
+  if (
+    (currentDay.getDay() === 5 && currentDay.getHours() >= 13) ||
+    currentDay.getDay() === 6
+  ) {
     currentDay.setDate(currentDay.getDate() + 2);
   }
 
@@ -13,10 +14,10 @@ export const getCurrentWeekDates = () => {
   );
 
   for (let i = 1; i <= 5; i++) {
-    for (let j = 0; j < slotTimeStart.length; j++) {
+    for (const timeStart of slotTimeStart) {
       const first = currentDay.getDate() - currentDay.getDay() + i;
       const day = new Date(currentDay.setDate(first));
-      day.setUTCHours(slotTimeStart[j], 0, 0, 0);
+      day.setUTCHours(timeStart, 0, 0, 0);
       week.push(day);
     }
   }

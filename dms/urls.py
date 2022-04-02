@@ -18,11 +18,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+auth_endpoint = "auth/"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("auth/", include("djoser.urls")),
-    path("auth/", include("djoser.urls.jwt")),
-    path("auth/", include("core.urls")),
+    path(auth_endpoint, include("djoser.urls")),
+    path(auth_endpoint, include("djoser.urls.jwt")),
+    path(auth_endpoint, include("core.urls")),
     path("dmsfront/", include("dmsfront.urls")),
 ]
 

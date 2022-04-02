@@ -48,3 +48,10 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_title
+
+
+class TimeSheet(models.Model):
+    chaplain_id = models.ForeignKey(Chaplain, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    start = models.TextField(blank=False)
+    end = models.TextField(blank=False)

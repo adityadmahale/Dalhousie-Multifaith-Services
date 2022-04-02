@@ -22,24 +22,8 @@ const AppointmentCard = ({ cardData, onclick, user }) => {
             <div className="d-flex flex-column justify-content-start">
               <span className="h6">{`#DAL${cardData.id}`}</span>
               <h5 className="card-title">{`${firstName} ${lastName}`}</h5>
-              <div
-                className={`${
-                  cardData.status === "pending"
-                    ? "text-danger"
-                    : cardData.status === "confirmed"
-                    ? "text-success"
-                    : "text-secondary"
-                } mt-3  d-flex `}
-              >
-                <div
-                  className={`${
-                    cardData.status === "pending"
-                      ? "bg-danger"
-                      : cardData.status === "confirmed"
-                      ? "bg-success"
-                      : "bg-secondary"
-                  } dot`}
-                ></div>{" "}
+              <div className={getClassNames(cardData)}>
+                <div className={getClassNamesStatus(cardData)}></div>{" "}
                 <p className="h6">&nbsp;&nbsp;{cardData.status}</p>
               </div>
             </div>
@@ -89,3 +73,27 @@ const AppointmentCard = ({ cardData, onclick, user }) => {
   );
 };
 export default AppointmentCard;
+
+const getClassNames = (cardData) => {
+  let classes = "mt-3 d-flex ";
+  if (cardData.status === "pending") {
+    classes += "text-danger";
+  } else if (cardData.status === "confirmed") {
+    classes += "text-success";
+  } else {
+    classes += "text-secondary";
+  }
+  return classes;
+};
+
+const getClassNamesStatus = (cardData) => {
+  let classes = "dot ";
+  if (cardData.status === "pending") {
+    classes += "bg-danger";
+  } else if (cardData.status === "confirmed") {
+    classes += "bg-success";
+  } else {
+    classes += "bg-secondary";
+  }
+  return classes;
+};
