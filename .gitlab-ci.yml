@@ -48,9 +48,6 @@ test:
   after_script:
     - *ssh-configure
     - scp -r -o StrictHostKeyChecking=no report.html "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_integration.html"
-  only:
-    - develop
-    - main
 
 code_quality:
   stage: code_quality
@@ -67,6 +64,9 @@ code_quality:
   after_script:
     - *ssh-configure
     - scp -r -o StrictHostKeyChecking=no code_quality.txt "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHA}_code_quality.txt"
+  only:
+    - develop
+    - main
 
 deploy_frontend:
   image: node:12.16.1
