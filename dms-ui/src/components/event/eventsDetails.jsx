@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import EventContext from "../../context/eventContext";
 
-const EventDetails = () => {
+const EventsDetails = () => {
   const eventContext = useContext(EventContext);
   const [event, setEvent] = useState({});
   const location = useLocation();
@@ -129,4 +129,4 @@ const EventDetails = () => {
   );
 };
 
-export default EventDetails;
+export default EventsDetails;

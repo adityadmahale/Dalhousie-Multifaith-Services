@@ -19,7 +19,7 @@ import TimesheetContext from "../../context/timesheetContext";
 
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
-export default function Resource({ user }) {
+export default function TimeSheet({ user }) {
   const [event, setEvent] = useState({
     title: "",
     start_date: "",
@@ -60,94 +60,94 @@ export default function Resource({ user }) {
     []
   );
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		let data = {
-			chaplain_id: user.id,
-			title: event.title,
-			start: String(new Date(event.start_date + "T" + event.start_time)),
-			end: String(new Date(event.end_date + "T" + event.end_time)),
-		};
-		setCreateTimeEvent(data);
-		timesheetContext.handleTimesheetSubmit(createTimeEvent);
-	};
-	let classes = "btn btn-primary btn-detail";
-	return (
-		<Fragment>
-			<button
-				onClick={onclick}
-				className={classes}
-				style={{ maxWidth: "300px" }}
-				data-bs-toggle="modal"
-				data-bs-target="#exampleModal2"
-			>
-				Add 
-			</button>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let data = {
+      chaplain_id: user.id,
+      title: event.title,
+      start: String(new Date(event.start_date + "T" + event.start_time)),
+      end: String(new Date(event.end_date + "T" + event.end_time)),
+    };
+    setCreateTimeEvent(data);
+    timesheetContext.handleTimesheetSubmit(createTimeEvent);
+  };
+  let classes = "btn btn-primary btn-detail";
+  return (
+    <Fragment>
+      <button
+        onClick={onclick}
+        className={classes}
+        style={{ maxWidth: "300px" }}
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal2"
+      >
+        Add
+      </button>
 
-			<div>
-				<Modal id="exampleModal2">
-					<form id="event" onSubmit={handleSubmit}>
-						<div className="">
-							<span className="font-weight-bold">Title:</span>
-							<Input
-								type="text"
-								placeholder="Enter Title"
-								name="title"
-								onChange={handleChange}
-								value={event.title}
-							/>
-						</div>
-						<div>
-							<span className="font-weight-bold">Start Date:</span>
-							<Input
-								type="date"
-								placeholder="Start date"
-								name="start_date"
-								onChange={handleChange}
-								value={event.start_date}
-							/>
-						</div>
-						<div>
-							<span className="font-weight-bold">End Date:</span>
-							<Input
-								type="date"
-								placeholder="End date"
-								name="end_date"
-								onChange={handleChange}
-								value={event.end_date}
-							/>
-						</div>
-						<div>
-							<span className="font-weight-bold">Start Time:</span>
-							<Input
-								type="time"
-								placeholder="Start time"
-								name="start_time"
-								onChange={handleChange}
-								value={event.start_time}
-							/>
-						</div>
-						<div>
-							<span className="font-weight-bold">End Time:</span>
-							<Input
-								type="time"
-								placeholder="End time"
-								name="end_time"
-								onChange={handleChange}
-								value={event.end_time}
-							/>
-						</div>
-						<button
-							className="btn btn-primary"
-							type="submit"
-							data-bs-dismiss="modal"
-							onClick={() => handleSubmit}
-						>
-							Confirm
-						</button>
-					</form>
-				</Modal>
-			</div>
+      <div>
+        <Modal id="exampleModal2">
+          <form id="event" onSubmit={handleSubmit}>
+            <div className="">
+              <span className="font-weight-bold">Title:</span>
+              <Input
+                type="text"
+                placeholder="Enter Title"
+                name="title"
+                onChange={handleChange}
+                value={event.title}
+              />
+            </div>
+            <div>
+              <span className="font-weight-bold">Start Date:</span>
+              <Input
+                type="date"
+                placeholder="Start date"
+                name="start_date"
+                onChange={handleChange}
+                value={event.start_date}
+              />
+            </div>
+            <div>
+              <span className="font-weight-bold">End Date:</span>
+              <Input
+                type="date"
+                placeholder="End date"
+                name="end_date"
+                onChange={handleChange}
+                value={event.end_date}
+              />
+            </div>
+            <div>
+              <span className="font-weight-bold">Start Time:</span>
+              <Input
+                type="time"
+                placeholder="Start time"
+                name="start_time"
+                onChange={handleChange}
+                value={event.start_time}
+              />
+            </div>
+            <div>
+              <span className="font-weight-bold">End Time:</span>
+              <Input
+                type="time"
+                placeholder="End time"
+                name="end_time"
+                onChange={handleChange}
+                value={event.end_time}
+              />
+            </div>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              data-bs-dismiss="modal"
+              onClick={() => handleSubmit}
+            >
+              Confirm
+            </button>
+          </form>
+        </Modal>
+      </div>
 
       <div className="height600 bg-white">
         <Calendar
@@ -167,6 +167,6 @@ export default function Resource({ user }) {
     </Fragment>
   );
 }
-Resource.propTypes = {
+TimeSheet.propTypes = {
   localizer: PropTypes.instanceOf(DateLocalizer),
 };

@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { getSlotRange } from "../../utility/booking";
-import { useState, useRef } from "react";
 import emailjs from "emailjs-com";
 import Input from "../common/inputField";
 import CardConfirmation from "./cardConfirmation";

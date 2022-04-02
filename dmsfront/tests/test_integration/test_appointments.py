@@ -27,7 +27,7 @@ class TestAppointmentsAuth:
         )
         daluser_id = daluser_response.json()["id"]
         data = {"user_id": id, "phone": "9024538293", "user": "harshit"}
-        daluser_response = requests.post(self.dal_user_url, data)
+        requests.post(self.dal_user_url, data)
 
         # chaplin added
         chaplin_response = requests.post(
@@ -49,7 +49,7 @@ class TestAppointmentsAuth:
             "description": "i am a chaplin",
         }
         # chaplin added
-        chaplin_response = requests.post(self.chaplin_url, data)
+        requests.post(self.chaplin_url, data)
 
         response = requests.get(
             self.appointment_url + str(daluser_id) + "/" + str(chaplin_id)

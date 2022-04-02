@@ -13,10 +13,10 @@ class TestTimesheetUnit:
 
     # TIMESHEETLIST - mocked the post method from the TimeSheetList
     def test_timesheet_list_post(self):
-        fakeResponse = Response()
-        fakeResponse.status_code = status.HTTP_202_ACCEPTED
+        fake_response = Response()
+        fake_response.status_code = status.HTTP_202_ACCEPTED
         mock_post = mock.Mock(
-            name="TimeSheetList-post", return_value=fakeResponse
+            name="TimeSheetList-post", return_value=fake_response
         )
         self.timesheet_list.post = mock_post
 
@@ -26,10 +26,10 @@ class TestTimesheetUnit:
 
     # TIMESHEETDETAIL - mocked the get method from the TimeSheetDetail
     def test_timesheet_detail_get(self):
-        fakeResponse = Response()
-        fakeResponse.status_code = status.HTTP_200_OK
+        fake_response = Response()
+        fake_response.status_code = status.HTTP_200_OK
         mock_post = mock.Mock(
-            name="TimeSheetDetail-get", return_value=fakeResponse
+            name="TimeSheetDetail-get", return_value=fake_response
         )
         self.timesheet_detail.get = mock_post
 

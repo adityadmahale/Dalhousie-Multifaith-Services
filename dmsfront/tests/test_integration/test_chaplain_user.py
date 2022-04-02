@@ -14,7 +14,7 @@ class TestChaplinUsersAuth:
     appointment_url = "http://localhost:8000/dmsfront/appointments/"
 
     # ChaplinUser-test adding chaplin user with correct data
-    def test_ChaplinUser_post(self):
+    def test_chaplain_user_post(self):
         user_response = requests.post(
             self.url,
             {
@@ -25,13 +25,13 @@ class TestChaplinUsersAuth:
                 "is_staff": False,
             },
         )
-        id = user_response.json()["id"]
-        data = {"user_id": id, "phone": "9024538293", "user": "apexa"}
+        user_id = user_response.json()["id"]
+        data = {"user_id": user_id, "phone": "9024538293", "user": "apexa"}
         response = requests.post(self.chaplin_url, data)
         assert response.status_code == status.HTTP_201_CREATED
 
     # ChaplinUser-test adding chaplin user with correct data
-    def test_ChaplinUserDetail_get(self):
+    def test_chaplain_user_detail_get(self):
         # user added
         user_response = requests.post(
             self.url,
@@ -43,9 +43,9 @@ class TestChaplinUsersAuth:
                 "is_staff": False,
             },
         )
-        id = user_response.json()["id"]
-        data = {"user_id": id, "phone": "9024538293", "user": "sneha"}
+        user_id = user_response.json()["id"]
+        data = {"user_id": user_id, "phone": "9024538293", "user": "sneha"}
         # daluser added
         daluser_response = requests.post(self.chaplin_url, data)
-        response = requests.get(self.chaplin_url + str(id))
+        response = requests.get(self.chaplin_url + str(user_id))
         assert response.json()["id"] == daluser_response.json()["id"]
