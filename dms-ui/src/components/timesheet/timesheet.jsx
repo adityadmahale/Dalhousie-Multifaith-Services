@@ -63,7 +63,7 @@ export default function Resource({ user }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		let data = {
-			chaplain_id: user.user.id,
+			chaplain_id: user.id,
 			title: event.title,
 			start: String(new Date(event.start_date + "T" + event.start_time)),
 			end: String(new Date(event.end_date + "T" + event.end_time)),
