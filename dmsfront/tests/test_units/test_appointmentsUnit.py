@@ -24,11 +24,11 @@ class TestAppointmentsUnits:
     userappointment_detail = UserAppointmentDetails()
 
     # USERAPPOINTMENTLIST - mocked the post method from the UserAppointmentList
-    def test_UserAppointmentList_put(self):
-        fakeResponse = Response()
-        fakeResponse.status_code = status.HTTP_202_ACCEPTED
+    def test_user_appointment_list_put(self):
+        fake_response = Response()
+        fake_response.status_code = status.HTTP_202_ACCEPTED
         mock_put = mock.Mock(
-            name="AppointmentList-put", return_value=fakeResponse
+            name="AppointmentList-put", return_value=fake_response
         )
         self.userappointment_list.put = mock_put
 
@@ -38,11 +38,11 @@ class TestAppointmentsUnits:
         )
 
     # APPOINTMENTLIST - mocked the post method from the AppointmentList
-    def test_AppointmentList_get(self):
-        fakeResponse = Response()
-        fakeResponse.status_code = 200
+    def test_appointment_list_get(self):
+        fake_response = Response()
+        fake_response.status_code = 200
         mock_get = mock.Mock(
-            name="AppointmentList-put", return_value=fakeResponse
+            name="AppointmentList-put", return_value=fake_response
         )
         self.appointment_list.get = mock_get
 
@@ -50,11 +50,11 @@ class TestAppointmentsUnits:
 
     # USERAPPOINTMENTDETAILS
     # mocked the post method from the UserAppointmentDetails
-    def test_UserAppointmentDetail_put(self):
-        fakeResponse = Response()
-        fakeResponse.status_code = status.HTTP_202_ACCEPTED
+    def test_user_appointment_detail_put(self):
+        fake_response = Response()
+        fake_response.status_code = status.HTTP_202_ACCEPTED
         mock_put = mock.Mock(
-            name="AppointmentList-put", return_value=fakeResponse
+            name="AppointmentList-put", return_value=fake_response
         )
         self.userappointment_detail.put = mock_put
 

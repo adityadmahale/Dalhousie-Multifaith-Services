@@ -14,7 +14,7 @@ class TestDalUsersAuth:
     appointment_url = "http://localhost:8000/dmsfront/appointments/"
 
     # Daluser-test adding daluser with correct data
-    def test_dalUser_post(self):
+    def test_dal_user_post(self):
         user_response = requests.post(
             self.url,
             {
@@ -25,13 +25,13 @@ class TestDalUsersAuth:
                 "is_staff": False,
             },
         )
-        id = user_response.json()["id"]
-        data = {"user_id": id, "phone": "9024538293", "user": "harshit"}
+        user_id = user_response.json()["id"]
+        data = {"user_id": user_id, "phone": "9024538293", "user": "harshit"}
         response = requests.post(self.dal_user_url, data)
         assert response.status_code == status.HTTP_201_CREATED
 
     # Daluser-test adding daluser with correct data
-    def test_dalUserDetail_get(self):
+    def test_dal_user_detail_get(self):
         # user added
         user_response = requests.post(
             self.url,
@@ -43,9 +43,9 @@ class TestDalUsersAuth:
                 "is_staff": False,
             },
         )
-        id = user_response.json()["id"]
-        data = {"user_id": id, "phone": "9024538293", "user": "harshit"}
+        user_id = user_response.json()["id"]
+        data = {"user_id": user_id, "phone": "9024538293", "user": "harshit"}
         # daluser added
         daluser_response = requests.post(self.dal_user_url, data)
-        response = requests.get(self.dal_user_url + str(id))
+        response = requests.get(self.dal_user_url + str(user_id))
         assert response.json()["id"] == daluser_response.json()["id"]

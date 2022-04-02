@@ -21,20 +21,20 @@ class TestEventsAuth:
         assert response.status_code == status.HTTP_200_OK
 
     # EVENTS-test on adding an events
-    def test_addEvents_post(self):
+    def test_add_events_post(self):
         # events
-        dateTime = models.DateTimeField(
+        date_time = models.DateTimeField(
             default=datetime.datetime.now, blank=True
         )
         response = requests.post(
             (self.events_url + "addevent/"),
             {
                 "event_title": "abcdbd",
-                "event_date": dateTime,
-                "event_location": "svhsjnv",
+                "event_date": date_time,
+                "event_location": "xyanascaasc3",
                 "event_description": "sdcjdshvn",
-                "available_seats": 5,
-                "host_name": "dvhdfnvf",
+                "available_seats": 10,
+                "host_name": "acas^7anc",
                 "host_details": "dchdbfchfd",
             },
         )
@@ -42,16 +42,16 @@ class TestEventsAuth:
         assert response.status_code == status.HTTP_200_OK
 
     # EVENTS-test on getting an events
-    def test_Particularevent_get(self):
+    def test_particular_event_get(self):
         # events
-        dateTime = models.DateTimeField(
+        date_time = models.DateTimeField(
             default=datetime.datetime.now, blank=True
         )
         response = requests.post(
             (self.events_url + "addevent/"),
             {
                 "event_title": "abcdbd",
-                "event_date": dateTime,
+                "event_date": date_time,
                 "event_location": "svhsjnv",
                 "event_description": "sdcjdshvn",
                 "available_seats": 5,

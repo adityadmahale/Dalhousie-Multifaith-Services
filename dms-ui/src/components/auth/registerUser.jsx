@@ -32,7 +32,7 @@ const RegisterUser = () => {
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string()
       .email({ tlds: { allow: false } })
-      .regex(RegExp(".*@dal.ca$"))
+      .regex(/.*@dal.ca$/)
       .required()
       .label("Email")
       .messages({

@@ -3,7 +3,7 @@ import ChaplainImage from "./chaplainImage";
 import { useNavigate } from "react-router-dom";
 import ChaplainContext from "../../context/chaplainContext";
 
-const ChaplainList = () => {
+const Chaplains = () => {
   const navigate = useNavigate();
   const chaplainContext = useContext(ChaplainContext);
 
@@ -46,4 +46,4 @@ const renderButton = (onClick, chaplain) => {
   );
 };
 
-export default ChaplainList;
+export default Chaplains;

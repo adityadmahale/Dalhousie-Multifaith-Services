@@ -19,7 +19,7 @@ const LoginUser = () => {
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })
-      .regex(RegExp(".*@dal.ca$"))
+      .regex(/.*@dal.ca$/)
       .required()
       .label("Email")
       .messages({

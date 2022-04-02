@@ -33,7 +33,7 @@ class TestTimeSheetAuth:
             "description": "Certified clergy member.",
         }
 
-        chaplin_response = requests.post(self.chaplin_url, chaplain_data)
+        requests.post(self.chaplin_url, chaplain_data)
 
         response = requests.get(self.timesheet_url + str(chaplin_id))
         assert response.status_code == status.HTTP_200_OK
@@ -60,7 +60,7 @@ class TestTimeSheetAuth:
             "description": "Member",
         }
 
-        chaplin_response = requests.post(self.chaplin_url, chaplain_data)
+        requests.post(self.chaplin_url, chaplain_data)
 
         response = requests.get(self.timesheet_url + str(chaplin_id))
         assert response.status_code == status.HTTP_200_OK
