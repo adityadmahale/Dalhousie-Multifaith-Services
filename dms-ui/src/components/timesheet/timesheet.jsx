@@ -81,14 +81,14 @@ export default function Resource({ user }) {
 				data-bs-toggle="modal"
 				data-bs-target="#exampleModal2"
 			>
-				Add Event
+				Add 
 			</button>
 
 			<div>
 				<Modal id="exampleModal2">
 					<form id="event" onSubmit={handleSubmit}>
 						<div className="">
-							<span className="font-weight-bold">Event Name:</span>
+							<span className="font-weight-bold">Title:</span>
 							<Input
 								type="text"
 								placeholder="Enter Event Name"
