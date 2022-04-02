@@ -1,16 +1,16 @@
 import React, {
-	Fragment,
-	useMemo,
-	useState,
-	useContext,
-	useEffect,
+  Fragment,
+  useMemo,
+  useState,
+  useContext,
+  useEffect,
 } from "react";
 import PropTypes from "prop-types";
 import {
-	Calendar,
-	Views,
-	DateLocalizer,
-	momentLocalizer,
+  Calendar,
+  Views,
+  DateLocalizer,
+  momentLocalizer,
 } from "react-big-calendar";
 import moment from "moment";
 import Input from "../common/inputField";
@@ -20,45 +20,45 @@ import TimesheetContext from "../../context/timesheetContext";
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
 export default function Resource({ user }) {
-	const [event, setEvent] = useState({
-		title: "",
-		start_date: "",
-		end_date: "",
-		start_time: "",
-		end_time: "",
-	});
-	const [createTimeEvent, setCreateTimeEvent] = useState(null);
-	const timesheetContext = useContext(TimesheetContext);
-	const handleChange = ({ currentTarget: input }) => {
-		const account = { ...event };
-		account[input.name] = input.value;
-		setEvent(account);
-	};
+  const [event, setEvent] = useState({
+    title: "",
+    start_date: "",
+    end_date: "",
+    start_time: "",
+    end_time: "",
+  });
+  const [createTimeEvent, setCreateTimeEvent] = useState(null);
+  const timesheetContext = useContext(TimesheetContext);
+  const handleChange = ({ currentTarget: input }) => {
+    const account = { ...event };
+    account[input.name] = input.value;
+    setEvent(account);
+  };
 
-	useEffect(() => {
-		timesheetContext.timesheet.map((item) => {
-			item["start"] = new Date(item["start"]);
-			item["end"] = new Date(item["end"]);
-		});
-	}, []);
+  useEffect(() => {
+    timesheetContext.timesheet.map((item) => {
+      item["start"] = new Date(item["start"]);
+      item["end"] = new Date(item["end"]);
+    });
+  }, []);
 
-	const ColoredDateCellWrapper = ({ children }) =>
-		React.cloneElement(React.Children.only(children), {
-			style: {
-				backgroundColor: "lightblue",
-			},
-		});
+  const ColoredDateCellWrapper = ({ children }) =>
+    React.cloneElement(React.Children.only(children), {
+      style: {
+        backgroundColor: "lightblue",
+      },
+    });
 
-	const { components, defaultDate, views } = useMemo(
-		() => ({
-			components: {
-				timeSlotWrapper: ColoredDateCellWrapper,
-			},
-			defaultDate: new Date(),
-			views: Object.keys(Views).map((k) => Views[k]),
-		}),
-		[]
-	);
+  const { defaultDate, views } = useMemo(
+    () => ({
+      components: {
+        timeSlotWrapper: ColoredDateCellWrapper,
+      },
+      defaultDate: new Date(),
+      views: Object.keys(Views).map((k) => Views[k]),
+    }),
+    []
+  );
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -149,24 +149,24 @@ export default function Resource({ user }) {
 				</Modal>
 			</div>
 
-			<div className="height600 bg-white">
-				<Calendar
-					defaultDate={defaultDate}
-					defaultView={Views.MONTH}
-					events={timesheetContext.timesheet}
-					localizer={localizer}
-					step={60}
-					views={views}
-					startAccessor="start"
-					endAccessor="end"
-					min={moment("12:00am", "h:mma").toDate()}
-					max={moment("11:59pm", "h:mma").toDate()}
-					draggableAccessor={(event) => true}
-				/>
-			</div>
-		</Fragment>
-	);
+      <div className="height600 bg-white">
+        <Calendar
+          defaultDate={defaultDate}
+          defaultView={Views.MONTH}
+          events={timesheetContext.timesheet}
+          localizer={localizer}
+          step={60}
+          views={views}
+          startAccessor="start"
+          endAccessor="end"
+          min={moment("12:00am", "h:mma").toDate()}
+          max={moment("11:59pm", "h:mma").toDate()}
+          draggableAccessor={(e) => true}
+        />
+      </div>
+    </Fragment>
+  );
 }
 Resource.propTypes = {
-	localizer: PropTypes.instanceOf(DateLocalizer),
+  localizer: PropTypes.instanceOf(DateLocalizer),
 };

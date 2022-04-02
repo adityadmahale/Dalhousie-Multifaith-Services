@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { getQuestions } from "../../services/questions";
@@ -13,8 +12,8 @@ const Questionnaire = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const questions = await getQuestions();
-      setQuestions(questions);
+      const allQuestions = getQuestions();
+      setQuestions(allQuestions);
     };
     getData();
   }, []);

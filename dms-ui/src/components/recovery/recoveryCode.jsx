@@ -31,25 +31,25 @@ const RecoveryCode = () => {
     if (!result.error) {
       return null;
     }
-    const errors = {};
+    const allErrors = {};
     for (let item of result.error.details) {
-      errors[item.path[0]] = item.message;
+      allErrors[item.path[0]] = item.message;
     }
 
-    return errors;
+    return allErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let errors = validate();
-    if (errors) {
-      if (errors.code.split(" ")[0] === '"code"') {
-        errors = { code: "Please enter correct code." };
+    let allErrors = validate();
+    if (allErrors) {
+      if (allErrors.code.split(" ")[0] === '"code"') {
+        allErrors = { code: "Please enter correct code." };
       }
     }
-    setErrors(errors || {});
-    if (errors) {
+    setErrors(allErrors || {});
+    if (allErrors) {
       return;
     }
     navigate("/recovery/password", {
