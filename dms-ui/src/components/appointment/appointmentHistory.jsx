@@ -21,9 +21,7 @@ const AppointmentHistory = ({ user }) => {
         selectedAppointment
       )}
       <div className="height600 ">
-        <h3 className=" mb-4" style={{ color: "#727272" }}>
-          Appointment History
-        </h3>
+        <h3 className="link mb-4">Appointment History</h3>
 
         {appointmentContext.appointments.map((appointment) => (
           <div key={appointment.id}>

@@ -33,11 +33,11 @@ const Header = ({ user }) => {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mx-auto">
-            <li className="nav-item active">
-              <NavLink className="nav-link" to="/" onClick={handleCollapse}>
-                Home
-              </NavLink>
-            </li>
+          <li className="nav-item active">
+            <NavLink className="nav-link" to="/" onClick={handleCollapse}>
+              Home
+            </NavLink>
+          </li>
 
           {user && (
             <li className="nav-item">
@@ -58,32 +58,32 @@ const Header = ({ user }) => {
                 to="/chaplains"
                 onClick={handleCollapse}
               >
-                Chaplains
+                Book
               </NavLink>
             </li>
           )}
           {user && !user.user.is_staff && (
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/questionnaire"
-                  onClick={handleCollapse}
-                >
-                  Questionnaire
-                </NavLink>
-              </li>
-           )}
-           {user && user.user.is_staff && (
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/timesheet"
-                  onClick={handleCollapse}
-                >
-                  Timesheet
-                </NavLink>
-              </li>
-           )}
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                to="/questionnaire"
+                onClick={handleCollapse}
+              >
+                Questionnaire
+              </NavLink>
+            </li>
+          )}
+          {user && user.user.is_staff && (
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                to="/timesheet"
+                onClick={handleCollapse}
+              >
+                Timesheet
+              </NavLink>
+            </li>
+          )}
           {user && (
             <li className="nav-item">
               <NavLink
@@ -120,7 +120,7 @@ const Header = ({ user }) => {
             </li>
           )}
 
-         {!user && (
+          {!user && (
             <li className="nav-item">
               <span
                 className="nav-link"

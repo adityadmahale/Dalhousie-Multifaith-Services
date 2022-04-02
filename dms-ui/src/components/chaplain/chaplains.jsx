@@ -21,6 +21,7 @@ const Chaplains = () => {
 
   return (
     <div className="row">
+      <h4 className="link mb-4">Spiritual Support Team</h4>
       {chaplainContext.chaplains.map((chaplain) => (
         <div className="col-12 col-md-4" key={chaplain.id}>
           <div className="card">

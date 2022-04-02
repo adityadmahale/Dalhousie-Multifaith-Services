@@ -134,7 +134,7 @@ const Events = () => {
       </div>
       <div key="index" className="mb-4">
         <div className="p-2 mb-2">
-          <h4 style={{ color: "#727272" }}>Upcoming Events</h4>
+          <h4 className="link mb-4">Upcoming Events</h4>
         </div>
 
         <div className="d-flex flex-wrap">
