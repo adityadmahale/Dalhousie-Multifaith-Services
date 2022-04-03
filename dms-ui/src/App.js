@@ -73,6 +73,7 @@ function App() {
     getData();
   }, []);
 
+  // Handler for submitting the timesheet
   const handleTimesheetSubmit = async (createTimeEvent) => {
     try {
       await createTimesheet(createTimeEvent);
@@ -88,6 +89,7 @@ function App() {
     }
   };
 
+  // handler for booking a slot
   const handleBooking = async (event) => {
     try {
       await updateEvent(event.id);
@@ -103,6 +105,7 @@ function App() {
     }
   };
 
+  // handler for adding an event
   const handleAddEvent = async (e, event) => {
     e.preventDefault();
     try {
@@ -119,11 +122,14 @@ function App() {
     }
   };
 
+  // Handler for confirming an appointment
   const handleConfirmClick = async (action, selectedAppointment) => {
     const originalAppointments = appointments;
     const appointmentsData = [...appointments];
     const index = appointmentsData.indexOf(selectedAppointment);
     appointmentsData[index] = { ...selectedAppointment };
+
+    // Check if the appointment is booked or confirmed
     if (action === "confirm") {
       appointmentsData[index].status = "confirmed";
     } else if (action === "reject") {
@@ -145,6 +151,7 @@ function App() {
   };
 
   return (
+    // Define routes and pass down all the context references to the components hierarchy
     <TimesheetContext.Provider value={{ timesheet, handleTimesheetSubmit }}>
       <EventContext.Provider value={{ events, handleAddEvent, handleBooking }}>
         <AppointmentContext.Provider

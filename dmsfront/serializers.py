@@ -24,6 +24,7 @@ class ChaplainSerializer(serializers.ModelSerializer):
         fields = ["id", "user_id", "phone", "religion", "description",
                   "user", "booked_slots"]
 
+    # Get the availability count
     def get_booked_slots(self, obj):
         booked_slots = Appointment.objects.all()
         booked_slots = booked_slots.filter(chaplain_id=obj.user_id)

@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+# Routes for the dmsfront application
 urlpatterns = [
     path("dalusers/", views.DalUserList.as_view(), name="daluserlist"),
     path("dalusers/<int:id>", views.DalUserDetail.as_view(), name="daluser"),
