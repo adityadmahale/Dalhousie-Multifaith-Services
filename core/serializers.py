@@ -6,12 +6,14 @@ from rest_framework import serializers
 from .models import UserImage
 
 
+# Serializer for uploaded user image
 class UserImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserImage
         fields = ["id", "image", "user"]
 
 
+# Used when a user creates a profile
 class UserCreateSerializer(BaseUserCreateSerializer):
     image = UserImageSerializer(read_only=True)
 
@@ -27,6 +29,7 @@ class UserCreateSerializer(BaseUserCreateSerializer):
         ]
 
 
+# Used to retrieve user data
 class UserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
         fields = ["id", "email", "first_name", "last_name", "is_staff"]
