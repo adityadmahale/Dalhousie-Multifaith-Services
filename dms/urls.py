@@ -20,6 +20,7 @@ from django.urls import path, include
 
 auth_endpoint = "auth/"
 
+# Base routes
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(auth_endpoint, include("djoser.urls")),

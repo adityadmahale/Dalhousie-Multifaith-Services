@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 # https://www.pygopar.com/how-to-remove-username-from-django-user-model
+# Inherit from the django authentication module
 class UserManager(BaseUserManager):
     """User Manager that knows how to create
     users via email instead of username"""
@@ -35,7 +36,6 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-# Create your models here.
 class User(AbstractUser):
     username = None
     email = models.EmailField(_("email address"), unique=True)
@@ -49,11 +49,13 @@ class User(AbstractUser):
         return self.email
 
 
+# Location for uploading profile images
 def upload_location(instance, filename):
     filebase, extension = filename.split(".")
     return "profile/images/%s.%s" % (instance.user.id, extension)
 
 
+# User image model
 class UserImage(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="image"
