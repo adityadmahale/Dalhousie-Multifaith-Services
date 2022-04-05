@@ -73,6 +73,11 @@ function App() {
     getData();
   }, []);
 
+  const handleUserUpdate = (body) => {
+    const updatedUser = { ...user, ...body };
+    setUser(updatedUser);
+  };
+
   // Handler for submitting the timesheet
   const handleTimesheetSubmit = async (createTimeEvent) => {
     const originalTimesheet = timesheet;
@@ -192,7 +197,7 @@ function App() {
                     path="/profile"
                     element={
                       <ProtectedRoute user={user}>
-                        <Profile user={user} />
+                        <Profile user={user} onUpdate={handleUserUpdate} />
                       </ProtectedRoute>
                     }
                   />

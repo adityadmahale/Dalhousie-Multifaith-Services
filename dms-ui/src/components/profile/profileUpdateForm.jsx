@@ -77,6 +77,16 @@ const ProfileUpdateForm = (props) => {
       await updatePassword(props.user.user.email, user.password);
       await updateName(props.user.user_id, user.firstName, user.lastName);
       if (props.user.user.is_staff) {
+        props.onUpdate({
+          phone: phone,
+          religion: user.religion,
+          description: user.description,
+          user: {
+            ...props.user.user,
+            first_name: user.firstName,
+            last_name: user.lastName,
+          },
+        });
         await updateChaplainDetails(
           props.user.user_id,
           phone,
@@ -84,9 +94,16 @@ const ProfileUpdateForm = (props) => {
           user.description
         );
       } else {
+        props.onUpdate({
+          phone: phone,
+          user: {
+            ...props.user.user,
+            first_name: user.firstName,
+            last_name: user.lastName,
+          },
+        });
         await updateStudentDetails(props.user.user_id, phone);
       }
-      window.location = "/";
     } catch (ex) {
       toast.error("Something went wrong.");
     }
@@ -162,7 +179,9 @@ const ProfileUpdateForm = (props) => {
         value={user.confirmPassword}
         error={errors.confirmPassword}
       />
-      <button className="btn btn-primary">Update</button>
+      <button className="btn btn-primary" data-bs-dismiss="modal">
+        Update
+      </button>
     </form>
   );
 };
