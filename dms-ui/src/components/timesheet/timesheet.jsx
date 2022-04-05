@@ -27,7 +27,6 @@ export default function TimeSheet({ user }) {
     start_time: "",
     end_time: "",
   });
-  const [createTimeEvent, setCreateTimeEvent] = useState(null);
   const timesheetContext = useContext(TimesheetContext);
   const handleChange = ({ currentTarget: input }) => {
     const account = { ...event };
@@ -60,22 +59,10 @@ export default function TimeSheet({ user }) {
     []
   );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let data = {
-      chaplain_id: user.id,
-      title: event.title,
-      start: String(new Date(event.start_date + "T" + event.start_time)),
-      end: String(new Date(event.end_date + "T" + event.end_time)),
-    };
-    setCreateTimeEvent(data);
-    timesheetContext.handleTimesheetSubmit(createTimeEvent);
-  };
   let classes = "btn btn-primary btn-detail";
   return (
     <Fragment>
       <button
-        onClick={onclick}
         className={classes}
         style={{ maxWidth: "300px" }}
         data-bs-toggle="modal"
@@ -86,7 +73,20 @@ export default function TimeSheet({ user }) {
 
       <div>
         <Modal id="exampleModal2">
-          <form id="event" onSubmit={handleSubmit}>
+          <form
+            id="event"
+            onSubmit={(e) => {
+              e.preventDefault();
+              timesheetContext.handleTimesheetSubmit({
+                chaplain_id: user.id,
+                title: event.title,
+                start: String(
+                  new Date(event.start_date + "T" + event.start_time)
+                ),
+                end: String(new Date(event.end_date + "T" + event.end_time)),
+              });
+            }}
+          >
             <div className="">
               <span className="font-weight-bold">Title:</span>
               <Input
@@ -139,9 +139,8 @@ export default function TimeSheet({ user }) {
             </div>
             <button
               className="btn btn-primary"
-              type="submit"
               data-bs-dismiss="modal"
-              onClick={() => handleSubmit}
+              type="submit"
             >
               Confirm
             </button>

@@ -85,14 +85,6 @@ const EventsDetails = () => {
                 <div className="d-flex justify-content-between p-4">
                   <div className="d-flex flex-column justify-content-start ">
                     <div className="d-flex flex-wrap   ">
-                      <div className="d-flex align-self-center ">
-                        <img
-                          className="profile-img"
-                          style={{ height: "50px", width: "50px" }}
-                          src={process.env.PUBLIC_URL + "/andrew.png"}
-                          alt="profile"
-                        />{" "}
-                      </div>
                       <div className="card-body">
                         {event.host_name}
                         <br />

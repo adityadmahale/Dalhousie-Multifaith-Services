@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "../common/modal";
 import ProfileUpdateForm from "./profileUpdateForm";
 
-const Profile = ({ user }) => {
+const Profile = ({ user, onUpdate }) => {
   return (
     <div className="profile-jumbotron">
       <Modal id="exampleModal">
-        <ProfileUpdateForm user={user} />
+        <ProfileUpdateForm user={user} onUpdate={onUpdate} />
       </Modal>
       <div className="prl-img-container">
         <img
