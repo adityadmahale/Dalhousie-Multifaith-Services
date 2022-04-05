@@ -75,15 +75,18 @@ function App() {
 
   // Handler for submitting the timesheet
   const handleTimesheetSubmit = async (createTimeEvent) => {
+    const originalTimesheet = timesheet;
+    const updatedTimeSheet = [...timesheet, createTimeEvent];
+    setTimesheet(updatedTimeSheet);
     try {
       await createTimesheet(createTimeEvent);
-      window.location = "/";
     } catch (ex) {
       if (
         ex.response &&
         ex.response.status >= 400 &&
         ex.response.status < 500
       ) {
+        setTimesheet(originalTimesheet);
         toast.error(<ListError errors={Object.values(ex.response.data)} />);
       }
     }
