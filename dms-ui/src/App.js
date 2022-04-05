@@ -73,17 +73,25 @@ function App() {
     getData();
   }, []);
 
+  const handleUserUpdate = (body) => {
+    const updatedUser = { ...user, ...body };
+    setUser(updatedUser);
+  };
+
   // Handler for submitting the timesheet
   const handleTimesheetSubmit = async (createTimeEvent) => {
+    const originalTimesheet = timesheet;
+    const updatedTimeSheet = [...timesheet, createTimeEvent];
+    setTimesheet(updatedTimeSheet);
     try {
       await createTimesheet(createTimeEvent);
-      window.location = "/";
     } catch (ex) {
       if (
         ex.response &&
         ex.response.status >= 400 &&
         ex.response.status < 500
       ) {
+        setTimesheet(originalTimesheet);
         toast.error(<ListError errors={Object.values(ex.response.data)} />);
       }
     }
@@ -91,15 +99,23 @@ function App() {
 
   // handler for booking a slot
   const handleBooking = async (event) => {
+    const originalEvents = events;
+    const updatedEvents = [...events];
+    const index = events.findIndex((e) => e.id === event.id);
+    updatedEvents[index] = { ...updatedEvents[index] };
+    updatedEvents[index].available_seats =
+      updatedEvents[index].available_seats - 1;
+    setEvents(updatedEvents);
     try {
       await updateEvent(event.id);
-      window.location = "/";
+      toast.success("Booked successfully");
     } catch (ex) {
       if (
         ex.response &&
         ex.response.status >= 400 &&
         ex.response.status < 500
       ) {
+        setEvents(originalEvents);
         toast.error(<ListError errors={Object.values(ex.response.data)} />);
       }
     }
@@ -109,8 +125,9 @@ function App() {
   const handleAddEvent = async (e, event) => {
     e.preventDefault();
     try {
-      await addEvent(event);
-      window.location = "/";
+      const { data: dataEvent } = await addEvent(event);
+      const updatedEvents = [...events, dataEvent];
+      setEvents(updatedEvents);
     } catch (ex) {
       if (
         ex.response &&
@@ -189,7 +206,7 @@ function App() {
                     path="/profile"
                     element={
                       <ProtectedRoute user={user}>
-                        <Profile user={user} />
+                        <Profile user={user} onUpdate={handleUserUpdate} />
                       </ProtectedRoute>
                     }
                   />
